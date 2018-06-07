@@ -31,4 +31,4 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 /tests/results/
 
 # dev-baldr
-/application/config/dev-baldr/
+application/config/dev-baldr/
