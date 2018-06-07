@@ -1,5 +1,4 @@
 <?php
-
 /*
  *---------------------------------------------------------------
  * APPLICATION ENVIRONMENT
@@ -84,7 +83,6 @@ switch (ENVIRONMENT)
  * use an absolute (full) server path.
  * For more info please see the user guide:
  *
- * https://codeigniter.com/user_guide/general/managing_apps.html
  *
  * NO TRAILING SLASH!
  */
@@ -104,6 +102,7 @@ switch (ENVIRONMENT)
  * NO TRAILING SLASH!
  */
 	$view_folder = SERVERROOT.DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.THEME;
+
 
 /*
  * --------------------------------------------------------------------
