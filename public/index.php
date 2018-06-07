@@ -31,8 +31,6 @@ switch ($_SERVER['HTTP_HOST'])
         define('ENVIRONMENT','development');
 }
 
-define('THEME','default');
-
 /*
  *---------------------------------------------------------------
  * ERROR REPORTING
@@ -101,6 +99,9 @@ switch (ENVIRONMENT)
  *
  * NO TRAILING SLASH!
  */
+if (!defined('THEME')) {
+    define('THEME', 'default');
+}
 	$view_folder = SERVERROOT.DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.THEME;
 
 
