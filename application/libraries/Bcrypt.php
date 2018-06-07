@@ -4,10 +4,6 @@
  *
  * Requirements: PHP5 or above
  *
- * @package    CodeIgniter-Ion-Auth
- * @author     Ben Edmunds
- * @link       http://github.com/benedmunds/CodeIgniter-Ion-Auth
- * @filesource
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
