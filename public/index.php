@@ -16,7 +16,20 @@
  *
  * NOTE: If you change these, also change the error_reporting() code below
  */
-	define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
+switch ($_SERVER['HTTP_HOST'])
+{
+    case "production.com":
+        define('ENVIRONMENT','production');
+        break;
+    case "179471.simplecloud.ru":
+        define('ENVIRONMENT','testing');
+        break;
+    case "social.loc":
+        define('ENVIRONMENT','dev-baldr');
+        break;    
+    default:
+        define('ENVIRONMENT','development');
+}
 
 /*
  *---------------------------------------------------------------
@@ -29,6 +42,7 @@
 switch (ENVIRONMENT)
 {
 	case 'development':
+	case 'dev-baldr':
 		error_reporting(-1);
 		ini_set('display_errors', 1);
 	break;
@@ -36,14 +50,7 @@ switch (ENVIRONMENT)
 	case 'testing':
 	case 'production':
 		ini_set('display_errors', 0);
-		if (version_compare(PHP_VERSION, '5.3', '>='))
-		{
-			error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_STRICT & ~E_USER_NOTICE & ~E_USER_DEPRECATED);
-		}
-		else
-		{
-			error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT & ~E_USER_NOTICE);
-		}
+		error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_STRICT & ~E_USER_NOTICE & ~E_USER_DEPRECATED);
 	break;
 
 	default:
@@ -60,7 +67,8 @@ switch (ENVIRONMENT)
  * This variable must contain the name of your "system" directory.
  * Set the path if it is not in the same directory as this file.
  */
-	$system_path = '../system';
+	define('SERVERROOT', dirname(__FILE__, 2));
+	$system_path = SERVERROOT.DIRECTORY_SEPARATOR.'system';
 
 /*
  *---------------------------------------------------------------
@@ -76,7 +84,7 @@ switch (ENVIRONMENT)
  *
  * NO TRAILING SLASH!
  */
-	$application_folder = '../application';
+	$application_folder = SERVERROOT.DIRECTORY_SEPARATOR.'application';
 
 /*
  *---------------------------------------------------------------
@@ -91,7 +99,10 @@ switch (ENVIRONMENT)
  *
  * NO TRAILING SLASH!
  */
-	$view_folder = '';
+if (!defined('THEME')) {
+    define('THEME', 'default');
+}
+	$view_folder = SERVERROOT.DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.THEME;
 
 
 /*
