@@ -15,6 +15,7 @@ class Profile extends CI_Controller
         }
         $this->user = $this->ion_auth->user()->row();
         $photos = scandir('./uploads/profile/'.$this->user->id);
+        
         $this->user->photo = end($photos);
     }
 
