@@ -6,7 +6,7 @@
  * Time: 14:04
  */
 
-class Post
+class Post extends CI_Controller
 {
 
 }
