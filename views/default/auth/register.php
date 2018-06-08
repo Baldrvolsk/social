@@ -1,4 +1,4 @@
-<form action="/auth/register" method="POST">
+<form action="/auth/register" method="POST" enctype="multipart/form-data">
     <div class="form-group">
         <label for="InputEmail1">Email(обязательно)</label>
         <input type="email" name="email" value="<?php echo set_value('email'); ?>" class="form-control" id="InputEmail1" aria-describedby="emailHelp" placeholder="Ваш email" required>
@@ -18,6 +18,11 @@
         <label for="InputLogin">Ваша фамилия</label>
         <input type="text" name="last_name" value="<?php echo set_value('last_name'); ?>" class="form-control" id="InputLastName" aria-describedby="lastNameHelp" placeholder="Ваша фамилия">
         <?php if(form_error('last_name')) {echo form_error('last_name','<span class="error">','</span>');} ?>
+    </div>
+    <div class="form-group">
+        <label for="exampleFormControlFile1">Ваше фото</label>
+        <input type="file" name="photo" class="form-control-file" id="File1">
+        <?php if(form_error('photo')) {echo form_error('photo','<span class="error">','</span>');} ?>
     </div>
     <div class="form-group">
         <label for="InputPassword1">Пароль</label>
