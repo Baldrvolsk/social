@@ -4,6 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Profile extends CI_Controller
 {
 
+    public $user;
     public function __construct()
     {
         parent::__construct();
@@ -12,12 +13,14 @@ class Profile extends CI_Controller
             // redirect them to the login page
             redirect('auth/login', 'refresh');
         }
+        $this->user = $this->ion_auth->user()->row();
     }
 
     public function index()
     {
-
+      $this->load->view('header');
       $this->load->view('profile');
+      $this->load->view('footer');
     }
 
 }

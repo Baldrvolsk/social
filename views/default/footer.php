@@ -1,4 +1,3 @@
-</div>
 
 
 <!-- на jQuery (необходим для Bootstrap - х JavaScript плагины) -->
