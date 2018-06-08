@@ -57,7 +57,7 @@
         </div>
         <div class="col-md-10">
             <div class="col-md-5">
-                <img class="avatar" src="https://media.forgecdn.net/avatars/124/768/636424778749237239.jpeg" style="width: 100%"/>
+                <img class="avatar" src="/uploads/profile/<?=$this->user->id;?>/<?=$this->user->photo;?>" style="width: 100%"/>
             </div>
             <div class="col-md-7">
                 <div class="col-md-6"><i class="glyphicon glyphicon-user"></i>V.I.P.</div>
