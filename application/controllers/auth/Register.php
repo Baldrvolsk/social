@@ -28,10 +28,11 @@ class Register extends CI_Controller
         } else {
             $additional_data = array(
                 'first_name' => $this->input->post('first_name'),
-                'last_name' => $this->input->post('last_name'),
-            );
+                'last_name' => $this->input->post('last_name'),);
+
             $group = array('2');
             $user_id = $this->ion_auth->register($this->input->post('login'), $this->input->post('password'), $this->input->post('email'),$additional_data , $group);
+            $this->ion_auth->login($this->input->post('email'),$this->input->post('password'),true);
 
             mkdir('./uploads/profile/'.$user_id,0755);
 
@@ -43,21 +44,13 @@ class Register extends CI_Controller
             $config['max_height'] = 768;
 
             $this->load->library('upload', $config);
-            if ( ! $this->upload->do_upload('photo'))
-            {
+            if ( ! $this->upload->do_upload('photo')) {
+                die('Ошибка загрузки файла');
                 $error = array('error' => $this->upload->display_errors());
-                print_r($error);die();
-                #die('error');
-               # $this->load->view('upload_form', $error);
+                print_r($error);
+                die();
             }
-            else
-            {
-                #die('good');
-                $data = array('upload_data' => $this->upload->data());
-
-                #$this->load->view('upload_success', $data);
-            }
-            $this->load->view('auth/success');
+            redirect('profile');
 
         }
     }

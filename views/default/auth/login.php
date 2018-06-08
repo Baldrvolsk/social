@@ -24,4 +24,5 @@
 
 </form>
 
+<p><a href="/auth/register">Регистрация</a></p>
 <p><a href="forgot_password">Забыли пароль?</a></p>

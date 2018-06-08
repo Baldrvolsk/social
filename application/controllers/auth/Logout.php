@@ -21,7 +21,7 @@ class Logout extends CI_Controller
         $logout = $this->ion_auth->logout();
 
         $this->session->set_flashdata('message', $this->ion_auth->messages());
-        redirect('auth/login', 'refresh');
+        redirect('auth/login');
     }
 
 }
