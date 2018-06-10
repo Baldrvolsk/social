@@ -1,5 +1,4 @@
-<?php
-/* https://github.com/chernavin/CodeIgniter-Russian-Language */
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 $lang['upload_userfile_not_set']		= "Невозможно найти переменную с именем userfile в массиве POST.";
 $lang['upload_file_exceeds_limit']		= "Размер загружаемого файла превышает максимально допустимый размер, указанный в файле конфигурации PHP.";
@@ -17,6 +16,3 @@ $lang['upload_no_filepath']				= "Некорректная директория 
 $lang['upload_no_file_types']			= "Необходимо указать допустимые для загрузки типы файлов.";
 $lang['upload_bad_filename']			= "Файл с указанным именем уже существует на сервере.";
 $lang['upload_not_writable']			= "Директория для загрузки недоступна для записи.";
-
-/* End of file upload_lang.php */
-/* Location: ./system/language/russian/upload_lang.php */
