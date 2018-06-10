@@ -32,4 +32,8 @@ class Post_model extends CI_Model
         }
     }
 
+    public function createPost() {
+
+    }
+
 }
