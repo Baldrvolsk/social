@@ -69,10 +69,12 @@ class Webhook extends CI_Controller
             $somecontent = date('Y-m-d H:i:s ') . "Run deploy... \n";
             fwrite($handle, $somecontent);
             fclose($handle);
+            echo '['.date('Y-m-d H:i:s ').'] Run deploy...';
         } catch (Exception $e) {
             $this->log($e, 'ERROR');
         }
     }
+
     public function deploy($wh) {
         $protocol = (isset($_SERVER['SERVER_PROTOCOL']) ? $_SERVER['SERVER_PROTOCOL'] : 'HTTP/1.0');
         // Валидация ключа запроса
@@ -98,5 +100,6 @@ class Webhook extends CI_Controller
         }
         $this->execute();
     }
+
     public function index() {}
 }
