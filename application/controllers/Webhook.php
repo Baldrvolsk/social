@@ -1,14 +1,10 @@
-<?php
-
-date_default_timezone_set('Europe/Moscow'); // Set this to your local timezone - http://www.php.net/manual/en/timezones.php
-
-
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
 /**
  * Автодеплой из битбакета
  *
  * Class Deploy
  */
-class Deploy extends CI_Controller
+class Webhook extends CI_Controller
 {
     /**
     * Адрес файла лога
