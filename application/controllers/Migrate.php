@@ -2,11 +2,19 @@
 /**
  * Created by PhpStorm.
  * User: Baldr
- * Date: 10.06.2018
- * Time: 23:41
+ * Date: 11.06.2018
+ * Time: 0:09
  */
 
-class Migrate
+class Migrate extends CI_Controller
 {
+
+    public function index() {
+        $this->load->library('migration');
+
+        if ($this->migration->current() === FALSE) {
+            show_error($this->migration->error_string());
+        }
+    }
 
 }
