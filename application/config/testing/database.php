@@ -72,10 +72,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $active_group = 'testing';
 
-$db['dev-baldr'] = array(
-	'hostname' => '192.168.88.10',
-	'username' => 'social',
-	'password' => 'social',
-	'database' => 'social',
+$db['testing'] = array(
+	'hostname' => 'localhost',
+	'username' => 'root',
+	'password' => 'toor',
+	'database' => 'db',
 	'dbdriver' => 'mysqli'
 );
