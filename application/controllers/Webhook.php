@@ -73,11 +73,10 @@ class Webhook extends CI_Controller
             $this->log($e, 'ERROR');
         }
     }
-    public function index() {
+    public function deploy($wh) {
         $protocol = (isset($_SERVER['SERVER_PROTOCOL']) ? $_SERVER['SERVER_PROTOCOL'] : 'HTTP/1.0');
         // Валидация ключа запроса
-        $whKey = $this->input->get_post('wh');
-        if ($whKey !== $this->_whKey) {
+        if ($wh !== $this->_whKey) {
             header($protocol . ' 400 Bad Request');
             die('invalid validate key.');
         }
@@ -99,4 +98,5 @@ class Webhook extends CI_Controller
         }
         $this->execute();
     }
+    public function index() {}
 }
