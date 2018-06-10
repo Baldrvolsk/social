@@ -1,4 +1,5 @@
 <?php
+include '../CIPS.php';
 /*
  *---------------------------------------------------------------
  * APPLICATION ENVIRONMENT

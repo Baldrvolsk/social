@@ -1,5 +1,4 @@
 .DS_Store
-
 application/cache/*
 !application/cache/index.html
 
@@ -33,3 +32,6 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 # dev-baldr
 application/config/dev-baldr/
 application/config/dev-baldr/*
+
+#apps
+/public/uploads/*
