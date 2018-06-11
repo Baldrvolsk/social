@@ -8,7 +8,7 @@ class Migration_b_add_post extends CI_Migration {
         $this->dbforge->add_field(array(
             'user_id' => array('type' => 'INT'),
             'date_add' => array('type' => 'TIMESTAMP'),
-            'date_edit' => array('type' => 'TIMESTAMP'),
+            'date_edit' => array('type' => 'TIMESTAMP', 'null' => TRUE),
             'content' => array('type' => 'TEXT', 'null' => TRUE),
             'link' => array('type' => 'TEXT', 'null' => TRUE),
             'tags' => array('type' => 'TEXT', 'null' => TRUE),

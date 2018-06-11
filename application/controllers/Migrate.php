@@ -15,7 +15,7 @@ class Migrate extends CI_Controller
         if ($this->migration->latest() === FALSE) {
             show_error($this->migration->error_string());
         } else {
-            redirect('profile', 'refresh');
+            echo 'Migrate complete <a href="'.site_url('/').'">goto site &raquo;</a>';
         }
     }
 
