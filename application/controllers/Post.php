@@ -8,7 +8,7 @@
 
 class Post extends CI_Controller
 {
-    private $user;
+    public $user;
     public function __construct() {
         parent::__construct();
         $this->load->model('post_model');
@@ -17,13 +17,16 @@ class Post extends CI_Controller
             // redirect them to the login page
             redirect('auth/login', 'refresh');
         }
-        $htis->user = $this->ion_auth->user()->row();
+        $this->user = $this->ion_auth->user()->row();
+        $photos = scandir('./uploads/profile/'.$this->user->id);
+
+        $this->user->photo = end($photos);
     }
 
-    public function index() {
+    public function index($userId, $limit) {
 
-        $data['posts'] = $this->post_model->get_users_post($this->user->id);
-
+        $data['posts'] = $this->post_model->get_users_post($userId, $limit);
+        echo $this->load->view('post/view_post', $data, TRUE);
     }
 
     public function view($id = NULL) {
@@ -35,5 +38,24 @@ class Post extends CI_Controller
         $this->load->helper('form');
         $data['user_id'] = $this->user->id;
         return $this->load->view('post/add_post', $data, TRUE);
+    }
+
+    public function add_post() {
+        $this->load->helper('form');
+        $this->load->library('form_validation');
+
+        $this->form_validation->set_rules('content', 'content', 'required|min_length[3]');
+
+        if ($this->form_validation->run() === FALSE) {
+            $formData['userId'] = $this->input->post('userId');
+            $data['addPostForm'] = $this->load->view('post/add_post', $formData,true);
+            $this->load->view('header', $data);
+            $this->load->view('profile');
+            $this->load->view('footer');
+
+        } else {
+            $this->post_model->createPost();
+            redirect('profile');
+        }
     }
 }
