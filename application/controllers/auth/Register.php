@@ -34,7 +34,9 @@ class Register extends CI_Controller
             $user_id = $this->ion_auth->register($this->input->post('login'), $this->input->post('password'), $this->input->post('email'),$additional_data , $group);
             $this->ion_auth->login($this->input->post('email'),$this->input->post('password'),true);
 
-            mkdir('./uploads/profile/'.$user_id,0755);
+            if (!is_dir('./uploads/profile/'.$user_id)) {
+                mkdir('./uploads/profile/' . $user_id, 0755);
+            }
 
             $config['upload_path'] = './uploads/profile/'.$user_id;
             $config['allowed_types'] = 'gif|jpg|png';

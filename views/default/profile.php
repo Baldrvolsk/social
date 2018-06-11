@@ -67,7 +67,11 @@
                 <div class="col-md-12">Тут еще что-то</div>
             </div>
             <div class="col-md-12">
-                Тут лента
+                <div class="row" style="margin-bottom:50px">
+                    <?=$addPostForm?>
+                </div>
+
+                <?=$posts?>
             </div>
         </div>
 
