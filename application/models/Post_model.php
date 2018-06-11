@@ -27,7 +27,7 @@ class Post_model extends CI_Model
         $user_id = isset($user_id) ? $user_id : $this->session->userdata('user_id');
         if ($limit !== null && $limit !== 0) {
             if ($offset === null) $offset = 0;
-            //$this->db->join('users', 'users.id = post.user_id');
+            $this->db->join('users', 'users.id = post.user_id');
             $this->db->order_by($this->post_table.'.date_add', 'desc');
             $this->db->where($this->post_table.'.user_id', $user_id);
             $query = $this->db->get($this->post_table, $limit, $offset);
