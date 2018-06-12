@@ -24,7 +24,6 @@ class Post extends CI_Controller
     }
 
     public function index($userId, $limit) {
-
         $data['posts'] = $this->post_model->get_users_post($userId, $limit);
         echo $this->load->view('post/view_post', $data, TRUE);
     }
@@ -37,7 +36,7 @@ class Post extends CI_Controller
     public function add_post_form() {
         $this->load->helper('form');
         $data['user_id'] = $this->user->id;
-        return $this->load->view('post/add_post', $data, TRUE);
+        $this->load->view('post/add_post', $data, TRUE);
     }
 
     public function add_post() {
