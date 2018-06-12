@@ -30,7 +30,7 @@
                         <div class="col-md-2">
                             <img src="<?=@$user->avatar?>" width="50" class="img-circle">
                         </div>
-                        <div class="col-md-10">
+                        <div class="col-md-8">
                             <span class="lead"><?=$user->first_name.' '.$user->last_name?></span>
                         </div>
                     </a>
