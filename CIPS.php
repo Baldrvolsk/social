@@ -72,6 +72,8 @@
  * @property Ion_auth|Ion_auth_model $ion_auth The ION Auth spark
  * @property Post $post
  * @property Post_model $post_model
+ * @property Friends $friends
+ * @property Friend_model $friend_model
  *
  */
 class CIPS
