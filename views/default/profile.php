@@ -31,7 +31,7 @@
                         </button>
                     </div>
                     <form action="/chat/send" method="post">
-                        <input type="hidden" name="user_id" value="<?=$user->id; ?>">
+                        <input type="hidden" name="user_id" value="<?=$userdata->id; ?>">
                         <div class="modal-body">
                             <div class="form-group">
                                 <label>Текст сообщения:</label>
