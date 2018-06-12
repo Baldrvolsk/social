@@ -3,9 +3,10 @@
 
     <?php if(count($chat) > 0) : ?>
             <?php foreach($chat as $c): ?>
+        <div <?php if($c->user_id == $this->user->id) : ?> style="text-align:right;" <?php endif;?>>
         От: <?=$c->first_name.' '.$c->last_name; ?> <?=$c->date_add; ?><br />
         Текст: <?=$c->content; ?>
-            <br />
+        </div>
             <br />
             <?php endforeach; ?>
     <?php else : ?>
