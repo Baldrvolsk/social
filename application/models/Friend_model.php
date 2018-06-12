@@ -35,7 +35,7 @@ class Friend_model extends CI_Model
             'friend_group_id' => $friend_group_id,
         );
 
-        return $this->db->insert('post', $data);
+        return $this->db->insert('friends', $data);
 
     }
 
