@@ -1,12 +1,12 @@
         <div class="col-md-10">
             <div class="col-md-5">
-                <img class="avatar" src="/uploads/profile/<?=$this->user->id;?>/<?=$this->user->photo;?>" style="width: 100%"/>
+                <img class="avatar" src="/uploads/profile/<?=$user->id;?>/<?=$user->photo;?>" style="width: 100%"/>
                 <button class="btn btn-info send_message"  data-toggle="modal" data-target="#exampleModal" style="width: 100%">Отправить сообщение</button>
             </div>
             <div class="col-md-7">
                 <div class="col-md-6"><i class="glyphicon glyphicon-user"></i>V.I.P.</div>
-                <div class="col-md-6">Last vizit: <?=gmdate('H:i d.m.Y',$this->user->last_login); ?></div>
-                <div class="col-md-12"><?=$this->user->first_name.' '.$this->user->last_name ;?></div>
+                <div class="col-md-6">Last vizit: <?=gmdate('H:i d.m.Y',$user->last_login); ?></div>
+                <div class="col-md-12"><?=$this->user->first_name.' '.$user->last_name ;?></div>
                 <div class="col-md-12">Тут статус</div>
                 <div class="col-md-12">Тут еще что-то</div>
             </div>
@@ -31,7 +31,7 @@
                         </button>
                     </div>
                     <form action="/chat/send" method="post">
-                        <input type="hidden" name="user_id" value="<?=$this->user->id; ?>">
+                        <input type="hidden" name="user_id" value="<?=$user->id; ?>">
                         <div class="modal-body">
                             <div class="form-group">
                                 <label>Текст сообщения:</label>
