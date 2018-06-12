@@ -36,10 +36,9 @@ class Post_model extends CI_Model
     }
 
     public function createPost() {
-        $content = trim($this->input->post('content', true));
+        $content = $this->input->post('content', true);
         //$this->load->helper('url');
 
-        //$slug = url_title($this->input->post('title'), 'dash', TRUE);
         $link = null;
         $tags = null;
         $data = array(
