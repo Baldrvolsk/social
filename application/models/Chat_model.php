@@ -19,7 +19,7 @@ class Chat_model extends CI_Model
      */
     public function get_user_chats()
     {
-        $q = 'SELECT c.*,concat(f.first_name," ",f.last_name) as from_user ,concat(t.first_name," ", t.last_name) as to_user FROM `chat` c LEFT JOIN users f ON f.id = c.from LEFT JOIN users t ON t.id = c.to';
+        $q = 'SELECT c.*,concat(f.first_name," ",f.last_name) as from_user ,concat(t.first_name," ", t.last_name) as to_user FROM `chat` c LEFT JOIN users f ON f.id = c.from LEFT JOIN users t ON t.id = c.to WHERE c.from = '.$this->user->id.' OR c.to = '.$this->user->id;
         // Берет чаты, и подтягивает имена пользователей для отправителя и получателя
         return $this->db->query($q)->result();
     }
@@ -54,7 +54,6 @@ class Chat_model extends CI_Model
                 $data['chat_id'] = $chat_id;
             }
             $data['user_id'] = $this->user->id;
-            $data['status'] = 0;
             $this->db->insert($this->message_table,$data);
         }
         return;
@@ -91,7 +90,7 @@ class Chat_model extends CI_Model
         $where = "(from=$user_id AND to = $sender) OR (from=$sender AND to=$user_id)";
         $this->db->where($where);
         $chat_id = $this->db->get($this->chat_table)->result();
-        if($chat_id) {
+        if(count($chat_id) > 0) {
             $this->add_message($chat_id[0]->id);
         } else {
             $chat_id = $this->create_chat($sender,$user_id);
