@@ -4,7 +4,7 @@
     <?php if(count($chat) > 0) : ?>
             <?php foreach($chat as $c): ?>
         <div <?php if($c->user_id == $this->user->id) : ?> style="text-align:right;" <?php endif;?>>
-        От: <?=$c->first_name.' '.$c->last_name; ?> <?=$c->date_add; ?><br />
+            От: <a href="/profile/<?=$c->user_id; ?>"><?=$c->first_name.' '.$c->last_name; ?></a> <?=$c->date_add; ?><br />
         Текст: <?=$c->content; ?>
         </div>
             <br />
