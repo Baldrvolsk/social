@@ -34,4 +34,9 @@ class Friends extends CI_Controller
         $this->friend_model->add_friend($this->user->id, $id, $group_id);
         redirect('friends', 'refresh');
     }
+
+    public function delete_friend($id) {
+        $this->friend_model->delete_friend($this->user->id, $id);
+        redirect('friends', 'refresh');
+    }
 }
