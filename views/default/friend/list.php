@@ -7,14 +7,19 @@
             <div class="row">
                 <?php foreach ($friends as $friend): ?>
                 <div class="col-md-12">
-                    <a class="row" href="/profile/<?=$friend['id']?>">
-                        <div class="col-md-2">
-                            <img src="<?=@$friend['avatar']?>" width="50" class="img-circle">
+                    <div class="col-md-12" style="margin:.3em">
+                        <div class="row">
+                            <a class="col-md-2" href="/profile/<?=$friend['id']?>" title="Посмотреть профиль">
+                                <img src="<?=@$user->avatar?>" width="50" class="img-circle">
+                            </a>
+                            <a class="col-md-8" href="/profile/<?=$friend['id']?>" title="Посмотреть профиль">
+                                <span class="lead"><?=$friend['first_name'].' '.$friend['last_name']?></span>
+                            </a>
+                            <a href="/friends/delete/<?=$friend['id']?>" class="col-md-2" title="Удалить из друзей">
+                                <span class="glyphicon glyphicon-minus"></span>
+                            </a>
                         </div>
-                        <div class="col-md-10">
-                            <span class="lead"><?=$friend['first_name'].' '.$friend['last_name']?></span>
-                        </div>
-                    </a>
+                    </div>
                 </div>
                 <?php endforeach; ?>
             </div>

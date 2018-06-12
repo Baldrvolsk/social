@@ -57,4 +57,12 @@ class Post extends CI_Controller
             redirect('profile');
         }
     }
+
+    public function add_like($post_id, $user_id = null) {
+
+    }
+
+    public function add_dislike($post_id, $user_id = null) {
+
+    }
 }
