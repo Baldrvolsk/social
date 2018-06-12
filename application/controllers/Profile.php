@@ -19,10 +19,18 @@ class Profile extends CI_Controller
 
     }
 
-    public function index() {
+    public function index($id = 0) {
+        if($id != 0) {
+            $data['user'] = $this->ion_auth->user((int)$id)->row();
+        } else {
+            $data['user'] = $this->user;
+        }
+        $photos = scandir('./uploads/profile/'.$data['user']->id);
+        $data['user']->photo = end($photos);
+
         $formData['userId'] = $this->user->id;
         $data['addPostForm'] = $this->load->view('post/add_post', $formData,true);
-        $postData['posts'] = $this->post_model->get_users_post($this->user->id, 5);
+        $postData['posts'] = $this->post_model->get_users_post($data['user']->id, 5);
         $data['posts'] = $this->load->view('post/view_post', $postData,true);
         $this->load->view('header', $data);
         $this->load->view('profile');
