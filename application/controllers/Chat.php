@@ -11,11 +11,42 @@ class Chat extends CI_Controller {
             redirect('auth/login');
         }
         $this->user = $this->ion_auth->user()->row();
+        $this->load->model('chat_model');
     }
 
-    public function index() {
-        $this->load->view('header');
-        $this->load->view('chat/chat');
-        $this->load->view('footer');
+    public function index($id = 0) {
+        if((int)$id != 0) {
+            if($this->chat_model->check_user_chat($id))
+            {
+                $data['chat'] = $this->chat_model->get_chat((int)$id);
+                $data['chat_id'] = $id;
+                $this->load->view('header',$data);
+                $this->load->view('chat/show_chat');
+                $this->load->view('footer');
+            } else {
+                die('Это не твой чат');
+            }
+        } else {
+            $data['chats'] = $this->chat_model->get_user_chats();
+            $this->load->view('header',$data);
+            $this->load->view('chat/chat');
+            $this->load->view('footer');
+        }
+    }
+
+    public function send() {
+        if($this->chat_model->check_user_chat($this->input->post('chat_id')))
+        {
+            $this->load->library('form_validation');
+            $this->form_validation->set_rules('content', 'Текст', 'trim|required');
+            $this->form_validation->set_rules('chat_id', 'Номер чата', 'required');
+            if ($this->form_validation->run()) {
+                $this->chat_model->add_message();
+            }
+
+        } else {
+            die('хакер чтоли?');
+        }
+        redirect('/chat/index/'.$this->input->post('chat_id'));
     }
 }
