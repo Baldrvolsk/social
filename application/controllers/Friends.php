@@ -31,6 +31,7 @@ class Friends extends CI_Controller
     }
 
     public function add_friend($id, $group_id) {
-
+        $this->friend_model->add_friend($this->user->id, $id, $group_id);
+        redirect('friends', 'refresh');
     }
 }
