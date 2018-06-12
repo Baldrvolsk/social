@@ -13,24 +13,35 @@ class Profile extends CI_Controller
             redirect('auth/login', 'refresh');
         }
         $this->user = $this->ion_auth->user()->row();
-        $photos = scandir('./uploads/profile/'.$this->user->id);
-        
-        $this->user->photo = end($photos);
+        if(!file_exists('./uploads/profile/'.$this->user->id))
+        {
+            $this->user->photo = '/img/blank.jpeg';
+        } else {
+            $photos = scandir('./uploads/profile/'.$this->user->id);
+
+            $this->user->photo = '/uploads/profile/' . $this->user->id .'/'.end($photos);
+
+        }
+
 
     }
 
     public function index($id = 0) {
         if($id != 0) {
-            $data['user'] = $this->ion_auth->user((int)$id)->row();
+            $data['userdata'] = $this->ion_auth->user((int)$id)->row();
         } else {
-            $data['user'] = $this->user;
+            $data['userdata'] = $this->user;
         }
-        $photos = scandir('./uploads/profile/'.$data['user']->id);
-        $data['user']->photo = end($photos);
-
+        if(!file_exists('./uploads/profile/'.$data['userdata']->id))
+        {
+            $data['userdata']->photo = '/img/blank.jpeg';
+        } else {
+            $photos = scandir('./uploads/profile/' . $data['userdata']->id);
+            $data['userdata']->photo = '/uploads/profile/' . $data['userdata']->id.'/'.end($photos);
+        }
         $formData['userId'] = $this->user->id;
         $data['addPostForm'] = $this->load->view('post/add_post', $formData,true);
-        $postData['posts'] = $this->post_model->get_users_post($data['user']->id, 5);
+        $postData['posts'] = $this->post_model->get_users_post($data['userdata']->id, 5);
         $data['posts'] = $this->load->view('post/view_post', $postData,true);
         $this->load->view('header', $data);
         $this->load->view('profile');
