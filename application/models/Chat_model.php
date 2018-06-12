@@ -54,6 +54,7 @@ class Chat_model extends CI_Model
                 $data['chat_id'] = $chat_id;
             }
             $data['user_id'] = $this->user->id;
+            $data['status'] = 0;
             $this->db->insert($this->message_table,$data);
         }
         return;
@@ -89,9 +90,9 @@ class Chat_model extends CI_Model
         $sender = $this->user->id;
         $where = "(from=$user_id AND to = $sender) OR (from=$sender AND to=$user_id)";
         $this->db->where($where);
-        $chat_id = $this->db->get($this->chat_table)->row();
-        if(count($chat_id) > 0) {
-            $this->add_message($chat_id->id);
+        $chat_id = $this->db->get($this->chat_table)->result();
+        if($chat_id) {
+            $this->add_message($chat_id[0]->id);
         } else {
             $chat_id = $this->create_chat($sender,$user_id);
             $this->add_message($chat_id);
