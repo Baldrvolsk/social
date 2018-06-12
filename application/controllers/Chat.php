@@ -35,18 +35,24 @@ class Chat extends CI_Controller {
     }
 
     public function send() {
-        if($this->chat_model->check_user_chat($this->input->post('chat_id')))
+        if($chat_id = $this->input->post('chat_id'))
         {
-            $this->load->library('form_validation');
-            $this->form_validation->set_rules('content', 'Текст', 'trim|required');
-            $this->form_validation->set_rules('chat_id', 'Номер чата', 'required');
-            if ($this->form_validation->run()) {
-                $this->chat_model->add_message();
+            if($this->chat_model->check_user_chat($chat_id))
+            {
+                $this->load->library('form_validation');
+                $this->form_validation->set_rules('content', 'Текст', 'trim|required');
+                $this->form_validation->set_rules('chat_id', 'Номер чата', 'required');
+                if ($this->form_validation->run()) {
+                    $this->chat_model->add_message();
+                }
+            } else {
+                die('хакер чтоли?');
             }
-
         } else {
-            die('хакер чтоли?');
+
+            $this->chat_model->find_chat((int)$this->input->post('user_id'));
         }
         redirect('/chat/index/'.$this->input->post('chat_id'));
     }
+
 }
