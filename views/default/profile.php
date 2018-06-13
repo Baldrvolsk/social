@@ -11,10 +11,11 @@
                 <div class="col-md-12">Тут еще что-то</div>
             </div>
             <div class="col-md-12">
+                <?php if ($showPostForm): ?>
                 <div class="row" style="margin-bottom:50px">
                     <?=$addPostForm?>
                 </div>
-
+                <?php endif; ?>
                 <?=$posts?>
             </div>
         </div>
