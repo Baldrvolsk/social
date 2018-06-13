@@ -13,15 +13,6 @@ class Profile extends CI_Controller
             redirect('auth/login', 'refresh');
         }
         $this->user = $this->ion_auth->user()->row();
-        if(!file_exists('./uploads/profile/'.$this->user->id))
-        {
-            $this->user->photo = '/img/blank.jpeg';
-        } else {
-            $photos = scandir('./uploads/profile/'.$this->user->id);
-
-            $this->user->photo = '/uploads/profile/' . $this->user->id .'/'.end($photos);
-
-        }
 
 
     }
@@ -31,13 +22,6 @@ class Profile extends CI_Controller
             $data['userdata'] = $this->ion_auth->user((int)$id)->row();
         } else {
             $data['userdata'] = $this->user;
-        }
-        if(!file_exists('./uploads/profile/'.$data['userdata']->id))
-        {
-            $data['userdata']->photo = '/img/blank.jpeg';
-        } else {
-            $photos = scandir('./uploads/profile/' . $data['userdata']->id);
-            $data['userdata']->photo = '/uploads/profile/' . $data['userdata']->id.'/'.end($photos);
         }
         $formData['userId'] = $this->user->id;
         $data['addPostForm'] = $this->load->view('post/add_post', $formData,true);
