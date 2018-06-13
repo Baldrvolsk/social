@@ -29,8 +29,10 @@ class Profile extends CI_Controller
     public function index($id = 0) {
         if($id != 0) {
             $data['userdata'] = $this->ion_auth->user((int)$id)->row();
+            $data['showPostForm'] = false;
         } else {
             $data['userdata'] = $this->user;
+            $data['showPostForm'] = true;
         }
         if(!file_exists('./uploads/profile/'.$data['userdata']->id))
         {
@@ -39,8 +41,10 @@ class Profile extends CI_Controller
             $photos = scandir('./uploads/profile/' . $data['userdata']->id);
             $data['userdata']->photo = '/uploads/profile/' . $data['userdata']->id.'/'.end($photos);
         }
-        $formData['userId'] = $this->user->id;
-        $data['addPostForm'] = $this->load->view('post/add_post', $formData,true);
+        if ($data['showPostForm']) {
+            $formData['userId'] = $this->user->id;
+            $data['addPostForm'] = $this->load->view('post/add_post', $formData, true);
+        }
         $postData['posts'] = $this->post_model->get_users_post($data['userdata']->id, 5);
         $data['posts'] = $this->load->view('post/view_post', $postData,true);
         $this->load->view('header', $data);
