@@ -39,4 +39,7 @@ class Friend_model extends CI_Model
 
     }
 
+    public function delete_friend($user_id, $friend_id) {
+        return $this->db->delete('friends', array('user_id' => $user_id, 'friend_id' => $friend_id));
+    }
 }

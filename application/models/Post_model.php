@@ -29,12 +29,15 @@ class Post_model extends CI_Model
             if ($offset === null) $offset = 0;
             $this->db->limit($limit, $offset);
         }
-            $this->db->join('users', 'users.id = post.user_id');
-            $this->db->order_by($this->post_table.'.date_add', 'desc');
-            $this->db->where($this->post_table.'.user_id', $user_id);
-            $query = $this->db->get($this->post_table);
-            return $query->result_array();
-
+        $this->db->join('users', 'users.id = post.user_id');
+        $this->db->order_by($this->post_table.'.date_add', 'desc');
+        $this->db->where($this->post_table.'.user_id', $user_id);
+        $query = $this->db->get($this->post_table);
+        $ret = $query->result_array();
+        foreach ($ret as $row) {
+            $row['delta'] = $row['like'] - $row['dislike'];
+        }
+        return $ret;
     }
 
     public function createPost() {
