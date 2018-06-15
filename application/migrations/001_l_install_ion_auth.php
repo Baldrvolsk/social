@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Migration_Install_ion_auth extends CI_Migration {
+class Migration_install_ion_auth extends CI_Migration {
 	private $tables;
 
 	public function __construct() {

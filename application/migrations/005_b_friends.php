@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Migration_b_friends extends CI_Migration {
+class Migration_friends extends CI_Migration {
 
 	public function up() {
         // Table structure for table 'friends'
