@@ -11,12 +11,12 @@ class Migrate extends CI_Controller
 
     public function index() {
         $this->load->library('migration');
-
-        if ($this->migration->latest() === FALSE) {
+        $v = $this->migration->latest();
+        if ($v === FALSE) {
             show_error($this->migration->error_string());
         } else {
-            echo 'Migrate complete <a href="'.site_url('/').'">goto site &raquo;</a>';
+            echo 'Migrate to version '.$v.' complete <a href="'.site_url('/').'">goto site &raquo;</a>';
         }
     }
-
+    
 }
