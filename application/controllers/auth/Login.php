@@ -8,6 +8,8 @@ class Login extends CI_Controller
     {
         parent::__construct();
         $this->load->library('form_validation');
+        $this->load->library('google');
+
         if ($this->ion_auth->logged_in())
         {
             // redirect them to the login page
@@ -48,8 +50,19 @@ class Login extends CI_Controller
                 'id' => 'password',
                 'type' => 'password',
             );
+            $this->data['loginURL'] = $this->google->loginURL();
 
             $this->load->view('auth/login', $this->data);
+        }
+    }
+
+    public function google_auth()
+    {
+        if(isset($_GET['code'])) {
+            $this->google->getAuthenticate();
+            //get user info from google
+            $gpInfo = $this->google->getUserInfo();
+            print_r($gpInfo);die();
         }
     }
 }
