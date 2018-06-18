@@ -23,10 +23,10 @@ switch ($_SERVER['HTTP_HOST'])
     case "production.com":
         define('ENVIRONMENT','production');
         break;
-    case "179471.simplecloud.ru":
+    case "rusimperia.ru":
         define('ENVIRONMENT','testing');
         break;
-    case "social.loc":
+    case "social.org":
         define('ENVIRONMENT','dev-baldr');
         break;    
     default:
