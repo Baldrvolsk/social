@@ -39,22 +39,24 @@ class Post extends CI_Controller
         $this->load->view('post/add_post', $data, TRUE);
     }
 
-    public function add_post() {
+    public function add_post($id) {
         $this->load->helper('form');
         $this->load->library('form_validation');
 
         $this->form_validation->set_rules('content', 'content', 'required|min_length[3]');
 
         if ($this->form_validation->run() === FALSE) {
-            $formData['userId'] = $this->input->post('userId');
+            $formData['userId'] = $id;
             $data['addPostForm'] = $this->load->view('post/add_post', $formData,true);
             $this->load->view('header', $data);
             $this->load->view('profile');
             $this->load->view('footer');
 
         } else {
-            $this->post_model->createPost();
-            redirect('profile');
+            $this->post_model->createPost((int)$id);
+            $url = 'profile'.(($id === $this->user->id)?'':'/'.$id);
+            log_message('debug', 'redirect add_post to '.$url);
+            redirect($url);
         }
     }
 

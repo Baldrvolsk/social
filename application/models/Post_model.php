@@ -29,7 +29,7 @@ class Post_model extends CI_Model
             if ($offset === null) $offset = 0;
             $this->db->limit($limit, $offset);
         }
-        $this->db->join('users', 'users.id = post.user_id');
+        $this->db->join('users', 'users.id = post.user_create_id', 'left');
         $this->db->order_by($this->post_table.'.date_add', 'desc');
         $this->db->where($this->post_table.'.user_id', $user_id);
         $query = $this->db->get($this->post_table);
@@ -40,16 +40,15 @@ class Post_model extends CI_Model
         return $ret;
     }
 
-    public function createPost() {
+    public function createPost($id) {
         $content = $this->input->post('content', true);
         //$this->load->helper('url');
 
         $link = null;
         $tags = null;
         $data = array(
-            'user_id' => $this->input->post('userId'),
-            'date_add' => mdate('%Y-%m-%d %H:%i:%s', now()),
-            'date_edit' => mdate('%Y-%m-%d %H:%i:%s', now()),
+            'user_id' => $id,
+            'user_create_id' => $this->input->post('userAddId'),
             'content' => $content,
             'link' => $link,
             'tags' => $tags,
