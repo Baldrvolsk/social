@@ -9,19 +9,18 @@
 class Post_model extends CI_Model
 {
     private $post_table = 'post';
-    private $comm_table = 'post_comment';
     public function __construct() {
-
+        $this->load->model('like_model', 'like');
+        $this->like->set_type('post');
     }
 
     public function get_post($id = null) {
         if ($id === null) {
-            $query = $this->db->get($this->post_table);
-            return $query->result_array();
+            return;
         }
 
         $query = $this->db->get_where($this->post_table, array('id' => $id));
-        return $query->row_array();
+        return $query->row();
     }
     public function get_users_post($user_id, $limit = null, $offset = null) {
         $user_id = isset($user_id) ? $user_id : $this->session->userdata('user_id');
@@ -33,10 +32,8 @@ class Post_model extends CI_Model
         $this->db->order_by($this->post_table.'.date_add', 'desc');
         $this->db->where($this->post_table.'.user_id', $user_id);
         $query = $this->db->get($this->post_table);
-        $ret = $query->result_array();
-        foreach ($ret as $row) {
-            $row['delta'] = $row['like'] - $row['dislike'];
-        }
+        $ret = $query->result();
+
         return $ret;
     }
 
@@ -61,6 +58,10 @@ class Post_model extends CI_Model
         );
 
         return $this->db->insert('post', $data);
+    }
+
+    public function like($type, $post_id, $user_id) {
+
     }
 
 }

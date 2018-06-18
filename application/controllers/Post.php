@@ -13,6 +13,7 @@ class Post extends CI_Controller
         parent::__construct();
         $this->load->model('post_model');
         $this->load->model('comment_model');
+        $this->comment_model->set_type('post');
         if (!$this->ion_auth->logged_in()) {
             // redirect them to the login page
             redirect('auth/login', 'refresh');
@@ -55,16 +56,23 @@ class Post extends CI_Controller
         } else {
             $this->post_model->createPost((int)$id);
             $url = 'profile'.(($id === $this->user->id)?'':'/'.$id);
-            log_message('debug', 'redirect add_post to '.$url);
             redirect($url);
         }
     }
 
-    public function add_like($post_id, $user_id = null) {
-
+    public function add_like($user_id = null, $post_id = null) {
+        $ret = null;
+        if ($post_id !== null && $user_id !== null) {
+            $ret = $this->post_model->like('up', $post_id, $user_id);
+        }
+        return $ret;
     }
 
-    public function add_dislike($post_id, $user_id = null) {
-
+    public function add_dislike($user_id = null, $post_id = null) {
+        $ret = null;
+        if ($post_id !== null && $user_id !== null) {
+            $ret = $this->post_model->like('down', $post_id, $user_id);
+        }
+        return $ret;
     }
 }

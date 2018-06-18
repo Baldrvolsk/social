@@ -1618,6 +1618,7 @@ class Ion_auth_model extends CI_Model
 
 		$this->limit(1);
 		$this->order_by($this->tables['users'].'.id', 'desc');
+        $this->db->join('users_meta', 'users_meta.id = users.id', 'left');
 		$this->where($this->tables['users'].'.id', $id);
 
 		$this->users();
