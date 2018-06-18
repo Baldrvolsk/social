@@ -23,6 +23,7 @@
   <p><?php echo form_submit('submit', 'Войти');?></p>
 
 </form>
-
 <p><a href="/auth/register">Регистрация</a></p>
 <p><a href="forgot_password">Забыли пароль?</a></p>
+<h3>Или</h3>
+<a href="<?=$loginURL;?>"><img src="/img/google_login.png" /></a>
