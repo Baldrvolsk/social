@@ -12,7 +12,6 @@ class Register extends CI_Controller
 
     public function index()
     {
-        #print_r($_POST);die();
         $this->form_validation->set_rules('login', 'Логин', 'required|min_length[5]|is_unique[users.username]');
         $this->form_validation->set_rules('first_name', 'Имя', 'required|min_length[3]');
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[users.email]');

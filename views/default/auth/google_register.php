@@ -20,13 +20,13 @@
         <input type="hidden" name="google_photo" value="<?=$google_info['picture']; ?>" />
         <img src="<?=$google_info['picture'];?>" width="300"/>
     </div>
-    <div class="form-group">
+    <div class="form-group" style="display:none;">
         <label for="InputPassword1">Пароль</label>
-        <input type="hidden" name="password" value="<?php echo set_value('password'); ?>" class="form-control" id="InputPassword1" placeholder="Пароль" required>
+        <input type="hidden" name="password" value="123456" class="form-control" id="InputPassword1" placeholder="Пароль" required>
     </div>
-    <div class="form-group">
+    <div class="form-group" style="display:none;">
         <label for="InputPassword1">Подтверждение пароля</label>
-        <input type="hidden" name="password_confirm" value="<?php echo set_value('password_confirm'); ?>" class="form-control" id="InputPassword2" placeholder="Подтверждение пароля" required>
+        <input type="hidden" name="password_confirm" value="123456" class="form-control" id="InputPassword2" placeholder="Подтверждение пароля" required>
     </div>
     <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
 </form>
