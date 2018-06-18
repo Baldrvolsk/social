@@ -12,15 +12,22 @@ class Register extends CI_Controller
 
     public function index()
     {
+        #print_r($_POST);die();
         $this->form_validation->set_rules('login', 'Логин', 'required|min_length[5]|is_unique[users.username]');
         $this->form_validation->set_rules('first_name', 'Имя', 'required|min_length[3]');
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[users.email]');
         $this->form_validation->set_rules('password', 'Пароль', 'required|min_length[4]');
         $this->form_validation->set_rules('password_confirm', 'Подтверждение пароля', 'required|min_length[4]');
-        //Если файл не загружен
-        if (empty($_FILES['photo']['name']))
-        {
-            $this->form_validation->set_rules('photo', 'Фото', 'required');
+        //Если есть поле с фоткой гугла
+        if($this->input->post('google_photo')) {
+
+        } else {
+            //Если файл не загружен
+           # if (empty($_FILES['photo']['name']))
+           # {
+                $this->form_validation->set_rules('photo', 'Фото', 'required');
+           # }
+
         }
         //Если валидация не прошла
         if ($this->form_validation->run() == FALSE) {
@@ -40,26 +47,38 @@ class Register extends CI_Controller
             if (!is_dir('./uploads/profile/'.$user_id)) {
                 mkdir('./uploads/profile/' . $user_id, 0755);
             }
+            //Загрузка фото
+            if (!empty($_FILES['photo']['name'])) {
+                $config['upload_path'] = './uploads/profile/'.$user_id;
+                $config['allowed_types'] = 'gif|jpg|png';
+                $config['file_name'] = 'active';
+                $config['max_size'] = 100;
+                $config['max_width'] = 1024;
+                $config['max_height'] = 768;
 
-            $config['upload_path'] = './uploads/profile/'.$user_id;
-            $config['allowed_types'] = 'gif|jpg|png';
-            $config['file_name'] = 'active';
-            $config['max_size'] = 100;
-            $config['max_width'] = 1024;
-            $config['max_height'] = 768;
-
-            $this->load->library('upload', $config);
-            if ( $this->upload->do_upload('photo')) {
-                $path = 'uploads/profile/'.$user_id.'/'.$this->upload->data('file_name');
+                $this->load->library('upload', $config);
+                if ( $this->upload->do_upload('photo')) {
+                    $path = 'uploads/profile/'.$user_id.'/'.$this->upload->data('file_name');
+                    $this->db->set('company',$path);
+                    $this->db->where('id',$user_id);
+                    $this->db->update('users');
+                } else {
+                    #die('Ошибка загрузки файла');
+                    $error = array('error' => $this->upload->display_errors());
+                    print_r($error);
+                    die();
+                }
+            } else {
+                //Скачивание с гугла
+                $this->load->model('photo_model');
+                $filename = $this->photo_model->download_photo($this->input->post('google_photo'),$user_id);
+                $path = 'uploads/profile/'.$user_id.'/'.$filename;
                 $this->db->set('company',$path);
                 $this->db->where('id',$user_id);
                 $this->db->update('users');
-            } else {
-                die('Ошибка загрузки файла');
-                $error = array('error' => $this->upload->display_errors());
-                print_r($error);
-                die();
+                #print_r($this->input->post('google_photo'));die();
             }
+
             redirect('profile');
 
         }

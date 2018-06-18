@@ -59,10 +59,22 @@ class Login extends CI_Controller
     public function google_auth()
     {
         if(isset($_GET['code'])) {
-            $this->google->getAuthenticate();
+            try{
+                $this->google->getAuthenticate();
+            } catch (Exception $e) {
+                redirect('auth/login');
+            }
             //get user info from google
             $gpInfo = $this->google->getUserInfo();
-            print_r($gpInfo);die();
+
+            if($this->ion_auth->email_check($gpInfo['email'])) {
+                die('Уже зарегистрирован');
+            } else {
+                $data['google_info'] = $gpInfo;
+                $this->load->view('header',$data);
+                $this->load->view('auth/google_register');
+                $this->load->view('footer');
+            }
         }
     }
 }
