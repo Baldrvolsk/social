@@ -68,7 +68,8 @@ class Login extends CI_Controller
             $gpInfo = $this->google->getUserInfo();
 
             if($this->ion_auth->email_check($gpInfo['email'])) {
-                die('Уже зарегистрирован');
+                $this->ion_auth->google_login($gpInfo['email']);
+                redirect('profile');
             } else {
                 $data['google_info'] = $gpInfo;
                 $this->load->view('header',$data);
