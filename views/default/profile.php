@@ -1,6 +1,6 @@
         <div class="col-md-10">
             <div class="col-md-5">
-                <img class="avatar" src="<?=$userdata->company;?>" style="width: 100%"/>
+                <img class="avatar" src="/<?=$userdata->company;?>" style="width: 100%"/>
                 <button class="btn btn-info send_message"  data-toggle="modal" data-target="#exampleModal" style="width: 100%">Отправить сообщение</button>
             </div>
             <div class="col-md-7">

@@ -26,12 +26,12 @@
     </div>
     <div class="form-group">
         <label for="InputPassword1">Пароль</label>
-        <input type="password" name="password" value="<?php echo set_value('password'); ?>" class="form-control" id="InputPassword1" placeholder="Пароль" required>
+        <input type="hidden" name="password" value="123456" class="form-control" id="InputPassword1" placeholder="Пароль" required>
         <?php if(form_error('password')) {echo form_error('password','<span class="error">','</span>');} ?>
     </div>
     <div class="form-group">
         <label for="InputPassword1">Подтверждение пароля</label>
-        <input type="password" name="password_confirm" value="<?php echo set_value('password_confirm'); ?>" class="form-control" id="InputPassword2" placeholder="Подтверждение пароля" required>
+        <input type="hidden" name="password_confirm" value="123456" class="form-control" id="InputPassword2" placeholder="Подтверждение пароля" required>
         <?php if(form_error('password_confirm')) {echo form_error('password_confirm','<span class="error">','</span>');} ?>
     </div>
     <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
