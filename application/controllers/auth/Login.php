@@ -72,6 +72,8 @@ class Login extends CI_Controller
                 redirect('profile');
             } else {
                 $data['google_info'] = $gpInfo;
+                $tmp = explode('@',$gpInfo['email']);
+                $data['google_info']['login'] = current($tmp);
                 $this->load->view('header',$data);
                 $this->load->view('auth/google_register');
                 $this->load->view('footer');

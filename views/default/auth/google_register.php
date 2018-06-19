@@ -5,7 +5,7 @@
     </div>
     <div class="form-group">
         <label for="InputLogin">Логин(обязательно)</label>
-        <input type="text" name="login" value="<?php echo set_value('login'); ?>" class="form-control" id="InputLogin" aria-describedby="loginHelp" placeholder="Ваш логин" required>
+        <input type="text" name="login" value="<?=$google_info['login'];?>"  readonly class="form-control" id="InputLogin" aria-describedby="loginHelp" placeholder="Ваш логин" required>
     </div>
     <div class="form-group">
         <label for="InputName">Ваше имя(обязательно)</label>
