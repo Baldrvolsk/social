@@ -10,14 +10,34 @@ foreach ($posts as $post):
     if ($post->delta <= -25) continue;?>
     <hr>
     <div class="row" style="margin-top: 15px;margin-bottom: 15px">
-        <div class="col-sm-1">
+        <div class="col-sm-2">
             <img src="/uploads/profile/<?= $this->user->id; ?>/active.jpg"
                  width="50" class="img-circle">
+            <p><?= $post->first_name . ' ' . $post->last_name ?></p>
         </div>
-        <div class="col-sm-11">
-            <div class="postHeader">
-                <span class="lead"><?= $post->first_name . ' ' . $post->last_name ?></span>
-                <span><?= $post->date_add ?></span>
+        <div class="col-sm-10">
+            <div class="postHeader clearfix">
+                <ul class="list-inline pull-right">
+                    <li><?= $post->date_add ?></li>
+                    <li>
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="post<?=$post->id?>" data-toggle="dropdown">
+                                Меню
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="post<?=$post->id?>">
+                                <li role="presentation">
+                                    <a role="menuitem" tabindex="-1" href="/post/edit/<?=$post->id?>">Редактировать</a>
+                                </li>
+                                <li role="presentation" class="divider"></li>
+                                <li role="presentation">
+                                    <a role="menuitem" tabindex="-1" href="/post/delete/<?=$post->id?>">Удалить</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+
             </div>
             <div class="postContent" style="margin:15px 0">
                 <?= $post->content ?>
@@ -36,8 +56,8 @@ foreach ($posts as $post):
                     if ($post->delta !== 0) {
                         echo $post->delta;
                     }?></span></span>
+                <span class="glyphicon glyphicon-comment"></span>
                 <span class="glyphicon glyphicon-share-alt"></span>
-                <span class="glyphicon glyphicon-eye-open"></span>
             </div>
         </div>
     </div>
