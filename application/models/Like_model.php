@@ -22,13 +22,14 @@ class Like_model extends CI_Model
         if ($type_id === null || $user_id === null) {
             return null;
         }
-        $this->db->select('id');
         $where = array(
             $this->type.'_id' => $type_id,
             'user_id' => $user_id,
         );
-        $query = $this->db->get_where($this->like_table, $where);
-        return $query->row();
+        $this->db->from($this->like_table)
+            ->where($where)
+            ->limit(1);
+        return $this->db->get()->row();
     }
 
     public function set_like($type_id = null, $user_id = null, $type = null) {
@@ -36,15 +37,16 @@ class Like_model extends CI_Model
             return;
         }
         $id = $this->get_like($type_id, $user_id);
-
-        if ($id->id) {
+        if (!empty($id)) {
             $this->db->set('like', $type);
+            $this->db->set('date_add', mdate('%Y-%m-%d %H:%i:%s', now()));
             $this->db->where('id', $id->id);
             $this->db->update($this->like_table);
         } else {
             $data = array(
                 $this->type.'_id' => $type_id,
                 'user_id' => $user_id,
+                'date_add' => mdate('%Y-%m-%d %H:%i:%s', now()),
                 'like' => $type,
             );
             return $this->db->insert($this->like_table, $data);
