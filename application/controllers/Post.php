@@ -14,6 +14,7 @@ class Post extends CI_Controller
         $this->load->model('post_model');
         $this->load->model('comment_model');
         $this->comment_model->set_type('post');
+
         if (!$this->ion_auth->logged_in()) {
             // redirect them to the login page
             redirect('auth/login', 'refresh');
@@ -54,7 +55,7 @@ class Post extends CI_Controller
             $this->load->view('footer');
 
         } else {
-            $this->post_model->createPost((int)$id);
+            $this->post_model->create_post((int)$id);
             $url = 'profile'.(($id === $this->user->id)?'':'/'.$id);
             redirect($url);
         }
@@ -63,16 +64,16 @@ class Post extends CI_Controller
     public function add_like($user_id = null, $post_id = null) {
         $ret = null;
         if ($post_id !== null && $user_id !== null) {
-            $ret = $this->post_model->like('up', $post_id, $user_id);
+            $ret = $this->post_model->add_update_like('up', $post_id, $user_id);
         }
-        return $ret;
+        echo json_encode($ret);
     }
 
     public function add_dislike($user_id = null, $post_id = null) {
         $ret = null;
         if ($post_id !== null && $user_id !== null) {
-            $ret = $this->post_model->like('down', $post_id, $user_id);
+            $ret = $this->post_model->add_update_like('down', $post_id, $user_id);
         }
-        return $ret;
+        echo json_encode($ret);
     }
 }
