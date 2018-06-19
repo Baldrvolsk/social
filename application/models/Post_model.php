@@ -9,47 +9,49 @@
 class Post_model extends CI_Model
 {
     private $post_table = 'post';
-    private $comm_table = 'post_comment';
     public function __construct() {
-
+        $this->load->model('like_model');
+        $this->like_model->set_type('post');
     }
 
     public function get_post($id = null) {
         if ($id === null) {
-            $query = $this->db->get($this->post_table);
-            return $query->result_array();
+            return;
         }
 
-        $query = $this->db->get_where($this->post_table, array('id' => $id));
-        return $query->row_array();
+        $this->db->select('post.*, post_like.like as u_like, (post.like - post.dislike) as delta')
+                 ->from($this->post_table)
+                 ->join('users','users.id = post.user_create_id','LEFT')
+                 ->join('post_like','post_like.post_id = post.id AND post_like.user_id = '.$this->user->id,'LEFT')
+                 ->where($this->post_table.'.id', (int)$id)
+                 ->limit(1);
+        return $this->db->get()->row();
     }
     public function get_users_post($user_id, $limit = null, $offset = null) {
         $user_id = isset($user_id) ? $user_id : $this->session->userdata('user_id');
+
         if ($limit !== null && $limit !== 0) {
             if ($offset === null) $offset = 0;
             $this->db->limit($limit, $offset);
         }
-        $this->db->join('users', 'users.id = post.user_id');
-        $this->db->order_by($this->post_table.'.date_add', 'desc');
-        $this->db->where($this->post_table.'.user_id', $user_id);
-        $query = $this->db->get($this->post_table);
-        $ret = $query->result_array();
-        foreach ($ret as $row) {
-            $row['delta'] = $row['like'] - $row['dislike'];
-        }
-        return $ret;
+        $this->db->select('post.*, users.first_name, users.last_name, post_like.like as u_like, (post.like - post.dislike) as delta')
+                 ->from($this->post_table)
+                 ->join('users','users.id = post.user_create_id','LEFT')
+                 ->join('post_like','post_like.post_id = post.id AND post_like.user_id = '.$this->user->id,'LEFT')
+                 ->order_by($this->post_table.'.date_add', 'desc')
+                 ->where($this->post_table.'.user_id', (int)$user_id);
+        return $this->db->get()->result();
     }
 
-    public function createPost() {
+    public function create_post($id) {
         $content = $this->input->post('content', true);
         //$this->load->helper('url');
 
         $link = null;
         $tags = null;
         $data = array(
-            'user_id' => $this->input->post('userId'),
-            'date_add' => mdate('%Y-%m-%d %H:%i:%s', now()),
-            'date_edit' => mdate('%Y-%m-%d %H:%i:%s', now()),
+            'user_id' => $id,
+            'user_create_id' => $this->input->post('userAddId'),
             'content' => $content,
             'link' => $link,
             'tags' => $tags,
@@ -64,4 +66,55 @@ class Post_model extends CI_Model
         return $this->db->insert('post', $data);
     }
 
+    public function update_post($id, $data) {
+        $this->db->update($this->post_table, $data, array('id' => $id));
+    }
+
+    public function add_update_like($type, $post_id, $user_id) {
+        switch ($type) {
+            case 'up':
+                $n_type = 1;
+                break;
+            case 'down':
+                $n_type = 0;
+                break;
+            default:
+                $n_type = 0;
+        }
+        $post = $this->get_post($post_id);
+        $p_user = $this->ion_auth->get_meta($post->user_create_id);
+
+        $like = $this->like_model->get_like($post_id, $user_id);
+        if (empty($like)) {
+            $this->like_model->set_like($post_id, $user_id, $n_type);
+            if ($n_type === 1) {
+                $p_data = array('like' => $post->like + 1);
+                $u_data = ($p_user)?
+                    array('all_like' => $p_user->all_like + 1):
+                    array('all_like' => 1);
+            } else {
+                $p_data = array('dislike' => $post->dislike + 1);
+                $u_data = ($p_user)?
+                    array('all_dislike' => $p_user->all_dislike + 1):
+                    array('all_dislike' => 1);
+            }
+            $u_data['count_day_like'] = ($p_user)?$p_user->count_day_like+1:1;
+            $this->update_post($post_id, $p_data);
+            $this->ion_auth->set_meta($user_id, $u_data);
+
+        } else {
+            $this->like_model->set_like($post_id, $user_id, $n_type);
+            if ($n_type === 1) {
+                $p_data = array('like' => $post->like + 1, 'dislike' => ($post->dislike - 1 < 0)?0:$post->dislike - 1, );
+                $u_data = array('all_like' => $p_user->all_like + 1, 'all_dislike' => $p_user->all_dislike - 1);
+            } else {
+                $p_data = array('like' => ($post->like - 1 < 0)?0:$post->like - 1, 'dislike' => $post->dislike + 1, );
+                $u_data = array('all_like' => $p_user->all_like - 1, 'all_dislike' => $p_user->all_dislike + 1);
+            }
+            $this->update_post($post_id, $p_data);
+            $this->ion_auth->set_meta($user_id, $u_data);
+        }
+        return $this->get_post($post_id);
+
+    }
 }

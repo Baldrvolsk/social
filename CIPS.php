@@ -74,6 +74,8 @@
  * @property Post_model $post_model
  * @property Friends $friends
  * @property Friend_model $friend_model
+ * @property Comment_model $comment_model
+ * @property Like_model $like_model
  *
  */
 class CIPS
