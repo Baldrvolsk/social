@@ -70,6 +70,7 @@
             <ul class="nav nav-pills nav-stacked">
                 <li role="presentation"><a href="#">Contacts +2</a></li>
                 <li role="presentation"><a href="/chat">Messages +15</a></li>
+                <li role="presentation"><a href="/photos">Photos</a></li>
                 <li role="presentation"><a href="#">News +257</a></li>
                 <li role="presentation"><a href="#">My groups +3</a></li>
                 <li role="presentation"><a href="#">D +16</a></li>
