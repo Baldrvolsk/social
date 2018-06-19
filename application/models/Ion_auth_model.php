@@ -1891,6 +1891,38 @@ class Ion_auth_model extends CI_Model
 		return TRUE;
 	}
 
+    /**
+     * set meta
+     *
+     * @param int $id
+     * @param array      $data
+     *
+     * @return bool
+     */
+    public function set_meta($id, array $data) {
+        $u = $this->db->get_where('users_meta', array('id' => $id), 1)->row();
+        if ($u) {
+            $this->db->update('users_meta', $data, array('id' => $id));
+        } else {
+            $data['id'] = $id;
+            $this->db->insert('users_meta', $data);
+        }
+    }
+
+    /**
+     * get meta
+     *
+     * @param int $id
+     * @param array      $data
+     *
+     * @return object
+     */
+    public function get_meta($id, $data = array()) {
+        if ($data) $this->db->select($data);
+        $query = $this->db->get_where('users_meta', array('id' => $id));
+        return $query->row();
+    }
+
 	/**
 	 * delete_user
 	 *
