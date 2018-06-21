@@ -7,10 +7,12 @@
             </div>
             <div class="col-md-7">
                 <div class="col-md-6"><i class="glyphicon glyphicon-user"></i>V.I.P.</div>
-                <?php if($userdata->id == $this->user->id) : ?>
-                    <div class="col-md-6"><a href="/profile/edit">Редактировать профиль</a>
-                <?php endif;?>
-                <br />Last vizit: <?=gmdate('H:i d.m.Y',$userdata->last_login); ?></div>
+                <div class="col-md-6">
+                    <?php if($userdata->id == $this->user->id) : ?>
+                    <a href="/profile/edit">Редактировать профиль</a><br />
+                    <?php endif;?>
+                    Last vizit: <?=gmdate('H:i d.m.Y',$userdata->last_login); ?>
+                </div>
                 <div class="col-md-12"><?=$userdata->first_name.' '.$userdata->last_name ;?></div>
                 <div class="col-md-12">Тут статус</div>
                 <div class="col-md-12">Тут еще что-то</div>
