@@ -2,8 +2,10 @@
     <div id="albums">
         <h3>Albums</h3>
         <?php foreach($albums as $a) : ?>
-            <div class="col-md-4">Тут обложка</div>
-            <div class="col-md-8"><a href="/photos/album/<?=$a->id; ?>"><?=$a->name;?></a><br /><?=$a->description; ?></div>
+            <div class="col-md-12">
+                <div class="col-md-4"><img src="<?=$a->last_photo;?>" style="width:100%;"/></div>
+                <div class="col-md-8"><a href="/photos/album/<?=$a->id; ?>"><?=$a->name;?></a><br /><?=$a->description; ?></div>
+            </div>
         <?php endforeach; ?>
         <button class="btn btn-info" data-toggle="modal" data-target="#create_album">Create album</button>
     </div>
@@ -11,7 +13,7 @@
         <h3>Photos</h3>
         <div class="row">
         <?php foreach($photos as $p) : ?>
-            <div class="col-md-3"><img src="<?=$p->file;?>" style="width:100%"/></div>
+            <div class="col-md-3"><img src="<?=$p->file;?>" style="width:100%"/><span><?=$p->description;?></span></div>
         <?php endforeach; ?>
         </div>
     </div>

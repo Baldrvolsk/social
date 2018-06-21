@@ -3,7 +3,7 @@
         <h3>Photos</h3>
         <div class="row">
             <?php foreach($photos as $p) : ?>
-                <div class="col-md-3"><img src="<?=$p->file;?>" style="width:100%"/></div>
+                <div class="col-md-3"><img src="<?=$p->file;?>" style="width:100%"/><span><?=$p->description;?></span></div>
             <?php endforeach; ?>
         </div>
     </div>

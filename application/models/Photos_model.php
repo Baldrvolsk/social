@@ -24,8 +24,11 @@ class Photos_model extends CI_Model
 
     public function get_albums()
     {
+        $subselect = '(select file FROM photos WHERE album_id = albums.id ORDER BY id DESC LIMIT 0,1 ) as last_photo';
+        $this->db->select("*,$subselect");
+        $this->db->from($this->album_table);
         $this->db->where('user_id',$this->user->id);
-        return $this->db->get($this->album_table)->result();
+        return $this->db->get()->result();
     }
 
     public function get_album($album_id = 0)
