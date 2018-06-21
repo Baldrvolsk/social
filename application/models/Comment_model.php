@@ -20,33 +20,29 @@ class Comment_model extends CI_Model
 
     public function get_comment($id = null) {
         if ($id === null) {
-            return;
+            return null;
         }
-
-        $query = $this->db->get_where($this->comm_table, array('id' => $id));
-        return $query->row();
+        return $this->db->get_where($this->comm_table, array('id' => (int)$id))->row();
     }
 
     public function get_comments($id = null, $limit = null, $offset = null) {
         if ($id === null) {
-            return;
+            return null;
         }
         if ($limit !== null && $limit !== 0) {
             if ($offset === null) $offset = 0;
             $this->db->limit($limit, $offset);
         }
-        $this->db->join('users', 'users.id = '.$this->comm_table.'.user_id', 'left');
-        $this->db->order_by($this->comm_table.'.date_add', 'desc');
-        $this->db->where($this->comm_table.'.'.$this->type.'_id', $id);
-        $query = $this->db->get($this->comm_table);
-        $ret = $query->result();
-
-        return $ret;
+        $this->db->select($this->comm_table.'.*, concat(users.first_name," ",users.last_name) as full_name_user, users.company as photo')
+                 ->from($this->comm_table)
+                 ->join('users', 'users.id = '.$this->comm_table.'.user_id', 'left')
+                 ->order_by($this->comm_table.'.date_add', 'desc')
+                 ->where($this->comm_table.'.'.$this->type.'_id', $id);
+        return $this->db->get()->result();
     }
 
-    public function createComments($id) {
+    public function create_comment($id) {
         $content = $this->input->post('content', true);
-        //$this->load->helper('url');
 
         $this->db->set('comments', 'comments+1', FALSE);
         $this->db->where('id', $id);
@@ -58,9 +54,7 @@ class Comment_model extends CI_Model
             $this->type.'_id' => $id,
             'user_id' => $this->input->post('userAddId'),
             'content' => $content,
-            'link' => $link,
             'tags' => $tags,
-            'views' => 0,
             'like' => 0,
             'dislike' => 0,
         );

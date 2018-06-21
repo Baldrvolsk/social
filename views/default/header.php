@@ -36,7 +36,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="/profile">Main</a></li>
-                <li class=""><a href="/friends">Friends</a></li>
+                <li class=""><a href="/people">People</a></li>
                 <li class=""><a href="/groups">Groups</a></li>
 
             </ul>
@@ -68,7 +68,7 @@
     <div class="row">
         <div class="col-md-2">
             <ul class="nav nav-pills nav-stacked">
-                <li role="presentation"><a href="#">Contacts +2</a></li>
+                <li role="presentation"><a href="/friends">Contacts +2</a></li>
                 <li role="presentation"><a href="/chat">Messages +15</a></li>
                 <li role="presentation"><a href="#">News +257</a></li>
                 <li role="presentation"><a href="#">My groups +3</a></li>

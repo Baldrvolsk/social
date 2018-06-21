@@ -11,15 +11,16 @@ foreach ($posts as $post):
     <hr>
     <div class="row" style="margin-top: 15px;margin-bottom: 15px">
         <div class="col-sm-2">
-            <img src="/uploads/profile/<?= $this->user->id; ?>/active.jpg"
-                 width="50" class="img-circle">
-            <p><?= $post->first_name . ' ' . $post->last_name ?></p>
+            <img src="<?=$post->photo?>"
+                 width="50" class="center-block img-circle">
+            <p class="text-center"><?= $post->full_name_user ?></p>
         </div>
         <div class="col-sm-10">
             <div class="postHeader clearfix">
                 <ul class="list-inline pull-right">
                     <li><?= $post->date_add ?></li>
                     <li>
+                        <?php if ($this->user->id === $post->user_id) : ?>
                         <div class="dropdown">
                             <button class="btn dropdown-toggle" type="button" id="post<?=$post->id?>" data-toggle="dropdown">
                                 Меню
@@ -35,6 +36,7 @@ foreach ($posts as $post):
                                 </li>
                             </ul>
                         </div>
+                        <?php endif; ?>
                     </li>
                 </ul>
 
@@ -56,11 +58,12 @@ foreach ($posts as $post):
                     if ($post->delta !== 0) {
                         echo $post->delta;
                     }?></span></span>
-                <span class="glyphicon glyphicon-comment"></span>
+                <span class="glyphicon glyphicon-comment" onclick="open_modal(<?=$post->id?>)"></span>
                 <span class="glyphicon glyphicon-share-alt"></span>
             </div>
         </div>
     </div>
+
 <?php endforeach; ?>
 
 <script>
@@ -88,4 +91,33 @@ foreach ($posts as $post):
             }
         });
     }
+
+    function open_modal(id) {
+        $.ajax({
+            type: "GET",
+            url: '/post/comment/'+id,
+            success: function(data){
+                $('#postModal .modal-content').html(data);
+                $('#postModal').modal('show');
+            }
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        $('#postModal').on('hidden.bs.modal', function (e) {
+            $('#postModal .modal-content').html('');
+        });
+        <?php
+        $show_modal = $this->session->flashdata('show_post');
+        if (!empty($show_modal)) { ?>
+        $.ajax({
+            type: "GET",
+            url: '/post/comment/<?=$show_modal?>',
+            success: function(data){
+                $('#postModal .modal-content').html(data);
+                $('#postModal').modal('show');
+            }
+        });
+        <?php } ?>
+    }, false);
 </script>

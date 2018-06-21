@@ -19,7 +19,7 @@ class Post_model extends CI_Model
             return;
         }
 
-        $this->db->select('post.*, post_like.like as u_like, (post.like - post.dislike) as delta')
+        $this->db->select('post.*, concat(users.first_name," ",users.last_name) as full_name_user, users.company as photo, post_like.like as u_like, (post.like - post.dislike) as delta')
                  ->from($this->post_table)
                  ->join('users','users.id = post.user_create_id','LEFT')
                  ->join('post_like','post_like.post_id = post.id AND post_like.user_id = '.$this->user->id,'LEFT')
@@ -34,7 +34,7 @@ class Post_model extends CI_Model
             if ($offset === null) $offset = 0;
             $this->db->limit($limit, $offset);
         }
-        $this->db->select('post.*, users.first_name, users.last_name, post_like.like as u_like, (post.like - post.dislike) as delta')
+        $this->db->select('post.*, concat(users.first_name," ",users.last_name) as full_name_user, users.company as photo, post_like.like as u_like, (post.like - post.dislike) as delta')
                  ->from($this->post_table)
                  ->join('users','users.id = post.user_create_id','LEFT')
                  ->join('post_like','post_like.post_id = post.id AND post_like.user_id = '.$this->user->id,'LEFT')
