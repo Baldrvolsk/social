@@ -25,7 +25,7 @@ class Profile extends CI_Controller
             $data['userdata'] = $this->user;
         }
         $formData['userId'] = $data['userdata']->id;
-        $data['addPostForm'] = $this->load->view('post/add_post', $formData,true);
+        $data['addPostForm'] = $this->load->view('post/add', $formData,true);
         if(!file_exists('./uploads/profile/'.$data['userdata']->id))
         {
             $data['userdata']->photo = '/img/blank.jpeg';
@@ -35,7 +35,7 @@ class Profile extends CI_Controller
         }
 
         $postData['posts'] = $this->post_model->get_users_post($data['userdata']->id, 5);
-        $data['posts'] = $this->load->view('post/view_post', $postData,true);
+        $data['posts'] = $this->load->view('post/index', $postData,true);
         $this->load->view('header', $data);
         $this->load->view('profile');
         $this->load->view('footer');

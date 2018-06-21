@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Baldr
- * Date: 08.06.2018
- * Time: 14:04
- */
+
 
 class Post extends CI_Controller
 {
@@ -20,25 +15,22 @@ class Post extends CI_Controller
             redirect('auth/login', 'refresh');
         }
         $this->user = $this->ion_auth->user()->row();
-        $photos = scandir('./uploads/profile/'.$this->user->id);
-
-        $this->user->photo = end($photos);
     }
 
     public function index($userId, $limit) {
         $data['posts'] = $this->post_model->get_users_post($userId, $limit);
-        echo $this->load->view('post/view_post', $data, TRUE);
+        echo $this->load->view('post/index', $data, TRUE);
     }
 
     public function view($id = NULL) {
         if ($id === null) return array();
-        $data['post'] = $this->post_model->get_post($id);
+        return $this->post_model->get_post($id);
     }
 
     public function add_post_form() {
         $this->load->helper('form');
         $data['user_id'] = $this->user->id;
-        $this->load->view('post/add_post', $data, TRUE);
+        $this->load->view('post/add', $data, TRUE);
     }
 
     public function add_post($id) {
@@ -75,5 +67,45 @@ class Post extends CI_Controller
             $ret = $this->post_model->add_update_like('down', $post_id, $user_id);
         }
         echo json_encode($ret);
+    }
+
+    public function comment($post_id){
+        $data['post'] = $this->view($post_id);
+        $data['comment'] = $this->get_comments($post_id);
+        $data['add_comment_form'] = $this->add_comment_form($post_id);
+        $ret = $this->load->view('post/view', $data, TRUE);
+        echo $ret;
+    }
+
+    public function get_comments($post_id, $limit = null, $offset = null) {
+        $limit = (is_int($limit))?$limit:3;
+        $offset = (is_int($offset))?$offset:0;
+        $data['comments'] = $this->comment_model->get_comments($post_id, $limit, $offset);
+        return $this->load->view('post/view_comment', $data, TRUE);
+    }
+
+    public function add_comment_form($post_id) {
+        $this->load->helper('form');
+        $data['postId'] = $post_id;
+        return $this->load->view('post/add_comment', $data, TRUE);
+    }
+
+    public function add_comment($post_id) {
+        $this->session->set_flashdata('show_post', (int)$post_id, 15);
+        $this->load->helper('form');
+        $this->load->library('form_validation');
+
+        $this->form_validation->set_rules('content', 'content', 'required|min_length[3]');
+
+        if ($this->form_validation->run() === FALSE) {
+            $form_error = $this->form_validation->error_string();
+            $this->session->set_tempdata('form_error', $form_error, 15);
+            redirect($_SERVER['HTTP_REFERER']);
+
+        } else {
+            $this->session->unset_tempdata('form_error');
+            $this->comment_model->create_comment((int)$post_id);
+            redirect($_SERVER['HTTP_REFERER']);
+        }
     }
 }

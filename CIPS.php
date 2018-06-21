@@ -72,10 +72,11 @@
  * @property Ion_auth|Ion_auth_model $ion_auth The ION Auth spark
  * @property Post $post
  * @property Post_model $post_model
- * @property Friends $friends
- * @property Friend_model $friend_model
  * @property Comment_model $comment_model
  * @property Like_model $like_model
+ * @property People $people
+ * @property Friends $friends
+ * @property Friend_model $friend_model
  *
  */
 class CIPS
