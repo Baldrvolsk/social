@@ -31,7 +31,7 @@ class Chat_model extends CI_Model
      */
     public function get_chat($id = 0)
     {
-        $this->db->select('chat_message.*,users.first_name,users.last_name');
+        $this->db->select('chat_message.*,users.first_name,users.last_name,users.company');
         $this->db->from($this->message_table);
         $this->db->join('users','users.id=chat_message.user_id','LEFT');
         $this->db->where('chat_message.chat_id',(int)$id);

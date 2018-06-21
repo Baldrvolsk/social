@@ -3,11 +3,28 @@
 
     <?php if(count($chat) > 0) : ?>
             <?php foreach($chat as $c): ?>
-        <div <?php if($c->user_id == $this->user->id) : ?> style="text-align:right;" <?php endif;?>>
-            От: <a href="/profile/<?=$c->user_id; ?>"><?=$c->first_name.' '.$c->last_name; ?></a> <?=$c->date_add; ?><br />
-        Текст: <?=$c->content; ?>
-        </div>
-            <br />
+                <?php
+                $tmp = explode(' ',$c->date_add);
+                $date = explode('-',$tmp[0]);
+                $time= explode(':',$tmp[1]);
+                ?>
+                <?php if($c->user_id == $this->user->id) : ?>
+                <div class="chat_message right">
+                   Я <?=$time[0].':'.$time[1] ?><br />
+                    <?=$c->content; ?>                    <img src="<?=$c->company;?>" width="50"/>
+                    <br />
+                    <?=$date[2].'-'.$date[1].'-'.$date[0]; ?>
+
+                </div>
+
+        <?php else : ?>
+                <div class="chat_message">
+                    <a href="/profile/<?=$c->user_id; ?>"><?=$c->first_name.' '.$c->last_name; ?></a> <?=$time[0].':'.$time[1] ?><br />
+                    <img src="<?=$c->company;?>" width="50"/>
+                    <?=$c->content; ?><br />
+                    <?=$date[2].'-'.$date[1].'-'.$date[0]; ?>
+                </div>
+        <?php endif; ?>
             <?php endforeach; ?>
     <?php else : ?>
         <h1>У Вас нет начатых чатов</h1>
@@ -25,5 +42,21 @@
 <style>
     .messages_container {
         min-height: 400px;
+        max-height: 400px;
+        overflow-x: scroll;
+    }
+    .chat_message {
+        border: 2px solid #dedede;
+        background-color: #f1f1f1;
+        border-radius: 5px;
+        padding: 10px;
+        margin: 10px 0;
+    }
+    .chat_message .chat_image {
+
+        margin-right:10px;
+    }
+    .right {
+        text-align:right;
     }
 </style>
