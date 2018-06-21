@@ -82,4 +82,16 @@ class Photos_model extends CI_Model
             return false;
         }
     }
+
+    public function download_photo($url = '', $user_id = 0)
+    {
+        if((int)$user_id != 0) {
+            $tmp = explode('.',$url);
+            $ext = end($tmp);
+            $photo = file_get_contents($url);
+            $filename = uniqid().'.'.$ext;
+            file_put_contents("./uploads/profile/$user_id/$filename",$photo);
+            return $filename;
+        }
+    }
 }

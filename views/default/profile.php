@@ -1,11 +1,16 @@
         <div class="col-md-10">
             <div class="col-md-5">
-                <img class="avatar" src="/<?=$userdata->company;?>" style="width: 100%"/>
-                <button class="btn btn-info send_message"  data-toggle="modal" data-target="#exampleModal" style="width: 100%">Отправить сообщение</button>
+                <img class="avatar" src="<?=$userdata->company;?>" style="width: 100%"/>
+                <?php if($userdata->id != $this->user->id) : ?>
+                    <button class="btn btn-info send_message"  data-toggle="modal" data-target="#exampleModal" style="width: 100%">Отправить сообщение</button>
+                <?php endif;?>
             </div>
             <div class="col-md-7">
                 <div class="col-md-6"><i class="glyphicon glyphicon-user"></i>V.I.P.</div>
-                <div class="col-md-6"><a href="/profile/edit">Редактировать профиль</a> <br />Last vizit: <?=gmdate('H:i d.m.Y',$userdata->last_login); ?></div>
+                <?php if($userdata->id == $this->user->id) : ?>
+                    <div class="col-md-6"><a href="/profile/edit">Редактировать профиль</a>
+                <?php endif;?>
+                <br />Last vizit: <?=gmdate('H:i d.m.Y',$userdata->last_login); ?></div>
                 <div class="col-md-12"><?=$userdata->first_name.' '.$userdata->last_name ;?></div>
                 <div class="col-md-12">Тут статус</div>
                 <div class="col-md-12">Тут еще что-то</div>

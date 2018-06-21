@@ -21,12 +21,7 @@ class Register extends CI_Controller
         if($this->input->post('google_photo')) {
 
         } else {
-            //Если файл не загружен
-           # if (empty($_FILES['photo']['name']))
-           # {
                 $this->form_validation->set_rules('photo', 'Фото', 'required');
-           # }
-
         }
         //Если валидация не прошла
         if ($this->form_validation->run() == FALSE) {
@@ -69,16 +64,16 @@ class Register extends CI_Controller
                 }
             } else {
                 //Скачивание с гугла
-                $this->load->model('photo_model');
-                $filename = $this->photo_model->download_photo($this->input->post('google_photo'),$user_id);
-                $path = 'uploads/profile/'.$user_id.'/'.$filename;
+                $this->load->model('photos_model');
+                $filename = $this->photos_model->download_photo($this->input->post('google_photo'),$user_id);
+                $path = '/uploads/profile/'.$user_id.'/'.$filename;
                 $this->db->set('company',$path);
                 $this->db->where('id',$user_id);
                 $this->db->update('users');
                 #print_r($this->input->post('google_photo'));die();
             }
 
-            redirect('profile');
+            redirect("profile/$user_id");
 
         }
     }
