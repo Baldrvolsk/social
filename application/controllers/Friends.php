@@ -17,22 +17,24 @@ class Friends extends CI_Controller
             redirect('auth/login', 'refresh');
         }
         $this->user = $this->ion_auth->user()->row();
-        $photos = scandir('./uploads/profile/'.$this->user->id);
-
-        $this->user->photo = end($photos);
     }
 
     public function index() {
-        $data['friends'] = $this->friend_model->get_friends($this->user->id);
-        $data['users'] = $this->ion_auth->users()->result();
+        $data['friends'] = $this->friend_model->get_friends($this->user->id, 'confirmed');
+        $data['req_friends'] = $this->friend_model->get_friends($this->user->id, 'request');
+        //echo '<pre>'.var_dump($data).'</pre>';die();
         $this->load->view('header', $data);
-        $this->load->view('friend/list');
+        $this->load->view('friend/index');
         $this->load->view('footer');
     }
 
     public function add_friend($id, $group_id) {
         $this->friend_model->add_friend($this->user->id, $id, $group_id);
         redirect('friends', 'refresh');
+    }
+
+    public function confirm_friend($id) {
+        $this->friend_model->change_friend_status($this->user->id, (int)$id, 'confirmed');
     }
 
     public function delete_friend($id) {
