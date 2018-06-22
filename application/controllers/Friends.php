@@ -34,7 +34,8 @@ class Friends extends CI_Controller
     }
 
     public function confirm_friend($id) {
-        $this->friend_model->change_friend_status($this->user->id, (int)$id, 'confirmed');
+        $this->friend_model->change_friend_status((int)$id, $this->user->id, 'confirmed');
+        redirect($_SERVER['HTTP_REFERER']);
     }
 
     public function delete_friend($id) {

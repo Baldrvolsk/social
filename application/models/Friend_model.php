@@ -51,6 +51,7 @@ class Friend_model extends CI_Model
     public function change_friend_status($user_id, $friend_id, $status) {
         $this->db->set('friend_status', $status);
         $this->db->where(array('user_id' => $user_id, 'friend_id' => $friend_id));
+
         $this->db->update($this->friend_table);
     }
 
