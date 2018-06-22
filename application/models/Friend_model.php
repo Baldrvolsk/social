@@ -14,17 +14,26 @@ class Friend_model extends CI_Model
 
     }
 
-    public function get_friends($user_id = null, $fr_group = null) {
+    public function get_friends($user_id = null, $status, $fr_group = null) {
         $user_id = isset($user_id) ? $user_id : $this->session->userdata('user_id');
+        $where = array(
+            $this->friend_table.'.friend_status' => $status,
+        );
+        if ($status === 'request') {
+            $where[$this->friend_table.'.friend_id'] = $user_id;
+        } else {
+            $where[$this->friend_table.'.user_id'] = $user_id;
+        }
         if ($fr_group !== null) {
-            $this->db->where($this->friend_table . '.friend_group_id', $user_id);
+            $where[$this->friend_table.'.friend_group_id'] = $user_id;
             $this->db->join($this->fr_group_table, $this->fr_group_table.'.id = '.$this->friend_table.'.friend_group_id');
         }
-        $this->db->join('users', 'users.id = '.$this->friend_table.'.friend_id');
-        $this->db->where($this->friend_table.'.user_id', $user_id);
-        $this->db->order_by($this->friend_table.'.date_add', 'desc');
-        $query = $this->db->get($this->friend_table);
-        return $query->result_array();
+        $this->db->select($this->friend_table.'.*, concat(users.first_name," ",users.last_name) as full_name_user, users.company as photo')
+            ->join('users', 'users.id = '.$this->friend_table.'.friend_id')
+            ->where($where)
+            ->order_by($this->friend_table.'.date_add', 'desc');
+        //echo $this->db->get_compiled_select();die();
+        return $this->db->get($this->friend_table)->result();
     }
 
     public function add_friend($user_id, $friend_id, $friend_group_id = null) {
@@ -35,11 +44,17 @@ class Friend_model extends CI_Model
             'friend_group_id' => $friend_group_id,
         );
 
-        return $this->db->insert('friends', $data);
+        return $this->db->insert($this->friend_table, $data);
 
     }
 
+    public function change_friend_status($user_id, $friend_id, $status) {
+        $this->db->set('friend_status', $status);
+        $this->db->where(array('user_id' => $user_id, 'friend_id' => $friend_id));
+        $this->db->update($this->friend_table);
+    }
+
     public function delete_friend($user_id, $friend_id) {
-        return $this->db->delete('friends', array('user_id' => $user_id, 'friend_id' => $friend_id));
+        return $this->db->delete($this->friend_table, array('user_id' => $user_id, 'friend_id' => $friend_id));
     }
 }
