@@ -9,10 +9,13 @@ class Welcome extends CI_Controller {
         {
             redirect('profile');
         }
+        $this->load->library('google');
     }
 
     public function index() {
-        $this->load->view('header');
+        $data['loginURL'] = $this->google->loginURL();
+
+        $this->load->view('header',$data);
 		$this->load->view('default_layout');
         $this->load->view('footer');
 	}

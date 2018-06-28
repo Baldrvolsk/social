@@ -1,0 +1,1 @@
+<a href="<?=$loginURL;?>"><img src="/img/google_login.png" /></a>
