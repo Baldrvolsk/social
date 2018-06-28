@@ -32,8 +32,10 @@ class Register extends CI_Controller
             //Создание пользователя
             $additional_data = array(
                 'first_name' => $this->input->post('first_name'),
-                'last_name' => $this->input->post('last_name'),);
-
+                'last_name' => $this->input->post('last_name'),
+                'gender' => $this->input->post('gender'),
+                'country' => $this->input->post('country'),
+                );
             $group = array('2');
             $user_id = $this->ion_auth->register($this->input->post('login'), $this->input->post('password'), $this->input->post('email'),$additional_data , $group);
             $this->ion_auth->login($this->input->post('email'),$this->input->post('password'),true);

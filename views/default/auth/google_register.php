@@ -28,6 +28,14 @@
         <label for="InputPassword1">Подтверждение пароля</label>
         <input type="hidden" name="password_confirm" value="123456" class="form-control" id="InputPassword2" placeholder="Подтверждение пароля" required>
     </div>
+    <div class="form-group" style="display:none;">
+        <label for="InputPassword1">Пол</label>
+        <input type="hidden" name="gender" value="<?= $google_info['gender']; ?>" class="form-control" id="Inputgender" placeholder="" required>
+    </div>
+    <div class="form-group" style="display:none;">
+        <label for="InputPassword1">Страна</label>
+        <input type="hidden" name="country" value="<?= $google_info['locale']; ?>" class="form-control" id="Inputcountry" placeholder="" required>
+    </div>
     <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
 </form>
 <style>
