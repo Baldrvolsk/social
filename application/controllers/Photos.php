@@ -17,6 +17,7 @@ class Photos extends CI_Controller {
     public function index() {
         $data['albums'] = $this->photos_model->get_albums();
         $data['photos'] = $this->photos_model->get_album();
+
         $this->load->view('header',$data);
         $this->load->view('photos/all');
         $this->load->view('footer');

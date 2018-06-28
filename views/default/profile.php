@@ -16,6 +16,16 @@
                 <div class="col-md-12"><?=$userdata->first_name.' '.$userdata->last_name ;?></div>
                 <div class="col-md-12">Тут статус</div>
                 <div class="col-md-12">Тут еще что-то</div>
+                <div class="col-md-12">
+                    <?php if(count($userdata->photos) != 0): ?>
+
+                        <?php foreach($userdata->photos as $p) : ?>
+                            <div class="col-md-3">
+                                <img src="<?=$p->file;?>" style="width:100%" />
+                            </div>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </div>
             </div>
             <div class="col-md-12">
                 <div class="row" style="margin-bottom:50px">

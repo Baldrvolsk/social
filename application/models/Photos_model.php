@@ -33,8 +33,20 @@ class Photos_model extends CI_Model
 
     public function get_album($album_id = 0)
     {
+        $this->db->where('user_id',$this->user->id);
         if((int) $album_id != 0) {
             $this->db->where('album_id', (int) $album_id);
+        }
+        return $this->db->get('photos')->result();
+    }
+
+    public function get_last($user_id = 0, $limit = 0)
+    {
+        $this->db->where('user_id', (int)$user_id);
+        $this->db->order_by('id','DESC');
+        if($limit > 0)
+        {
+            $this->db->limit((int)$limit);
         }
         return $this->db->get('photos')->result();
     }
