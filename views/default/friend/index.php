@@ -44,6 +44,10 @@
                                 <a href="/friends/delete/<?=$row->id?>" class="btn btn-info" title="Удалить из друзей">
                                     <span class="glyphicon glyphicon-remove"></span>
                                 </a>
+                                <a href="/friends/add_blacklist/<?=$row->id?>" class="btn btn-info"
+                                   title="Добавить в черный список">
+                                    <span class="glyphicon glyphicon-ban-circle"></span>
+                                </a>
                             </p>
                         </div>
                     </div>
@@ -75,6 +79,10 @@
                                 <a href="/friends/delete/<?=$row->id?>" class="btn btn-info" title="Удалить из друзей">
                                     <span class="glyphicon glyphicon-remove"></span>
                                 </a>
+                                <a href="/friends/add_blacklist/<?=$row->id?>" class="btn btn-info"
+                                   title="Добавить в черный список">
+                                    <span class="glyphicon glyphicon-ban-circle"></span>
+                                </a>
                             </p>
                         </div>
                     </div>
@@ -103,8 +111,13 @@
                                 <p>Ранг</p>
                                 <p>
                                     <a class="btn btn-info send_message"  data-toggle="modal" data-target="#exampleModal">Отправить сообщение</a>
-                                    <a href="/friends/delete/<?=$row->id?>" class="btn btn-info" title="Удалить из друзей">
-                                        <span class="glyphicon glyphicon-remove"></span>
+                                    <a href="/friends/confirm_friend/<?=$row->id?>" class="btn btn-info"
+                                       title="Подтвердить запрос">
+                                        <span class="glyphicon glyphicon-ok"></span>
+                                    </a>
+                                    <a href="/friends/add_blacklist/<?=$row->id?>" class="btn btn-info"
+                                       title="Добавить в черный список">
+                                        <span class="glyphicon glyphicon-ban-circle"></span>
                                     </a>
                                 </p>
                             </div>
@@ -134,7 +147,7 @@
                                 <p>Ранг</p>
                                 <p>
                                     <a class="btn btn-info send_message"  data-toggle="modal" data-target="#exampleModal">Отправить сообщение</a>
-                                    <a href="/friends/delete/<?=$row->id?>" class="btn btn-info" title="Удалить из друзей">
+                                    <a href="/friends/delete/<?=$row->id?>" class="btn btn-info" title="Удалить запрос">
                                         <span class="glyphicon glyphicon-remove"></span>
                                     </a>
                                 </p>
@@ -165,7 +178,8 @@
                                 <p>Ранг</p>
                                 <p>
                                     <a class="btn btn-info send_message"  data-toggle="modal" data-target="#exampleModal">Отправить сообщение</a>
-                                    <a href="/friends/delete/<?=$row->id?>" class="btn btn-info" title="Удалить из друзей">
+                                    <a href="/friends/delete/<?=$row->id?>" class="btn btn-info"
+                                       title="Удалить из черного списка">
                                         <span class="glyphicon glyphicon-remove"></span>
                                     </a>
                                 </p>
