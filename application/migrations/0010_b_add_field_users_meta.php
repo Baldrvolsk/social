@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Migration_add_friends_users_meta extends CI_Migration {
+class Migration_add_field_users_meta extends CI_Migration {
 
 	public function up() {
 
