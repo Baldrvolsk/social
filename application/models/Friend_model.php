@@ -11,29 +11,99 @@ class Friend_model extends CI_Model
     private $friend_table = 'friends';
     private $fr_group_table = 'friend_group';
     public function __construct() {
-
+        $this->load->helper('array_helper');
     }
 
-    public function get_friends($user_id = null, $status, $fr_group = null) {
-        $user_id = isset($user_id) ? $user_id : $this->session->userdata('user_id');
-        $where = array(
-            $this->friend_table.'.friend_status' => $status,
-        );
-        if ($status === 'request') {
-            $where[$this->friend_table.'.friend_id'] = $user_id;
-        } else {
-            $where[$this->friend_table.'.user_id'] = $user_id;
+    public function get_friends($user_id, $online = false, $fr_group = null) {
+        $where = ' AND fr.friend_status = \'confirmed\'';
+        if ($online) {
+            $where .= ' AND online = true';
         }
         if ($fr_group !== null) {
-            $where[$this->friend_table.'.friend_group_id'] = $user_id;
-            $this->db->join($this->fr_group_table, $this->fr_group_table.'.id = '.$this->friend_table.'.friend_group_id');
+            $where .= ' AND fr.friend_group_id = '.$fr_group;
         }
-        $this->db->select($this->friend_table.'.*, concat(users.first_name," ",users.last_name) as full_name_user, users.company as photo')
-            ->join('users', 'users.id = '.$this->friend_table.'.friend_id')
-            ->where($where)
-            ->order_by($this->friend_table.'.date_add', 'desc');
-        //echo $this->db->get_compiled_select();die();
-        return $this->db->get($this->friend_table)->result();
+        $where1 = '(fr.friend_id = '.$user_id.')'.$where;
+        $where2 = '(fr.user_id = '.$user_id.')'.$where;
+        $fr1 = $this->db->select('fr.user_id as id,
+                fr.date_add,
+                concat(u.first_name," ",u.last_name) as full_name_user,
+                u.company as photo, fg.name as group_name,
+                um.online as online')
+            ->from($this->friend_table.' as fr')
+            ->join($this->fr_group_table.' as fg',
+                   'fg.id = fr.friend_group_id',
+                   'left')
+            ->join('users as u',
+                   'u.id = fr.user_id',
+                    'left')
+            ->join('users_meta as um',
+                   'um.id = fr.user_id',
+                   'left')
+            ->where($where1)->get()->result();
+        $fr2 = $this->db->select('fr.friend_id as id,
+                fr.date_add,
+                concat(u.first_name," ",u.last_name) as full_name_user,
+                u.company as photo, fg.name as group_name,
+                um.online as online')
+                 ->from($this->friend_table.' as fr')
+                 ->join($this->fr_group_table.' as fg',
+                        'fg.id = fr.friend_group_id',
+                        'left')
+                 ->join('users as u',
+                        'u.id = fr.friend_id',
+                        'left')
+                 ->join('users_meta as um',
+                        'um.id = fr.friend_id',
+                        'left')
+                 ->where($where2)->get()->result();
+        $fr = array_merge($fr1, $fr2);
+        usort($fr, build_sorter_arr_obj('date_add'));
+        return $fr;
+    }
+
+    public function get_friends_request($user_id) {
+        $where = 'fr.friend_id = '.$user_id.' AND fr.friend_status = \'request\'';
+        return $this->db->select('fr.user_id as id, fr.date_add,
+                concat(u.first_name," ",u.last_name) as full_name_user,
+                u.company as photo')
+            ->from($this->friend_table.' as fr')
+            ->join('users as u',
+                   'u.id = fr.user_id',
+                   'left')
+            ->join('users_meta as um',
+                   'um.id = fr.user_id',
+                   'left')
+            ->where($where)->get()->result();
+    }
+
+    public function get_user_request($user_id) {
+        $where = 'fr.user_id = '.$user_id.' AND fr.friend_status = \'request\'';
+        return $this->db->select('fr.friend_id as id, fr.date_add,
+                concat(u.first_name," ",u.last_name) as full_name_user,
+                u.company as photo')
+                        ->from($this->friend_table.' as fr')
+                        ->join('users as u',
+                               'u.id = fr.friend_id',
+                               'left')
+                        ->join('users_meta as um',
+                               'um.id = fr.friend_id',
+                               'left')
+                        ->where($where)->get()->result();
+    }
+
+    public function get_blacklist($user_id) {
+        $where = 'fr.user_id = '.$user_id.' AND fr.friend_status = \'blacklist\'';
+        return $this->db->select('fr.friend_id as id, fr.date_add,
+                concat(u.first_name," ",u.last_name) as full_name_user,
+                u.company as photo')
+                        ->from($this->friend_table.' as fr')
+                        ->join('users as u',
+                               'u.id = fr.friend_id',
+                               'left')
+                        ->join('users_meta as um',
+                               'um.id = fr.friend_id',
+                               'left')
+                        ->where($where)->get()->result();
     }
 
     public function add_friend($user_id, $friend_id, $friend_group_id = null) {
@@ -48,6 +118,9 @@ class Friend_model extends CI_Model
 
     }
 
+    /**
+     * 'request','confirmed','subscriber','blacklist'
+     */
     public function change_friend_status($user_id, $friend_id, $status) {
         $this->db->set('friend_status', $status);
         $this->db->where(array('user_id' => $user_id, 'friend_id' => $friend_id));

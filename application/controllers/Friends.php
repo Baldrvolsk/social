@@ -20,9 +20,12 @@ class Friends extends CI_Controller
     }
 
     public function index() {
-        $data['friends'] = $this->friend_model->get_friends($this->user->id, 'confirmed');
-        $data['req_friends'] = $this->friend_model->get_friends($this->user->id, 'request');
-        //echo '<pre>'.var_dump($data).'</pre>';die();
+        $data['friends'] = $this->friend_model->get_friends($this->user->id);
+        $data['on_friends'] = $this->friend_model->get_friends($this->user->id, true);
+        $data['req_friends'] = $this->friend_model->get_friends_request($this->user->id);
+        $data['user_request'] = $this->friend_model->get_user_request($this->user->id);
+        $data['blacklist'] = $this->friend_model->get_blacklist($this->user->id);
+
         $this->load->view('header', $data);
         $this->load->view('friend/index');
         $this->load->view('footer');

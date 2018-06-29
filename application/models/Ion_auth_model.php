@@ -1983,7 +1983,7 @@ class Ion_auth_model extends CI_Model
      * @param int $id
      * @param array      $data
      *
-     * @return bool
+     * @return void
      */
     public function set_meta($id, array $data) {
         $u = $this->db->get_where('users_meta', array('id' => $id), 1)->row();

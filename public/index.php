@@ -69,7 +69,8 @@ switch (ENVIRONMENT)
  * This variable must contain the name of your "system" directory.
  * Set the path if it is not in the same directory as this file.
  */
-	define('SERVERROOT', dirname(__FILE__, 2));
+	define('WEBROOT', dirname(__FILE__));
+    define('SERVERROOT', dirname(__FILE__, 2));
 	$system_path = SERVERROOT.DIRECTORY_SEPARATOR.'system';
 
 /*
