@@ -35,7 +35,7 @@ class Photos extends CI_Controller {
     public function create_album() {
         $this->form_validation->set_rules('name', 'Имя', 'required');
         if (!$this->form_validation->run() == FALSE) {
-            $this->photos_model->create_album();
+            $this->photos_model->create_album($this->input->post('name'), $this->input->post('description'));
         }
         redirect('/photos');
     }

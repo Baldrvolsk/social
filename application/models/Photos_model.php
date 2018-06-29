@@ -9,14 +9,14 @@ class Photos_model extends CI_Model
 
     }
 
-    public function create_album()
+    public function create_album($name = '', $description = '',$user_id = 0, $status = 0)
     {
-        $data['user_id'] = $this->user->id;
-        $data['name'] = $this->input->post('name');
-        $data['description'] = $this->input->post('description');
+        $data['user_id'] = (int)$user_id;
+        $data['name'] = $name;
+        $data['description'] = $description;
+        $data['status']= $status;
         $this->db->insert('albums',$data);
         $album_id = $this->db->insert_id();
-        $folder_name = md5($this->user->username);
         if (!is_dir('./uploads/albums/'.$album_id)) {
             mkdir('./uploads/albums/'.$album_id, 0755);
         }
@@ -102,11 +102,28 @@ class Photos_model extends CI_Model
     {
         if((int)$user_id != 0) {
             $tmp = explode('.',$url);
-            $ext = end($tmp);
+            $ext = end($tmp); //Расширение файла
             $photo = file_get_contents($url);
+            $album_id = $this->get_profile_album($user_id); //Взять номер альбома с фотками профиля
             $filename = uniqid().'.'.$ext;
-            file_put_contents("./uploads/profile/$user_id/$filename",$photo);
-            return $filename;
+            $full_path = "/uploads/albums/$album_id/$filename";
+            file_put_contents(".$full_path",$photo);
+
+            //Записать в бд
+            $data['album_id'] = $album_id;
+            $data['user_id'] = $user_id;
+            $data['file'] =  $full_path;
+            $this->db->insert('photos',$data);
+            return $full_path;
         }
+    }
+
+    private function get_profile_album($user_id)
+    {
+        $this->db->where('user_id',(int)$user_id);
+        $this->db->where('status', 1);
+        $album = $this->db->get('albums')->row();
+        return $album->id;
+
     }
 }
