@@ -77,6 +77,8 @@
  * @property People $people
  * @property Friends $friends
  * @property Friend_model $friend_model
+ * @property Group_model $group_model
+ * @property Group $group
  *
  */
 class CIPS
