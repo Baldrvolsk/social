@@ -1,4 +1,3 @@
-<div class="col-md-10">
 <div class="messages_container">
 
     <?php if(count($chat) > 0) : ?>
@@ -35,10 +34,7 @@
         <textarea class="form-control" placeholder="Ваше сообщение" name="content"></textarea>
         <button type="submit" class="btn btn-success">Отправить</button>
     </form>
-</div>
 
-</div>
-</div>
 <style>
     .messages_container {
         min-height: 400px;

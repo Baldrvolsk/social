@@ -1,4 +1,3 @@
-        <div class="col-md-10">
             <div class="col-md-5">
                 <img class="avatar" src="<?=$userdata->company;?>" style="width: 100%"/>
                 <?php if($userdata->id != $this->user->id) : ?>
@@ -33,10 +32,7 @@
                 </div>
                 <?=$posts?>
             </div>
-        </div>
 
-    </div>
-</div>
 <div class="modal" tabindex="-1" role="dialog" id="exampleModal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -60,14 +56,5 @@
                 </div>
             </form>
         </div>
-    </div>
-</div>
-<!-- модалка для постов -->
-
-<div class="modal fade" id="postModal" tabindex="-1" role="dialog"
-     aria-labelledby="mySmallModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog modal-md">
-        <div class="modal-content"></div>
     </div>
 </div>

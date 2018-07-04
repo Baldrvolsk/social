@@ -72,11 +72,12 @@
                 <li role="presentation"><a href="/chat">Messages +15</a></li>
                 <li role="presentation"><a href="/photos">Photos</a></li>
                 <li role="presentation"><a href="#">News +257</a></li>
-                <li role="presentation"><a href="#">My groups +3</a></li>
+                <li role="presentation"><a href="/my_groups">My groups +3</a></li>
                 <li role="presentation"><a href="#">D +16</a></li>
                 <li role="presentation">Leptas: 10.000</li>
             </ul>
         </div>
+        <div class="col-md-8">
 <?php else: ?>
 <nav class="navbar navbar-default">
     <div class="container-fluid">
@@ -110,5 +111,5 @@
 </nav>
         <div class="container">
             <div class="row">
-
+                <div class="col-md-12">
 <?php endif; ?>

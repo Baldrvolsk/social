@@ -1,4 +1,3 @@
-<div class="col-md-10">
 <form action="/profile/edit" method="POST">
     <div class="form-group">
         <label for="InputEmail1">Email(обязательно)</label>
@@ -19,9 +18,7 @@
     </div>
     <button type="submit" class="btn btn-primary">Сохранить</button>
 </form>
-</div>
-</div>
-</div>
+
 <style>
     .error {
         color:red;
