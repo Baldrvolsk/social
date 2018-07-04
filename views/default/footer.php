@@ -1,10 +1,15 @@
+<?php if ($this->ion_auth->logged_in()) : ?>
 <!-- закрываем контейнер контента -->
     </div>
     <!-- RSS -->
     <div class="col-md-2" id="rss"></div>
-</div>
+</div></div>
+<?php else: ?>
+    <!-- закрываем контейнер контента -->
+    </div>
+</div></div>
+<?php endif; ?>
 <!-- модалка -->
-
 <div class="modal fade" id="Modal" tabindex="-1" role="dialog"
      aria-labelledby="mySmallModalLabel"
      aria-hidden="true">
