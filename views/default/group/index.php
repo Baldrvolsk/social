@@ -116,10 +116,10 @@
                 else {
                     $('#status').addClass("bg-danger").removeClass("bg-success bg-info bg-warning").html(json.message).css({'margin-bottom':'10px','padding':'10px 0'});
 
-                    $('#name').html(json.name_err);
-                    $('#slogan').html(json.slogan_err);
-                    $('#description').html(json.description_err);
-                    $('#label').html(json.label_err);
+                    $('#name_err').html(json.name_err);
+                    $('#slogan_err').html(json.slogan_err);
+                    $('#description_err').html(json.description_err);
+                    $('#label_err').html(json.label_err);
                 }
             },
 

@@ -40,8 +40,9 @@
     <div class="form-group">
         <label for="label" class="col-sm-3 control-label">Фото группы</label>
         <div class="col-sm-9">
-            <input type="file" name="label" class="form-control-file" id="label" accept="image/jpeg,image/png,
-            image/gif" required>
+            <input type="file" name="label" class="form-control-file" id="label"
+                   accept="image/jpeg,image/png, image/gif" required data-toggle="tooltip" data-placement="right"
+                   title="Максимальный размер файла: 100кБ, 1024х768px">
             <span class="text-danger" id="label_err" ></span>
         </div>
     </div>
@@ -55,5 +56,6 @@
     $(document).ready(function(){
         //Listen for the form submit
         $('#Modal').submit(sendContact);
+        $('#label').tooltip();
     });
 </script>
