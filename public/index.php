@@ -71,7 +71,8 @@ switch (ENVIRONMENT)
  */
 	define('WEBROOT', dirname(__FILE__));
     define('SERVERROOT', dirname(__FILE__, 2));
-	$system_path = SERVERROOT.DIRECTORY_SEPARATOR.'system';
+    define('DS', DIRECTORY_SEPARATOR);
+	$system_path = SERVERROOT.DS.'system';
 
 /*
  *---------------------------------------------------------------
@@ -87,7 +88,7 @@ switch (ENVIRONMENT)
  *
  * NO TRAILING SLASH!
  */
-	$application_folder = SERVERROOT.DIRECTORY_SEPARATOR.'application';
+	$application_folder = SERVERROOT.DS.'application';
 
 /*
  *---------------------------------------------------------------
@@ -105,7 +106,7 @@ switch (ENVIRONMENT)
 if (!defined('THEME')) {
     define('THEME', 'default');
 }
-	$view_folder = SERVERROOT.DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.THEME;
+	$view_folder = SERVERROOT.DS.'views'.DS.THEME;
 
 
 /*
@@ -174,7 +175,7 @@ if (!defined('THEME')) {
 
 	if (($_temp = realpath($system_path)) !== FALSE)
 	{
-		$system_path = $_temp.DIRECTORY_SEPARATOR;
+		$system_path = $_temp.DS;
 	}
 	else
 	{
@@ -182,8 +183,8 @@ if (!defined('THEME')) {
 		$system_path = strtr(
 			rtrim($system_path, '/\\'),
 			'/\\',
-			DIRECTORY_SEPARATOR.DIRECTORY_SEPARATOR
-		).DIRECTORY_SEPARATOR;
+			DS.DS
+		).DS;
 	}
 
 	// Is the system path correct?
@@ -206,7 +207,7 @@ if (!defined('THEME')) {
 	define('BASEPATH', $system_path);
 
 	// Path to the front controller (this file) directory
-	define('FCPATH', dirname(__FILE__).DIRECTORY_SEPARATOR);
+	define('FCPATH', dirname(__FILE__).DS);
 
 	// Name of the "system" directory
 	define('SYSDIR', basename(BASEPATH));
@@ -223,16 +224,16 @@ if (!defined('THEME')) {
 			$application_folder = strtr(
 				rtrim($application_folder, '/\\'),
 				'/\\',
-				DIRECTORY_SEPARATOR.DIRECTORY_SEPARATOR
+				DS.DS
 			);
 		}
 	}
-	elseif (is_dir(BASEPATH.$application_folder.DIRECTORY_SEPARATOR))
+	elseif (is_dir(BASEPATH.$application_folder.DS))
 	{
 		$application_folder = BASEPATH.strtr(
 			trim($application_folder, '/\\'),
 			'/\\',
-			DIRECTORY_SEPARATOR.DIRECTORY_SEPARATOR
+			DS.DS
 		);
 	}
 	else
@@ -242,10 +243,10 @@ if (!defined('THEME')) {
 		exit(3); // EXIT_CONFIG
 	}
 
-	define('APPPATH', $application_folder.DIRECTORY_SEPARATOR);
+	define('APPPATH', $application_folder.DS);
 
 	// The path to the "views" directory
-	if ( ! isset($view_folder[0]) && is_dir(APPPATH.'views'.DIRECTORY_SEPARATOR))
+	if ( ! isset($view_folder[0]) && is_dir(APPPATH.'views'.DS))
 	{
 		$view_folder = APPPATH.'views';
 	}
@@ -260,16 +261,16 @@ if (!defined('THEME')) {
 			$view_folder = strtr(
 				rtrim($view_folder, '/\\'),
 				'/\\',
-				DIRECTORY_SEPARATOR.DIRECTORY_SEPARATOR
+				DS.DS
 			);
 		}
 	}
-	elseif (is_dir(APPPATH.$view_folder.DIRECTORY_SEPARATOR))
+	elseif (is_dir(APPPATH.$view_folder.DS))
 	{
 		$view_folder = APPPATH.strtr(
 			trim($view_folder, '/\\'),
 			'/\\',
-			DIRECTORY_SEPARATOR.DIRECTORY_SEPARATOR
+			DS.DS
 		);
 	}
 	else
@@ -279,7 +280,7 @@ if (!defined('THEME')) {
 		exit(3); // EXIT_CONFIG
 	}
 
-	define('VIEWPATH', $view_folder.DIRECTORY_SEPARATOR);
+	define('VIEWPATH', $view_folder.DS);
 
 /*
  * --------------------------------------------------------------------

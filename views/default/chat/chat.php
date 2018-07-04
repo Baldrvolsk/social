@@ -1,4 +1,3 @@
-<div class="col-md-10">
 <?php if(count($chats) > 0) : ?>
     <table class="table table-hover">
         <thead>
@@ -19,7 +18,3 @@
 <?php else : ?>
     <h1>У Вас нет начатых чатов</h1>
 <?php endif; ?>
-</div>
-<!-- end content -->
-</div>
-</div>

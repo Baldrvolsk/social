@@ -1,4 +1,3 @@
-<div class="col-md-10">
     <div id="albums">
         <h3>Albums</h3>
         <?php foreach($albums as $a) : ?>
@@ -21,9 +20,6 @@
         <button class="btn btn-info"  data-toggle="modal" data-target="#upload">Add photo</button>
     <?php endif; ?>
 
-</div>
-</div>
-</div>
 <div class="modal" tabindex="-1" role="dialog" id="create_album">
     <div class="modal-dialog" role="document">
         <div class="modal-content">

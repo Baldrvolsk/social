@@ -97,15 +97,15 @@ foreach ($posts as $post):
             type: "GET",
             url: '/post/comment/'+id,
             success: function(data){
-                $('#postModal .modal-content').html(data);
-                $('#postModal').modal('show');
+                $('#Modal .modal-content').html(data);
+                $('#Modal').modal('show');
             }
         });
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-        $('#postModal').on('hidden.bs.modal', function (e) {
-            $('#postModal .modal-content').html('');
+        $('#Modal').on('hidden.bs.modal', function (e) {
+            $('#Modal .modal-content').html('');
         });
         <?php
         $show_modal = $this->session->flashdata('show_post');
@@ -114,8 +114,8 @@ foreach ($posts as $post):
             type: "GET",
             url: '/post/comment/<?=$show_modal?>',
             success: function(data){
-                $('#postModal .modal-content').html(data);
-                $('#postModal').modal('show');
+                $('#Modal .modal-content').html(data);
+                $('#Modal').modal('show');
             }
         });
         <?php } ?>
