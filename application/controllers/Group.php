@@ -45,12 +45,15 @@ class Group extends CI_Controller
     public function form_new_group() {
         $user_meta = $this->ion_auth->get_meta($this->user->id, array('leptas'));
 
-        if ($user_meta->leptas >= 10) {
-            $data = array();
-            $this->load->view('group/new', $data);
-        } else {
+        if (empty($user_meta->leptas)) {
+            $data['leptas'] = 0;
+            $this->load->view('group/need_money', $data);
+        } elseif ($user_meta->leptas < 10) {
             $data['leptas'] = $user_meta->leptas;
             $this->load->view('group/need_money', $data);
+        } else {
+            $data = array();
+            $this->load->view('group/new', $data);
         }
 
     }
