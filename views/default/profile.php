@@ -1,11 +1,17 @@
             <div class="col-md-5">
-                <a href="<?=$userdata->company;?>" class="gallery" rel="avatar_gal"><img class="avatar" src="<?=$userdata->company;?>" style="width: 100%"/></a>
+                <div class="box-crew">
+                <a href="<?=$userdata->company;?>" class="gallery" rel="avatar_gal">
+                    <img class="avatar" src="<?=$userdata->company;?>" style="width: 100%"/>
+                    <?php if($userdata->id == $this->user->id) : ?>
+
+                        <a href="#" data-toggle="modal" data-target="#upload_modal"><span>- Загрузить новую</span></a>
+                    <?php endif; ?>
+
+                </a>
+                </div>
                 <?php foreach($userdata->avatars as $a) : ?>
                 <a href="<?=$a->file;?>" class="gallery" rel="avatar_gal"></a>
                 <?php endforeach; ?>
-                <?php if($userdata->id == $this->user->id) : ?>
-                  <button type="button" class="btn" data-toggle="modal" data-target="#upload_modal">Сменить аватар</button>
-                <?php endif; ?>
 
                 <?php if($userdata->id != $this->user->id) : ?>
                     <button class="btn btn-info send_message"  data-toggle="modal" data-target="#exampleModal" style="width: 100%">Отправить сообщение</button>
@@ -97,3 +103,29 @@
             <link href="/css/colorbox.css" rel="stylesheet">
             <script type="text/javascript" src="/js/jquery.colorbox-min.js"></script>
             <script type="text/javascript" src="/js/profile.js"></script>
+            <style>
+                .box-crew{
+                    position:relative;
+                    overflow:hidden;
+                }
+
+                .box-crew span{
+                    background-color:rgba(0, 0, 0, 0.4);
+                    bottom:-120px;
+                    transition-duration:0.6s;
+                    padding:52px 0;
+                    position:absolute;
+                    text-align:center;
+                    color:#fff;
+                    font-size:12px;
+                    font-weight:bold;
+                    line-height:16px;
+                    margin:0;
+                    display:block;
+                    width:100%;
+                }
+
+                div.box-crew:hover span{
+                    bottom:0px;
+                }
+            </style>
