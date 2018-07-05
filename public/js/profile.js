@@ -13,6 +13,7 @@ function readURL(input) {
 
 jQuery(document).ready(function() {
     $('a.gallery').colorbox({rel:'avatar_gal'});
+    $('a.gallery_profie').colorbox({rel:'profile_gal'});
     $("input[name=photo]").change(function() {
         readURL(this);
     });

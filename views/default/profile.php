@@ -27,7 +27,7 @@
 
                         <?php foreach($userdata->photos as $p) : ?>
                             <div class="col-md-3">
-                                <img src="<?=$p->file;?>" style="width:100%" />
+                                <a href="<?=$p->file;?>" class="gallery_profie" rel="profile_gal"><img src="<?=$p->file;?>" style="width:100%" /></a>
                             </div>
                         <?php endforeach; ?>
                     <?php endif; ?>
