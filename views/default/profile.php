@@ -1,5 +1,12 @@
             <div class="col-md-5">
-                <img class="avatar" src="<?=$userdata->company;?>" style="width: 100%"/>
+                <a href="<?=$userdata->company;?>" class="gallery" rel="avatar_gal"><img class="avatar" src="<?=$userdata->company;?>" style="width: 100%"/></a>
+                <?php foreach($userdata->avatars as $a) : ?>
+                <a href="<?=$a->file;?>" class="gallery" rel="avatar_gal"></a>
+                <?php endforeach; ?>
+                <?php if($userdata->id == $this->user->id) : ?>
+                  <button type="button" class="btn" data-toggle="modal" data-target="#upload_modal">Сменить аватар</button>
+                <?php endif; ?>
+
                 <?php if($userdata->id != $this->user->id) : ?>
                     <button class="btn btn-info send_message"  data-toggle="modal" data-target="#exampleModal" style="width: 100%">Отправить сообщение</button>
                 <?php endif;?>
@@ -58,3 +65,35 @@
         </div>
     </div>
 </div>
+<div class="modal" tabindex="-1" role="dialog" id="upload_modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Загрузка нового аватара</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/photos/add_avatar" method="post" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="form-group" id="preview_avatar"></div>
+                    <div class="form-group">
+                        <label>Выберите аватар:</label>
+                        <input type="file" name="photo" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label>Подпись:</label>
+                        <textarea name="description" class="form-control"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Отправить</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+            <link href="/css/colorbox.css" rel="stylesheet">
+            <script type="text/javascript" src="/js/jquery.colorbox-min.js"></script>
+            <script type="text/javascript" src="/js/profile.js"></script>

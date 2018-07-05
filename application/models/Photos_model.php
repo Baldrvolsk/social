@@ -51,10 +51,13 @@ class Photos_model extends CI_Model
         return $this->db->get('photos')->result();
     }
 
-    public function add_photo()
+    public function add_photo($album_id = 0)
     {
-        if($this->check_album($this->input->post('album_id'), $this->user->id)) {
+        if($album_id == 0)
+        {
             $album_id = $this->input->post('album_id');
+        }
+        if($this->check_album($album_id, $this->user->id)) {
             //Загрузка фото
             if (!empty($_FILES['photo']['name'])) {
                 $config['upload_path'] = './uploads/albums/'.$album_id;
@@ -73,6 +76,7 @@ class Photos_model extends CI_Model
                     $data['description'] = $this->input->post('description');
                     $data['file'] = $path;
                     $this->db->insert('photos',$data);
+                    return $path;
                     #print_r($this->db->last_query());die();
                 } else {
                     #die('Ошибка загрузки файла');
@@ -117,8 +121,23 @@ class Photos_model extends CI_Model
             return $full_path;
         }
     }
-
-    private function get_profile_album($user_id)
+    public function get_avatars($user_id = 0)
+    {
+        if($user_id != 0)
+        {
+            return $this->db->query('SELECT * FROM photos WHERE album_id in (SELECT id FROM albums WHERE user_id = '.(int)$user_id.' AND status = 1)')->result();
+        }
+    }
+    public function update_avatar($file = '')
+    {
+        if($file != '')
+        {
+            $this->db->where('id',$this->user->id);
+            $this->db->set('company',$file);
+            $this->db->update('users');
+        }
+    }
+    public function get_profile_album($user_id)
     {
         $this->db->where('user_id',(int)$user_id);
         $this->db->where('status', 1);

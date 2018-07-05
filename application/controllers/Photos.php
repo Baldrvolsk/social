@@ -44,4 +44,12 @@ class Photos extends CI_Controller {
         $this->photos_model->add_photo();
         redirect('photos');
     }
+
+    public function add_avatar() {
+        $album_id = $this->photos_model->get_profile_album($this->user->id);
+        $new_avatar = $this->photos_model->add_photo($album_id);
+        $this->photos_model->update_avatar($new_avatar);
+        redirect('profile');
+
+    }
 }

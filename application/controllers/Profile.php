@@ -27,6 +27,7 @@ class Profile extends CI_Controller
         //Фотки для профиля
         $this->load->model('photos_model');
         $data['userdata']->photos = $this->photos_model->get_last($data['userdata']->id,4);
+        $data['userdata']->avatars = $this->photos_model->get_avatars($data['userdata']->id);
         $formData['userId'] = $data['userdata']->id;
         $data['addPostForm'] = $this->load->view('post/add', $formData,true);
 
