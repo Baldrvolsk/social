@@ -32,7 +32,7 @@
             </div>
             <div class="col-md-12 thumb-container">
                 <?php if(count($userdata->photos) != 0): ?>
-
+                <div class="col-md-2" style="text-align:center;">Мои фотографии <?=count($userdata->photos);?></div>
                     <?php foreach($userdata->photos as $p) : ?>
                         <div class="col-md-2 thumb">
                             <a href="<?=$p->file;?>" class="gallery_profie" rel="profile_gal"><img src="<?=$p->file;?>" style="width:100%" /></a>
