@@ -12,6 +12,10 @@ class Photos_model extends CI_Model
     public function create_album($name = '', $description = '',$user_id = 0, $status = 0)
     {
         $data['user_id'] = (int)$user_id;
+        if($user_id == 0)
+        {
+            $data['user_id'] = $this->user->id;
+        }
         $data['name'] = $name;
         $data['description'] = $description;
         $data['status']= $status;
