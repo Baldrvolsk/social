@@ -33,7 +33,7 @@ class Register extends CI_Controller
             $additional_data = array(
                 'first_name' => $this->input->post('first_name'),
                 'last_name' => $this->input->post('last_name'),
-                'gender' => $this->input->post('gender'),
+                //'gender' => $this->input->post('gender'),
                 'country' => $this->input->post('country'),
                 );
             $group = array('2');
