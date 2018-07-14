@@ -146,3 +146,4 @@
                     border-radius: 20px;
                 }
             </style>
+            <script src="/js/socket.js"></script>

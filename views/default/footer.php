@@ -30,6 +30,9 @@
 
 <!-- Включают все скомпилированные плагины (ниже), или включать отдельные файлы по мере необходимости -->
 <script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.message.min.js"></script>
 <script src="/js/main.js"></script>
+<link href="/css/jquery.message.css" rel="stylesheet">
+
 </body>
 </html>
