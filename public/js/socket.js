@@ -1,4 +1,4 @@
-var socket = new WebSocket("ws://89.223.88.108:8000");
+var socket = new WebSocket("wss://89.223.88.108:8000");
 socket.onopen = function() {
     console.log("Соединение установлено.");
 };
