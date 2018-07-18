@@ -6,12 +6,12 @@
  * Time: 14:03
  */
 
-class Post_model extends CI_Model
+class Group_post_model extends CI_Model
 {
-    private $post_table = 'post';
+    private $post_table = 'community_post';
     public function __construct() {
         $this->load->model('like_model');
-        $this->like_model->set_type('post');
+        $this->like_model->set_type('community_post');
     }
 
     public function get_post($id = null) {
@@ -20,39 +20,32 @@ class Post_model extends CI_Model
         }
 
         $this->db->select('post.*, concat(users.first_name," ",users.last_name) as full_name_user, users.company as photo, post_like.like as u_like, (post.like - post.dislike) as delta')
-                 ->from($this->post_table)
+                 ->from($this->post_table.' as post')
                  ->join('users','users.id = post.user_create_id','LEFT')
-                 ->join('post_like','post_like.post_id = post.id AND post_like.user_id = '.$this->user->id,'LEFT')
-                 ->where($this->post_table.'.id', (int)$id)
+                 ->join('community_post_like as post_like','post_like.post_id = post.id AND post_like.user_id = '
+                                              .$this->user->id,'LEFT')
+                 ->where('post.id', (int)$id)
                  ->limit(1);
         return $this->db->get()->row();
     }
-    public function get_users_post($user_id, $limit = null, $offset = null) {
-        $user_id = isset($user_id) ? $user_id : $this->session->userdata('user_id');
-
+    public function get_group_post($group_id, $limit = null, $offset = null) {
         if ($limit !== null && $limit !== 0) {
             if ($offset === null) $offset = 0;
             $this->db->limit($limit, $offset);
         }
         $this->db->select('post.*, concat(users.first_name," ",users.last_name) as full_name_user, users.company as photo, post_like.like as u_like, (post.like - post.dislike) as delta')
-                 ->from($this->post_table)
+                 ->from($this->post_table.' as post')
                  ->join('users','users.id = post.user_create_id','LEFT')
-                 ->join('post_like','post_like.post_id = post.id AND post_like.user_id = '.$this->user->id,'LEFT')
-                 ->order_by($this->post_table.'.date_add', 'desc')
-                 ->where($this->post_table.'.user_id', (int)$user_id);
+                 ->join('community_post_like as post_like','post_like.post_id = post.id AND post_like.user_id = '.$this->user->id,'LEFT')
+                 ->order_by('post.date_add', 'desc')
+                 ->where('post.group_id', (int)$group_id);
         return $this->db->get()->result();
     }
 
-    public function create_post($id) {
-        $content = $this->input->post('content', true);
-        //$this->load->helper('url');
-
+    public function create_post($data) {
         $link = null;
         $tags = null;
-        $data = array(
-            'user_id' => $id,
-            'user_create_id' => $this->input->post('userAddId'),
-            'content' => $content,
+        $data_def = array(
             'link' => $link,
             'tags' => $tags,
             'views' => 0,
@@ -62,8 +55,8 @@ class Post_model extends CI_Model
             'repost' => 0,
             'no_comm' => 0,
         );
-
-        return $this->db->insert('post', $data);
+        $all_data = array_merge($data, $data_def);
+        return $this->db->insert($this->post_table, $all_data);
     }
 
     public function update_post($id, $data) {
