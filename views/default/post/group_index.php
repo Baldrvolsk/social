@@ -8,8 +8,7 @@
 
 foreach ($posts as $post):
     if ($post->delta <= -25) continue;?>
-    <hr>
-    <div class="row" style="margin-top: 15px;margin-bottom: 15px">
+    <div class="row row-border">
         <div class="col-sm-2">
             <img src="<?=$post->photo?>"
                  width="50" class="center-block img-circle">
@@ -20,7 +19,7 @@ foreach ($posts as $post):
                 <ul class="list-inline pull-right">
                     <li><?= $post->date_add ?></li>
                     <li>
-                        <?php if ($this->user->id === $post->user_id) : ?>
+                        <?php if ($this->user->id === $post->user_create_id) : ?>
                         <div class="dropdown">
                             <button class="btn dropdown-toggle" type="button" id="post<?=$post->id?>" data-toggle="dropdown">
                                 Меню
@@ -70,7 +69,7 @@ foreach ($posts as $post):
     function add_like(id) {
         $.ajax({
             type: "GET",
-            url: "/post/add_like/<?=$this->user->id?>/" + id,
+            url: "/group/post/add_like/<?=$this->user->id?>/" + id,
             dataType: 'json',
             success: function(data){
                 $('#countLike'+id).text(data.like);
@@ -82,7 +81,7 @@ foreach ($posts as $post):
     function add_dislike(id) {
         $.ajax({
             type: "GET",
-            url: "/post/add_dislike/<?=$this->user->id?>/" + id,
+            url: "/group/post/add_dislike/<?=$this->user->id?>/" + id,
             dataType: 'json',
             success: function(data){
                 $('#countLike'+id).text(data.like);
@@ -112,7 +111,7 @@ foreach ($posts as $post):
         if (!empty($show_modal)) { ?>
         $.ajax({
             type: "GET",
-            url: '/post/comment/<?=$show_modal?>',
+            url: '/group/post/comment/<?=$show_modal?>',
             success: function(data){
                 $('#Modal .modal-content').html(data);
                 $('#Modal').modal('show');
