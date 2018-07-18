@@ -46,6 +46,16 @@
             <span class="text-danger" id="label_err" ></span>
         </div>
     </div>
+    <div class="form-group">
+        <label for="type" class="col-sm-3 control-label">Тип группы</label>
+        <div class="col-sm-9">
+            <select id="type" class="form-control">
+                <option value="open" <?php echo  set_select('type', 'open', TRUE); ?>>Открытая</option>
+                <option value="close" <?php echo  set_select('type', 'close'); ?>>Закрытая</option>
+            </select>
+            <span class="text-danger" id="type_err" ></span>
+        </div>
+    </div>
     <div id="status" class="text-center" ></div>
         <button type="submit" class="btn btn-success btn-lg btn-block" id="contactModalsubmit" >Создать
             группу</button>
