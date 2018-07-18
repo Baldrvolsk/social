@@ -16,5 +16,22 @@ $config = array(
             'label' => 'Описание',
             'rules' => 'trim|required|min_length[100]'
         )
+    ),
+    'group/post_add' => array(
+        array(
+            'field' => 'group_id',
+            'label' => 'ID группы',
+            'rules' => 'trim|required|integer'
+        ),
+        array(
+            'field' => 'user_id',
+            'label' => 'ID пользователя',
+            'rules' => 'trim|required|integer'
+        ),
+        array(
+            'field' => 'content',
+            'label' => 'Сообщение',
+            'rules' => 'trim|required'
+        )
     )
 );
