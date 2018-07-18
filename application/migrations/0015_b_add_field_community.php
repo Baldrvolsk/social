@@ -1,10 +1,15 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Migration_add_field_community_users extends CI_Migration {
+class Migration_add_field_community extends CI_Migration {
 
     public function up() {
-        $fields = array('contacts' => array('type' => 'BOOLEAN', 'default' => false));
-        $this->dbforge->add_column('community_users', $fields);
+        $fields = array(
+            'type' => array(
+                'type' => "SET('open','close')",
+                'default' => 'open'
+            )
+        );
+        $this->dbforge->add_column('community', $fields);
     }
 
     public function down() {
