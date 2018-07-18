@@ -70,6 +70,8 @@
  * User models:
  *
  * @property Ion_auth|Ion_auth_model $ion_auth The ION Auth spark
+ * @property Google $google
+ * @property Google_Client $client
  * @property Post $post
  * @property Post_model $post_model
  * @property Comment_model $comment_model
@@ -78,7 +80,10 @@
  * @property Friends $friends
  * @property Friend_model $friend_model
  * @property Group_model $group_model
+ * @property Group_post_model $group_post_model
  * @property Group $group
+ * @property Balance_model $balance_model
+ * @property Balance $balance
  *
  */
 class CIPS
