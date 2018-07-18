@@ -4,7 +4,16 @@
     <li class="active"><a href="#all_groups" data-toggle="tab">All groups</a></li>
     <li><a href="#popular_groups" data-toggle="tab">Popular groups</a></li>
     <li><a href="#new_groups" data-toggle="tab">New groups</a></li>
-    <li class="pull-right"><span class="btn btn-info" onclick="add_group()">Create group</span></li>
+    <li class="pull-right">
+        <?php if ($this->user->create_group->status): ?>
+            <span class="btn btn-info" onclick="add_group()">Create group</span>
+        <?php else: ?>
+            <span class="btn btn-info disabled" rel="tooltip" data-placement="bottom" data-html="true"
+                  data-title="Доступно через <?=$this->user->create_group->time?>">
+                Create group
+            </span>
+        <?php endif; ?>
+    </li>
 </ul>
 <!-- Search -->
 <div class="row">
@@ -77,6 +86,19 @@
             $('#Modal .modal-content').html('');
         });
 
+        $('body').tooltip({
+            selector: '[rel="tooltip"]'
+        });
+
+        $(".btn").click(function(e) {
+            if (! $(this).hasClass("disabled"))
+            {
+                $(".disabled").removeClass("disabled").attr("rel", null);
+                $(this).addClass("disabled").attr("rel", "tooltip");
+
+                $(this).mouseenter();
+            }
+        });
     }, false);
 
     //The function that handles the process
