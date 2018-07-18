@@ -6,6 +6,7 @@ class Group_model extends CI_Model
     private $com_table = 'community';
     private $com_group_table = 'community_groups';
     private $com_users_table = 'community_users';
+    private $com_rules = 'community_rules';
 
     public function __construct() {
         $this->load->helper('array_helper');
@@ -18,7 +19,10 @@ class Group_model extends CI_Model
         $u_data['user_id'] = $owner_id;
         $u_data['community_id'] = $this->db->insert_id();
         $u_data['community_group_id'] = 50;
+        $u_data['contacts'] = 1;
         $this->db->insert($this->com_users_table, $u_data);
+        $set = array('last_group_create' => $data['create_date']);
+        $this->ion_auth->set_meta($owner_id, $set);
     }
 
     public function follow_group($user_id, $group_id) {
@@ -60,21 +64,56 @@ class Group_model extends CI_Model
             ->get()->result();
     }
 
-    /*
-     * public function get_group_list($filter = array(), $user_id, $lang = 'en') {
-        $where = 'fr.friend_id = '.$user_id.' AND fr.friend_status = \'request\'';
-        return $this->db->select('com.*, c_u.*')
+    public function get_group($group_id) {
+        $group = $this->db->select('com.*')
             ->from($this->com_table.' as com')
-            ->join($this->com_users_table.' as c_u',
-                   'c_u.community_id = com.id AND c_u.community_group_id >= 20',
-                   'left')
-            ->join('users as u',
-                   'u.id = fr.user_id',
-                   'left')
-            ->join('users_meta as um',
-                   'um.id = fr.user_id',
-                   'left')
-            ->where($where)->get()->result();
+            ->limit(1)
+            ->where('com.id', $group_id)
+            ->get()->row();
+        $g_u = $this->db->select('COUNT(user_id) as count')
+            ->from($this->com_users_table)
+            ->where('community_id', $group_id)
+            ->get()->row();
+        $group->count_users = $g_u->count;
+        return $group;
     }
-     */
+
+    public function get_contacts($group_id) {
+        $group = $this->db->select('c_u.*, 
+                concat(u.first_name," ",u.last_name) as full_name_user,
+                u.company as photo, c_g.*')
+            ->from($this->com_users_table.' as c_u')
+            ->join('users as u',
+                'u.id = c_u.user_id',
+                'left')
+            ->join($this->com_group_table.' as c_g',
+                   'c_g.id = c_u.community_group_id',
+                   'left')
+            ->where('c_u.community_id', $group_id)
+            ->where('c_u.contacts', 1)
+            ->get()->result();
+        return $group;
+    }
+
+    public function get_user_com_gr_id($user_id, $com_id) {
+        $ret = $this->db->select('community_group_id')
+            ->from($this->com_users_table)
+            ->where(array('user_id' => $user_id, 'community_id' => $com_id))
+            ->get()->row();
+        return (int)$ret->community_group_id;
+    }
+
+    public function get_com_rules($group_id, $com_id) {
+        $ret = $this->db->select('rules')
+                        ->from($this->com_rules)
+                        ->where(array('community_id' => $com_id, 'community_group_id' => $group_id))
+                        ->get()->row();
+        return (empty($ret))?null:json_decode($ret->rules);
+    }
+
+    public function check_group($id) {
+        $check = $this->db->get_where($this->com_table, 'id = '.$id, 1);
+        return (empty($check))?false:true;
+    }
+
 }
