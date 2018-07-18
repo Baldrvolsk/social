@@ -93,7 +93,7 @@
 
 <div class="row row-border">
     <div class="col-md-12">
-        <div class="row" style="margin-bottom:50px">
+        <div class="row">
             <?=$addPostForm?>
         </div>
     </div>
