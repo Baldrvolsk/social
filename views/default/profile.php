@@ -28,10 +28,16 @@
                 <div class="col-md-12"> <i class="glyphicon glyphicon-user"></i><?=$userdata->first_name.' '.$userdata->last_name ;?></div>
 
                 <div class="col-md-12">
-                    <?php //Если страничка юзера то он может менять статус ?>
-                    <span <?php if($userdata->id == $this->user->id) { ?> class="status_string" <?php } else { ?> class="status_string_disabled"<?php } ; ?>>
-                        <?php if($userdata->text_status == '') { ?>Изменить статус<?php } else { echo $userdata->text_status; }?>
-                    </span>
+                    <?php //Если страничка юзера то он может менять статус?>
+                    <?php if($userdata->id == $this->user->id) : ?>
+                        <?php if($userdata->text_status == '') : //если статус пустой, то выводить Изменить статус  ?>
+                            <span class="status_string">Изменить статус</span>
+                        <?php else : ?>
+                            <span class="status_string"><?=$userdata->text_status; //Иначе статус?></span>
+                        <?php endif; ?>
+                    <?php else : ?>
+                        <span class="status_string_disabled"><?=$userdata->text_status; ?></span>
+                    <?php endif; ?>
                 </div>
                 <div class="col-md-12">Страна: <?=$userdata->country;?></div>
 

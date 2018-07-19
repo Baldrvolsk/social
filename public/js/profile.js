@@ -24,7 +24,12 @@ jQuery(document).ready(function() {
     //Клик по сохранению статуса
     jQuery(document.body).on('click', '#save_status', function(event) {
         var status = $('input[name=status]').val();
-        var status_elem = '<span class="status_string">'+$.trim(status)+'</span>';
+        var status_text = 'Изменить статус';
+        if(status != '')
+        {
+            status_text = status;
+        }
+        var status_elem = '<span class="status_string">'+$.trim(status_text)+'</span>';
         var this_context =  $(this);
         $.ajax({
             url: '/ajax/save_status',
