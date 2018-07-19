@@ -25,7 +25,7 @@
 <div class="container-fluid main_logo"></div>
 
 <div class="container">
-<nav class="navbar navbar-default">
+<nav class="navbar">
 
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
@@ -35,37 +35,33 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Brand</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <div class="collapse navbar-collapse"  id="main_menu">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="/profile">Main</a></li>
-                <li class=""><a href="/people">People</a></li>
-                <li class=""><a href="/groups">Groups</a></li>
+                <li class="active"><a href="/profile">Я</a></li>
+                <li class=""><a href="/people">Люди</a></li>
+                <li class=""><a href="/groups">Группы</a></li>
 
             </ul>
             <form class="navbar-form navbar-left">
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Search">
+                    <input type="text" class="form-control" placeholder="Поиск">
                 </div>
                 <button type="submit" class="btn btn-default">Submit</button>
             </form>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">About us</a></li>
-                <li><a href="#">For investors</a></li>
+                <li><a href="#">Правила</a></li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Contact us <span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Настройки <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">Action</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#">Separated link</a></li>
+                        <li><a href="/profile/edit">Редактировать профиль</a></li>
+
                     </ul>
                 </li>
-                <li><a href="/auth/logout">Logout</a></li>
+                <li><a href="/auth/logout">Выйти</a></li>
+                <li><a href="#">RSS+</a></li>
             </ul>
         </div><!-- /.navbar-collapse -->
 
