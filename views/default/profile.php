@@ -27,7 +27,7 @@
                 </div>
                 <div class="col-md-12"> <i class="glyphicon glyphicon-user"></i><?=$userdata->first_name.' '.$userdata->last_name ;?></div>
 
-                <div class="col-md-12"><span class="status_string">Изменить статус</span></div>
+                <div class="col-md-12"><span class="status_string"><?php if($userdata->text_status == '') { ?>Изменить статус<?php } else { echo $userdata->text_status; }?></span></div>
                 <div class="col-md-12">Страна: <?=$userdata->country;?></div>
 
             </div>
