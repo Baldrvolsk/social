@@ -95,7 +95,47 @@
             </div>
             <form action="/photos/add_avatar" method="post" enctype="multipart/form-data">
                 <div class="modal-body">
-                    <div class="form-group" id="preview_avatar"></div>
+                    <div class="form-group" id="preview_avatar">
+                        <img id="image" />
+                    </div>
+                    <div class="docs-buttons" style="display:none;">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-primary" data-method="rotate" data-option="-45" title="">
+                                <span class="docs-tooltip" data-toggle="tooltip" data-animation="false" title="" data-original-title="$().cropper(&quot;rotate&quot;, -45)">
+                                    <span class="fa fa-rotate-left">Повернуть влево</span>
+                                </span>
+                            </button>
+                            <button type="button" class="btn btn-primary" data-method="rotate" data-option="45" title="Rotate Right">
+                                <span class="docs-tooltip" data-toggle="tooltip" data-animation="false" title="" data-original-title="$().cropper(&quot;rotate&quot;, 45)">
+                                    <span class="fa fa-rotate-right">Повернуть вправо</span>
+                                </span>
+                            </button>
+                            <!--Увеличить/уменьшить-->
+                            <button type="button" class="btn btn-primary" data-method="zoom" data-option="0.1" title="Zoom In">
+                                <span class="docs-tooltip" data-toggle="tooltip" data-animation="false" title="" data-original-title="$().cropper(&quot;zoom&quot;, 0.1)">
+                                  <span class="glyphicon glyphicon-zoom-in"></span>
+                                </span>
+                            </button>
+                            <button type="button" class="btn btn-primary" data-method="zoom" data-option="-0.1" title="Zoom Out">
+                                <span class="docs-tooltip" data-toggle="tooltip" data-animation="false" title="" data-original-title="$().cropper(&quot;zoom&quot;, -0.1)">
+                                  <span class="glyphicon glyphicon-zoom-out"></span>
+                                </span>
+                            </button>
+                            <!--Отразить горизонталь/вертикаль -->
+                            <button type="button" class="btn btn-primary" data-method="scaleX" data-option="-1" title="Flip Horizontal">
+                                <span class="docs-tooltip" data-toggle="tooltip" data-animation="false" title="" data-original-title="$().cropper(&quot;scaleX&quot;, -1)">
+                                    <span class="glyphicon glyphicon-resize-horizontal"></span>
+                                </span>
+                            </button>
+                            <button type="button" class="btn btn-primary" data-method="scaleY" data-option="-1" title="Flip Vertical">
+                                <span class="docs-tooltip" data-toggle="tooltip" data-animation="false" title="" data-original-title="$().cropper(&quot;scaleY&quot;, -1)">
+                                    <span class="glyphicon glyphicon-resize-vertical"></span>
+                                </span>
+                            </button>
+
+                        </div>
+                    </div>
+
                     <div class="form-group">
                         <label>Выберите аватар:</label>
                         <input type="file" name="photo" class="form-control" />
@@ -103,6 +143,13 @@
                     <div class="form-group">
                         <label>Подпись:</label>
                         <textarea name="description" class="form-control"></textarea>
+                        <input type="hidden" name="dataX" id="dataX" />
+                        <input type="hidden" name="dataY" id="dataY" />
+                        <input type="hidden" name="dataHeight" id="dataHeight" />
+                        <input type="hidden" name="dataWidth" id="dataWidth" />
+                        <input type="hidden" name="dataRotate" id="dataRotate" />
+                        <input type="hidden" name="dataScaleX" id="dataScaleX" />
+                        <input type="hidden" name="dataScaleY" id="dataScaleY" />
                     </div>
                 </div>
                 <div class="modal-footer">
