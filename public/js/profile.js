@@ -15,14 +15,16 @@ jQuery(document).ready(function() {
     $("input[name=photo]").change(function() {
         readURL(this);
     });
+    //Клик по статусу
     jQuery(document.body).on('click','.status_string',function(){
         var current_status = $(this).html();
-        var input_elem = '<input name="status" value="'+current_status+'" class="status_input"/><i class="glyphicon glyphicon-ok" id="save_status"></i>';
+        var input_elem = '<input name="status" value="'+$.trim(current_status)+'" class="status_input"/><i class="glyphicon glyphicon-ok" id="save_status"></i>';
         $(this).parent().html(input_elem);
     });
+    //Клик по сохранению статуса
     jQuery(document.body).on('click', '#save_status', function(event) {
         var status = $('input[name=status]').val();
-        var status_elem = '<span class="status_string">'+status+'</span>';
+        var status_elem = '<span class="status_string">'+$.trim(status)+'</span>';
         var this_context =  $(this);
         $.ajax({
             url: '/ajax/save_status',

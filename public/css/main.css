@@ -108,6 +108,10 @@ div.box-crew:hover span{
     font-size:10px;
     cursor: pointer;
 }
+.status_string_disabled {
+    color:gray;
+    font-size:10px;
+}
 .status_string:hover {
     text-decoration: underline;
     
@@ -115,6 +119,9 @@ div.box-crew:hover span{
 #save_status {
     cursor:pointer;
     left: -21px;
+}
+input[name=status] {
+    width:96%;
 }
 
 /*end profile page*/
