@@ -1,1 +1,59 @@
 /* ~~ MAIN CSS ~~ */
+body {
+    background-color:#dcdcdc;
+}
+div.main_logo {
+    background-image:url(/img/main_logo.png);
+    background-repeat: no-repeat;
+    height:60px;
+    background-size:cover;
+}
+div.main_logo_big img{
+    width:100%;
+    padding: 0;
+}
+div#main_menu {
+    background-color: #707070;
+    border-radius: 15px;
+    border:0;
+    color:#fff;
+}
+div#main_menu a {
+    color:#fff;
+    font-weight: bold;
+}
+div#main_menu a:hover {
+    background-color:transparent;
+    font-weight: bold;
+    color:#e69124
+}
+div.content_box {
+    background-color:#fff;
+    border-radius:15px;
+}
+.center-align {
+    text-align: center;
+}
+div.welcome_box {
+    font-size:18px;
+    padding-top:40px;
+    padding-bottom:40px;
+}
+div.google_login {
+    width:265px;
+    margin:0 auto;
+    height:65px;
+    background-color:#fff;
+    border-radius: 15px;
+    margin-top:30px;
+    padding-top:4px;
+    padding-left:50px;
+    font-size:30px;
+}
+div.google_login a:hover {
+    text-decoration:none;
+    color:#fe9900;
+}
+div.google_login img {
+    width: 57px;
+}
