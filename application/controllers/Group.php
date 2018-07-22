@@ -144,11 +144,15 @@ class Group extends CI_Controller
 
     private function get_rules($id) {
         $this->user->com_gr_id = $this->group_model->get_user_com_gr_id($this->user->id, $id);
-        $this->user->com_rules = $this->group_model->get_com_rules($this->user->com_gr_id, $id);
+        if ($this->user->com_gr_id !== null) {
+            $this->user->com_rules = $this->group_model->get_com_rules($this->user->com_gr_id, $id);
+        } else {
+            $this->user->com_rules = null;
+        }
     }
 
     public function load_form($type, $group_id) {
-        $data['group_id'] = $group_id;
+        $data['group'] = $this->group_model->get_group($group_id);
         if ($type === 'change_head_img') {
             $this->load->view('group/change_head_img', $data);
         } elseif ($type === 'setting') {
