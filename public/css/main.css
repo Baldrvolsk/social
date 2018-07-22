@@ -1,1 +1,127 @@
 /* ~~ MAIN CSS ~~ */
+body {
+    background-color:#dcdcdc;
+}
+/*welcome page*/
+div.main_logo {
+    background-image:url(/img/main_logo.png);
+    background-repeat: no-repeat;
+    height:60px;
+    background-size:cover;
+}
+div.main_logo_big img{
+    width:100%;
+    padding: 0;
+}
+div#main_menu {
+    background-color: #707070;
+    border-radius: 15px;
+    border:0;
+    color:#fff;
+}
+div#main_menu a {
+    color:#fff;
+    font-weight: bold;
+}
+div#main_menu a:hover {
+    background-color:transparent;
+    font-weight: bold;
+    color:#e69124
+}
+div.content_box {
+    background-color:#fff;
+    border-radius:15px;
+}
+.center-align {
+    text-align: center;
+}
+div.welcome_box {
+    font-size:18px;
+    padding-top:40px;
+    padding-bottom:40px;
+}
+div.google_login {
+    width:265px;
+    margin:0 auto;
+    height:65px;
+    background-color:#fff;
+    border-radius: 15px;
+    margin-top:30px;
+    padding-top:4px;
+    padding-left:50px;
+    font-size:30px;
+}
+div.google_login a:hover {
+    text-decoration:none;
+    color:#fe9900;
+}
+div.google_login img {
+    width: 57px;
+}
+/*end welcome page*/
+/*profile page*/
+.box-crew{
+    position:relative;
+    overflow:hidden;
+}
+
+.box-crew span{
+    background-color:rgba(0, 0, 0, 0.4);
+    bottom:-120px;
+    transition-duration:0.6s;
+    padding:52px 0;
+    position:absolute;
+    text-align:center;
+    color:#fff;
+    font-size:12px;
+    font-weight:bold;
+    line-height:16px;
+    margin:0;
+    display:block;
+    width:100%;
+}
+
+div.box-crew:hover span{
+    bottom:0px;
+}
+.thumb {
+    overflow:hidden;
+    height:120px;
+
+}
+.thumb img {
+    border-radius: 20px;
+}
+.thumb-container {
+    margin-top:20px;
+    margin-bottom:20px;
+
+}
+.avatar {
+    border-radius: 20px;
+}
+.info_box {
+    padding:15px;
+}
+.status_string {
+    color:gray;
+    font-size:10px;
+    cursor: pointer;
+}
+.status_string_disabled {
+    color:gray;
+    font-size:10px;
+}
+.status_string:hover {
+    text-decoration: underline;
+    
+}
+#save_status {
+    cursor:pointer;
+    left: -21px;
+}
+input[name=status] {
+    width:96%;
+}
+
+/*end profile page*/

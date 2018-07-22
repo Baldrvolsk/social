@@ -17,20 +17,32 @@
                     <button class="btn btn-info send_message"  data-toggle="modal" data-target="#exampleModal" style="width: 100%">Отправить сообщение</button>
                 <?php endif;?>
             </div>
-            <div class="col-md-7">
-                <div class="col-md-6"><i class="glyphicon glyphicon-user"></i>V.I.P.</div>
-                <div class="col-md-6">
-                    <?php if($userdata->id == $this->user->id) : ?>
-                    <a href="/profile/edit">Редактировать профиль</a><br />
-                    <?php endif;?>
-                    Last vizit: <?=gmdate('H:i d.m.Y',$userdata->last_login); ?>
+            <div class="col-md-7 content_box info_box">
+                <div class="col-md-6"><i class="glyphicon glyphicon-king"></i>V.I.P.
                 </div>
-                <div class="col-md-12"><?=$userdata->first_name.' '.$userdata->last_name ;?></div>
-                <div class="col-md-12">Тут статус</div>
-                <div class="col-md-12">Тут еще что-то</div>
+
+
+                <div class="col-md-6">
+                   Был(а): <?=gmdate('H:i d.m.Y',$userdata->last_login); ?>
+                </div>
+                <div class="col-md-12"> <i class="glyphicon glyphicon-user"></i><?=$userdata->first_name.' '.$userdata->last_name ;?></div>
+
+                <div class="col-md-12">
+                    <?php //Если страничка юзера то он может менять статус?>
+                    <?php if($userdata->id == $this->user->id) : ?>
+                        <?php if($userdata->text_status == '') : //если статус пустой, то выводить Изменить статус  ?>
+                            <span class="status_string">Изменить статус</span>
+                        <?php else : ?>
+                            <span class="status_string"><?=$userdata->text_status; //Иначе статус?></span>
+                        <?php endif; ?>
+                    <?php else : ?>
+                        <span class="status_string_disabled"><?=$userdata->text_status; ?></span>
+                    <?php endif; ?>
+                </div>
+                <div class="col-md-12">Страна: <?=$userdata->country;?></div>
 
             </div>
-            <div class="col-md-12 thumb-container">
+            <div class="col-md-12 thumb-container content_box">
                 <?php if(count($userdata->photos) != 0): ?>
                 <div class="col-md-2" style="text-align:center;">Мои фотографии <?=count($userdata->photos);?></div>
                     <?php foreach($userdata->photos as $p) : ?>
@@ -83,7 +95,47 @@
             </div>
             <form action="/photos/add_avatar" method="post" enctype="multipart/form-data">
                 <div class="modal-body">
-                    <div class="form-group" id="preview_avatar"></div>
+                    <div class="form-group" id="preview_avatar">
+                        <img id="image" />
+                    </div>
+                    <div class="docs-buttons" style="display:none;">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-primary" data-method="rotate" data-option="-45" title="">
+                                <span class="docs-tooltip" data-toggle="tooltip" data-animation="false" title="" data-original-title="$().cropper(&quot;rotate&quot;, -45)">
+                                    <span class="fa fa-rotate-left">Повернуть влево</span>
+                                </span>
+                            </button>
+                            <button type="button" class="btn btn-primary" data-method="rotate" data-option="45" title="Rotate Right">
+                                <span class="docs-tooltip" data-toggle="tooltip" data-animation="false" title="" data-original-title="$().cropper(&quot;rotate&quot;, 45)">
+                                    <span class="fa fa-rotate-right">Повернуть вправо</span>
+                                </span>
+                            </button>
+                            <!--Увеличить/уменьшить-->
+                            <button type="button" class="btn btn-primary" data-method="zoom" data-option="0.1" title="Zoom In">
+                                <span class="docs-tooltip" data-toggle="tooltip" data-animation="false" title="" data-original-title="$().cropper(&quot;zoom&quot;, 0.1)">
+                                  <span class="glyphicon glyphicon-zoom-in"></span>
+                                </span>
+                            </button>
+                            <button type="button" class="btn btn-primary" data-method="zoom" data-option="-0.1" title="Zoom Out">
+                                <span class="docs-tooltip" data-toggle="tooltip" data-animation="false" title="" data-original-title="$().cropper(&quot;zoom&quot;, -0.1)">
+                                  <span class="glyphicon glyphicon-zoom-out"></span>
+                                </span>
+                            </button>
+                            <!--Отразить горизонталь/вертикаль -->
+                            <button type="button" class="btn btn-primary" data-method="scaleX" data-option="-1" title="Flip Horizontal">
+                                <span class="docs-tooltip" data-toggle="tooltip" data-animation="false" title="" data-original-title="$().cropper(&quot;scaleX&quot;, -1)">
+                                    <span class="glyphicon glyphicon-resize-horizontal"></span>
+                                </span>
+                            </button>
+                            <button type="button" class="btn btn-primary" data-method="scaleY" data-option="-1" title="Flip Vertical">
+                                <span class="docs-tooltip" data-toggle="tooltip" data-animation="false" title="" data-original-title="$().cropper(&quot;scaleY&quot;, -1)">
+                                    <span class="glyphicon glyphicon-resize-vertical"></span>
+                                </span>
+                            </button>
+
+                        </div>
+                    </div>
+
                     <div class="form-group">
                         <label>Выберите аватар:</label>
                         <input type="file" name="photo" class="form-control" />
@@ -91,6 +143,13 @@
                     <div class="form-group">
                         <label>Подпись:</label>
                         <textarea name="description" class="form-control"></textarea>
+                        <input type="hidden" name="dataX" id="dataX" />
+                        <input type="hidden" name="dataY" id="dataY" />
+                        <input type="hidden" name="dataHeight" id="dataHeight" />
+                        <input type="hidden" name="dataWidth" id="dataWidth" />
+                        <input type="hidden" name="dataRotate" id="dataRotate" />
+                        <input type="hidden" name="dataScaleX" id="dataScaleX" />
+                        <input type="hidden" name="dataScaleY" id="dataScaleY" />
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -104,46 +163,4 @@
             <link href="/css/colorbox.css" rel="stylesheet">
             <script type="text/javascript" src="/js/jquery.colorbox-min.js"></script>
             <script type="text/javascript" src="/js/profile.js"></script>
-            <style>
-                .box-crew{
-                    position:relative;
-                    overflow:hidden;
-                }
-
-                .box-crew span{
-                    background-color:rgba(0, 0, 0, 0.4);
-                    bottom:-120px;
-                    transition-duration:0.6s;
-                    padding:52px 0;
-                    position:absolute;
-                    text-align:center;
-                    color:#fff;
-                    font-size:12px;
-                    font-weight:bold;
-                    line-height:16px;
-                    margin:0;
-                    display:block;
-                    width:100%;
-                }
-
-                div.box-crew:hover span{
-                    bottom:0px;
-                }
-                .thumb {
-                    overflow:hidden;
-                    height:120px;
-
-                }
-                .thumb img {
-                    border-radius: 20px;
-                }
-                .thumb-container {
-                    margin-top:20px;
-                    margin-bottom:20px;
-
-                }
-                .avatar {
-                    border-radius: 20px;
-                }
-            </style>
-            <script src="/js/socket.js"></script>
+            <!--<script src="/js/socket.js"></script> -->

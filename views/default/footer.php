@@ -31,8 +31,11 @@
 <!-- Включают все скомпилированные плагины (ниже), или включать отдельные файлы по мере необходимости -->
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/jquery.message.min.js"></script>
-<script src="/js/main.js"></script>
+<script src="/js/cropper.js"></script>
 <link href="/css/jquery.message.css" rel="stylesheet">
+<link href="/css/cropper.css" rel="stylesheet">
+<script src="/js/main.js"></script>
+
 
 </body>
 </html>
