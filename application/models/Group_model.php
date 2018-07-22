@@ -100,7 +100,7 @@ class Group_model extends CI_Model
             ->from($this->com_users_table)
             ->where(array('user_id' => $user_id, 'community_id' => $com_id))
             ->get()->row();
-        return (int)$ret->community_group_id;
+        return (empty($ret))?null:(int)$ret->community_group_id;
     }
 
     public function get_com_rules($group_id, $com_id) {
