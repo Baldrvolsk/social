@@ -25,6 +25,11 @@ class Group_model extends CI_Model
         $this->ion_auth->set_meta($owner_id, $set);
     }
 
+    public function update_group($data, $group_id) {
+        $this->db->where('id', $group_id);
+        return $this->db->update($this->com_table, $data);
+    }
+
     public function follow_group($user_id, $group_id) {
         $data['user_id'] = $user_id;
         $data['community_id'] = $group_id;
@@ -70,6 +75,7 @@ class Group_model extends CI_Model
             ->limit(1)
             ->where('com.id', $group_id)
             ->get()->row();
+        $group->setting = json_decode($group->setting);
         $g_u = $this->db->select('COUNT(user_id) as count')
             ->from($this->com_users_table)
             ->where('community_id', $group_id)
