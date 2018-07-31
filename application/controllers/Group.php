@@ -85,6 +85,7 @@ class Group extends CI_Controller
             $data['name'] = $this->input->post('name');
             $data['slogan'] = $this->input->post('slogan');
             $data['description'] = $this->input->post('description');
+            $data['type'] = $this->input->post('type');
             $data['create_date'] = mdate('%Y-%m-%d %H:%i:%s', now());
 
             //Папка с фотками группы
@@ -103,7 +104,7 @@ class Group extends CI_Controller
 
                 $this->load->library('upload', $config);
                 if ( $this->upload->do_upload('label')) {
-                    $data['label'] = $data['group_dir'].'/'.$this->upload->data('file_name');
+                    $data['label'] = $data['group_dir'].DS.$this->upload->data('file_name');
                     if (!$this->group_model->add_new_group($data, $this->user->id)) {
                         $ret['status'] = "OK";
                         $ret['message'] = 'Группа успешно создана';
@@ -125,15 +126,100 @@ class Group extends CI_Controller
         echo json_encode($ret);
     }
 
+    public function manage($group_id) {
+        $data['group'] = $this->group_model->get_group($group_id);
+        $this->load->view('header', $data);
+        $this->load->view('group/setting');
+        $this->load->view('footer');
+    }
+
+    public function save_group($id) {
+        $this->form_validation->set_error_delimiters('', '');
+        if($this->form_validation->run() === FALSE){
+            $ret['status'] = "ERR";
+            $ret['slogan_err'] = $this->form_validation->error('slogan');
+            $ret['description_err'] = $this->form_validation->error('description');
+            $ret['message'] = 'Проверьте правильность заполнения формы';
+        } else {
+            $data['slogan'] = $this->input->post('slogan');
+            $data['description'] = $this->input->post('description');
+            $data['type'] = $this->input->post('type');
+
+            //Загрузка фото
+            if (!empty($_FILES['label']['name'])) {
+                $group = $this->group_model->get_group($id);
+                $group_dir = $group->group_dir;
+                $config['upload_path'] = WEBROOT.$group_dir;
+                $config['allowed_types'] = 'gif|jpg|png';
+                $config['file_name'] = 'label';
+                $config['max_size'] = 100;
+                $config['max_width'] = 1024;
+                $config['max_height'] = 768;
+
+                $this->load->library('upload', $config);
+                if ( $this->upload->do_upload('label')) {
+                    $data['label'] = $group_dir.DS.$this->upload->data('file_name');
+                    if ($this->group_model->update_group($data, $id)) {
+                        $ret['status'] = "OK";
+                        $ret['message'] = 'Информация о группе успешно обновлена';
+                    } else {
+                        $ret['status'] = "ERR";
+                        $ret['message'] = 'Что-то пошло не так';
+                    }
+                } else {
+                    $ret['status'] = "ERR";
+                    $ret['label_err'] = $this->upload->display_errors('', '');
+                    $ret['message'] = 'Проверьте правильность заполнения формы';
+                }
+            } else {
+                if ($this->group_model->update_group($data, $id)) {
+                    $ret['status'] = "OK";
+                    $ret['message'] = 'Информация о группе успешно обновлена';
+                } else {
+                    $ret['status'] = "ERR";
+                    $ret['message'] = 'Что-то пошло не так';
+                }
+            }
+        }
+        echo json_encode($ret);
+    }
+
+    public function save_setting($id) {
+        $this->form_validation->set_error_delimiters('', '');
+        if($this->form_validation->run() === FALSE){
+            $ret['status'] = "ERR";
+            $ret['wall_err'] = $this->form_validation->error('wall');
+            $ret['albums_err'] = $this->form_validation->error('albums');
+            $ret['event_err'] = $this->form_validation->error('event');
+            $ret['message'] = 'Проверьте правильность заполнения формы';
+        } else {
+            $set['wall'] = $this->input->post('wall');
+            $set['albums'] = $this->input->post('albums');
+            $set['event'] = $this->input->post('event');
+            $data['setting'] = json_encode($set);
+            if ($this->group_model->update_group($data, $id)) {
+                $ret['status'] = "OK";
+                $ret['message'] = 'Информация о группе успешно обновлена';
+            } else {
+                $ret['status'] = "ERR";
+                $ret['message'] = 'Что-то пошло не так. Err0';
+            }
+        }
+        echo json_encode($ret);
+    }
+
     public function check_create_group() {
         $ret = new stdClass();
         $u_m = $this->ion_auth->get_meta($this->user->id, array('last_group_create'));
-        $last_group_create = $u_m->last_group_create;
-        if ($last_group_create === null) {
+        if (empty($u_m)) {
+            $ret->status = true;
+            return $ret;
+        }
+        if ($u_m->last_group_create === null) {
             $ret->status = true;
         } else {
             $dt = date_create();
-            $lgc = date_create($last_group_create);
+            $lgc = date_create($u_m->last_group_create);
             date_add($lgc, new DateInterval($this->config->item('group_create_interval')));
             $ret->status = ($dt > $lgc)?true:false;
             if ($ret->status === false)
@@ -144,15 +230,17 @@ class Group extends CI_Controller
 
     private function get_rules($id) {
         $this->user->com_gr_id = $this->group_model->get_user_com_gr_id($this->user->id, $id);
-        $this->user->com_rules = $this->group_model->get_com_rules($this->user->com_gr_id, $id);
+        if ($this->user->com_gr_id !== null) {
+            $this->user->com_rules = $this->group_model->get_com_rules($this->user->com_gr_id, $id);
+        } else {
+            $this->user->com_rules = null;
+        }
     }
 
     public function load_form($type, $group_id) {
-        $data['group_id'] = $group_id;
+        $data['group'] = $this->group_model->get_group($group_id);
         if ($type === 'change_head_img') {
             $this->load->view('group/change_head_img', $data);
-        } elseif ($type === 'setting') {
-            $this->load->view('group/setting', $data);
         } else {
             echo 'Error';
         }

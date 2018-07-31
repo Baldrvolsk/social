@@ -16,14 +16,20 @@
             <div class="col-md-3">
                 <?php if ($this->user->com_gr_id === 50) : ?>
                     <div class="btn-group">
-                        <button type="button" class="btn btn-info" onclick="load_form('setting', <?=$group->id?>);">
-                            Setting
-                        </button>
+                        <a class="btn btn-info" href="/group/manage/<?=$group->id?>">
+                            Управление
+                        </a>
                     </div>
+                <?php elseif($this->user->com_gr_id !== null && $this->user->com_gr_id <= 10) : ?>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-info" onclick="follow_group(<?=$group->id?>);">
+                        Отписаться
+                    </button>
+                </div>
                 <?php else : ?>
                 <div class="btn-group">
                     <button type="button" class="btn btn-info" onclick="follow_group(<?=$group->id?>);">
-                        Follow
+                        Подписаться
                     </button>
                 </div>
                 <?php endif; ?>
@@ -101,11 +107,26 @@
 
 <?=$posts?>
 
+<div class="row row-border">
+    <div class="col-md-12">
+        <div class="row">
+            <?php
+            ob_start();
+            var_dump($this->user);
+            $s= ob_get_contents();
+            ob_end_clean();
+            echo '<pre>'.$s.'</pre>';
+            ?>
+        </div>
+    </div>
+</div>
 <style>
     .row-border {
         border-radius: 20px;
         border: #a3a3a3 1px solid;
         margin-bottom: 20px;
+        background-color: #fff;
+        overflow: hidden;
     }
     .head-img {
         width: 100%;
