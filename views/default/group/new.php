@@ -38,7 +38,7 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="label" class="col-sm-3 control-label">Фото группы</label>
+        <label for="label" class="col-sm-3 control-label">Аватар группы</label>
         <div class="col-sm-9">
             <input type="file" name="label" class="form-control-file" id="label"
                    accept="image/jpeg,image/png, image/gif" required data-toggle="tooltip" data-placement="right"
@@ -49,7 +49,7 @@
     <div class="form-group">
         <label for="type" class="col-sm-3 control-label">Тип группы</label>
         <div class="col-sm-9">
-            <select id="type" class="form-control">
+            <select id="type" name="type" class="form-control">
                 <option value="open" <?php echo  set_select('type', 'open', TRUE); ?>>Открытая</option>
                 <option value="close" <?php echo  set_select('type', 'close'); ?>>Закрытая</option>
             </select>
