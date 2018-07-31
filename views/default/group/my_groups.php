@@ -102,6 +102,7 @@
         formData.append('slogan', $("[name='slogan']").val());
         formData.append('description', $("[name='description']").val());
         formData.append('label', $("[name='label']")[0].files[0]);
+        formData.append('type', $("[name='type'] :selected").val());
 
         //Begin the ajax call
         $.ajax({
@@ -132,6 +133,7 @@
                     $('#slogan_err').html(json.slogan_err);
                     $('#description_err').html(json.description_err);
                     $('#label_err').html(json.label_err);
+                    $('#type_err').html(json.type_err);
                 }
             },
 
