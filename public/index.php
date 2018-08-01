@@ -21,16 +21,20 @@ include '../CIPS.php';
 switch ($_SERVER['HTTP_HOST'])
 {
     case "production.com":
-        define('ENVIRONMENT','production');
+        define('ENVIRONMENT', 'production');
+        define('DEBUG', false);
         break;
     case "rusimperia.ru":
-        define('ENVIRONMENT','testing');
+        define('ENVIRONMENT', 'testing');
+        define('DEBUG', false);
         break;
     case "social.org":
-        define('ENVIRONMENT','dev-baldr');
+        define('ENVIRONMENT', 'dev-baldr');
+        define('DEBUG', true);
         break;    
     default:
-        define('ENVIRONMENT','development');
+        define('ENVIRONMENT', 'development');
+        define('DEBUG', false);
 }
 
 /*
