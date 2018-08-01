@@ -87,7 +87,7 @@ class Group extends CI_Controller
             $data['description'] = $this->input->post('description');
             $data['type'] = $this->input->post('type');
             $data['create_date'] = mdate('%Y-%m-%d %H:%i:%s', now());
-
+            $data['setting'] = json_encode($this->config->item('group_setting'));
             //Папка с фотками группы
             $data['group_dir'] = DS.'uploads'.DS.'group'.DS.md5($data['name']);
             if (!is_dir(WEBROOT.$data['group_dir'])) {
