@@ -106,8 +106,8 @@
 </div>
 
 <?=$posts?>
-
-<div class="row row-border">
+<?php if (DEBUG) : ?>
+<div class="row">
     <div class="col-md-12">
         <div class="row">
             <?php
@@ -120,6 +120,7 @@
         </div>
     </div>
 </div>
+<?php endif; ?>
 <style>
     .row-border {
         border-radius: 20px;
