@@ -5,8 +5,7 @@
     </a>
 </div>
 <ul class="nav nav-tabs">
-    <li class="active"><a href="#general" data-toggle="tab">Основные</a></li>
-    <li><a href="#setting" data-toggle="tab">Настройки</a></li>
+    <li class="active"><a href="#general" data-toggle="tab">Основные настройки</a></li>
     <li><a href="#rules" data-toggle="tab">Привелегии</a></li>
     <li><a href="#admin" data-toggle="tab">Администрация</a></li>
 </ul>
@@ -128,15 +127,47 @@
             </button>
         </form>
     </div>
-    <div class="tab-pane fade" id="setting">
-        <div class="row">
 
-        </div>
-    </div>
     <div class="tab-pane fade" id="rules">
-        <div class="row">
-
-        </div>
+        <p>Владелец группы обладает всеми правами. Права участников настраиваются в основных настройках</p>
+        <form class="row form-horizontal" id="group-info" enctype="multipart/form-data">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Разрешение</th>
+                        <th>Администратор</th>
+                        <th>Редактор</th>
+                        <th>Модератор</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
     </div>
     <div class="tab-pane fade" id="admin">
         <div class="row">
@@ -144,7 +175,7 @@
         </div>
     </div>
 </div>
-
+<?php if (DEBUG) : ?>
 <div class="row">
     <div class="col-md-12">
         <div class="row">
@@ -158,7 +189,7 @@
         </div>
     </div>
 </div>
-
+<?php endif; ?>
 <script>
     function saveGroupInfo(id) {
         var formData = new FormData();
