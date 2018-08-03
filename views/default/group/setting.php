@@ -130,7 +130,7 @@
 
     <div class="tab-pane fade" id="rules">
         <p>Владелец группы обладает всеми правами. Права участников настраиваются в основных настройках</p>
-        <form class="row form-horizontal" id="group-info" enctype="multipart/form-data">
+        <form class="row form-horizontal" id="group-rules">
             <table class="table">
                 <thead>
                     <tr>
@@ -141,32 +141,32 @@
                     </tr>
                 </thead>
                 <tbody>
+                <?php foreach ($group->rules as $key => $row) : ?>
                     <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td><?=$row->title?>
+                            <input type="hidden" name="<?=$key?>_title" value="<?=$row->title?>"/>
+                            <input type="hidden" name="<?=$key?>_type" value="<?=$row->type?>"/>
+                            <input type="hidden" name="<?=$key?>_o" value="<?=$row->o?>"/>
+                            <input type="hidden" name="<?=$key?>_u" value="<?=$row->u?>"/>
+                        </td>
+                        <td>
+                            <input type="checkbox" name="<?=$key?>_a"<?=($row->a)?' checked':''?>/>
+                        </td>
+                        <td>
+                            <input type="checkbox" name="<?=$key?>_e"<?=($row->e)?' checked':''?>/>
+                        </td>
+                        <td>
+                            <input type="checkbox" name="<?=$key?>_m"<?=($row->m)?' checked':''?>/>
+                        </td>
                     </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
+                <?php endforeach; ?>
                 </tbody>
             </table>
+            <div id="status" class="text-center"></div>
+            <button type="button" class="center-block btn btn-success btn-md"
+                    onclick="saveGroupRules('<?=$group->id?>');" >
+                Сохранить
+            </button>
         </form>
     </div>
     <div class="tab-pane fade" id="admin">
@@ -292,6 +292,49 @@
 
             error: function () {
                 $('#group-setting #status').addClass("bg-warning")
+                    .removeClass("bg-danger bg-info bg-success")
+                    .html('<span class="text-danger">Что-то пошло не так. Попробуйте позже.</span>')
+                    .css({'margin-bottom':'10px','padding':'10px 0'});
+            }
+        });
+    }
+
+    function saveGroupRules(id) {
+        var formData = $('#group-rules').serialize();
+
+        //Begin the ajax call
+        $.ajax({
+            url: "/group/save_rules/"+id,
+            type: "POST",
+            data: formData,
+            dataType: "json",
+
+            beforeSend: function() {
+                $('#group-rules #status').addClass("bg-info")
+                    .removeClass("bg-danger bg-success bg-warning")
+                    .html('<span class="glyphicon glyphicon-refresh"></span>')
+                    .css({'margin-bottom':'10px','padding':'10px 0'});
+            },
+
+            success: function (json) {
+                if (json.status == "OK") { //ошибок не было
+                    $('#group-rules #status').addClass("bg-success")
+                        .removeClass("bg-danger bg-info bg-warning")
+                        .html(json.message)
+                        .css({'margin-bottom':'10px','padding':'10px 0'});
+                    setTimeout(function() {
+                        $('#group-rules #status').html('').css({'margin-bottom':'0','padding':'0'});
+                    }, 2000);
+                } else { //ошибки были, показываем их описание
+                    $('#group-rules #status').addClass("bg-danger")
+                        .removeClass("bg-success bg-info bg-warning")
+                        .html(json.message)
+                        .css({'margin-bottom':'10px','padding':'10px 0'});
+                }
+            },
+
+            error: function () {
+                $('#group-rules #status').addClass("bg-warning")
                     .removeClass("bg-danger bg-info bg-success")
                     .html('<span class="text-danger">Что-то пошло не так. Попробуйте позже.</span>')
                     .css({'margin-bottom':'10px','padding':'10px 0'});

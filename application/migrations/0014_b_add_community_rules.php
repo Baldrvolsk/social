@@ -3,12 +3,10 @@
 class Migration_add_community_rules extends CI_Migration {
 
     public function up() {
-        $this->dbforge->add_field(array(
-            'community_id' => array('type' => 'INT'),
-            'community_group_id' => array('type' => 'INT'),
+        $fields = array(
             'rules' => array('type' => 'JSON')
-        ));
-        $this->dbforge->create_table('community_rules');
+        );
+        $this->dbforge->add_column('community', $fields);
     }
 
     public function down() {

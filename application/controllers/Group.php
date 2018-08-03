@@ -88,6 +88,7 @@ class Group extends CI_Controller
             $data['type'] = $this->input->post('type');
             $data['create_date'] = mdate('%Y-%m-%d %H:%i:%s', now());
             $data['setting'] = json_encode($this->config->item('group_setting'));
+            $data['rules'] = json_encode($this->config->item('group_rules'));
             //Папка с фотками группы
             $data['group_dir'] = DS.'uploads'.DS.'group'.DS.md5($data['name']);
             if (!is_dir(WEBROOT.$data['group_dir'])) {
@@ -103,9 +104,9 @@ class Group extends CI_Controller
                 $config['max_height'] = 768;
 
                 $this->load->library('upload', $config);
-                if ( $this->upload->do_upload('label')) {
+                if ($this->upload->do_upload('label')) {
                     $data['label'] = $data['group_dir'].DS.$this->upload->data('file_name');
-                    if (!$this->group_model->add_new_group($data, $this->user->id)) {
+                    if ($this->group_model->add_new_group($data, $this->user->id)) {
                         $ret['status'] = "OK";
                         $ret['message'] = 'Группа успешно создана';
                     } else {
@@ -230,11 +231,36 @@ class Group extends CI_Controller
 
     private function get_rules($id) {
         $this->user->com_gr_id = $this->group_model->get_user_com_gr_id($this->user->id, $id);
-        if ($this->user->com_gr_id !== null) {
-            $this->user->com_rules = $this->group_model->get_com_rules($this->user->com_gr_id, $id);
-        } else {
-            $this->user->com_rules = null;
+    }
+
+    public function save_rules($id) {
+        $data = array();
+        $pre_data = $this->input->post();
+        foreach ($pre_data as $key => $value) {
+            $key = explode('_', $key);
+            if (empty($data[$key['0']])) $data[$key['0']] = array();
+            if (in_array($key['1'], array('o', 'a', 'e', 'm', 'u'))) {
+                $value = ($value === 'on' || $value === 1) ? true : false;
+            }
+            $data[$key['0']] += array($key['1'] => $value);
         }
+        foreach ($data as $key => $value) {
+            $keys = array('o', 'a', 'e', 'm', 'u');
+            foreach ($keys as $check) {
+                if (!array_key_exists($check, $value)) {
+                    $data[$key] += array($check => false);
+                }
+            }
+        }
+        $d['rules'] = json_encode($data);
+        if ($this->group_model->update_group($d, $id)) {
+            $ret['status'] = "OK";
+            $ret['message'] = 'Информация о группе успешно обновлена';
+        } else {
+            $ret['status'] = "ERR";
+            $ret['message'] = 'Что-то пошло не так. Err0';
+        }
+        echo json_encode($ret);
     }
 
     public function load_form($type, $group_id) {
