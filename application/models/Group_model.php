@@ -15,14 +15,17 @@ class Group_model extends CI_Model
     }
 
     public function add_new_group($data, $owner_id) {
-        $this->db->insert($this->com_table, $data);
-        $u_data['user_id'] = $owner_id;
-        $u_data['community_id'] = $this->db->insert_id();
-        $u_data['community_group_id'] = 50;
-        $u_data['contacts'] = 1;
-        $this->db->insert($this->com_users_table, $u_data);
-        $set = array('last_group_create' => $data['create_date']);
-        $this->ion_auth->set_meta($owner_id, $set);
+        if ($this->db->insert($this->com_table, $data)) {
+            $ret = true;
+            $u_data['user_id'] = $owner_id;
+            $u_data['community_id'] = $this->db->insert_id();
+            $u_data['community_group_id'] = 50;
+            $u_data['contacts'] = 1;
+            if (!$this->db->insert($this->com_users_table, $u_data)) $ret = false;
+            $set = array('last_group_create' => $data['create_date']);
+            $this->ion_auth->set_meta($owner_id, $set);
+        } else $ret = false;
+        return $ret;
     }
 
     public function update_group($data, $group_id) {
@@ -76,6 +79,7 @@ class Group_model extends CI_Model
             ->where('com.id', $group_id)
             ->get()->row();
         $group->setting = json_decode($group->setting);
+        $group->rules = json_decode($group->rules);
         $g_u = $this->db->select('COUNT(user_id) as count')
             ->from($this->com_users_table)
             ->where('community_id', $group_id)
@@ -107,14 +111,6 @@ class Group_model extends CI_Model
             ->where(array('user_id' => $user_id, 'community_id' => $com_id))
             ->get()->row();
         return (empty($ret))?null:(int)$ret->community_group_id;
-    }
-
-    public function get_com_rules($group_id, $com_id) {
-        $ret = $this->db->select('rules')
-                        ->from($this->com_rules)
-                        ->where(array('community_id' => $com_id, 'community_group_id' => $group_id))
-                        ->get()->row();
-        return (empty($ret))?null:json_decode($ret->rules);
     }
 
     public function check_group($id) {
