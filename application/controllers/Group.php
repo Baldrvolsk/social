@@ -127,8 +127,49 @@ class Group extends CI_Controller
         echo json_encode($ret);
     }
 
+    public function remove_group($id) {
+        $del_interval = new DateInterval($this->config->item('group_del_time'));
+        $data['delete_time'] = date_add(date_create(), $del_interval)->format('Y-m-d H:i:s');
+        if ($this->group_model->update_group($data, $id)) {
+            $ret['status'] = "OK";
+            $ret['message'] = 'Группа будет полностью удалена через '.$del_interval->format('%d дней');
+        } else {
+            $ret['status'] = "ERR";
+            $ret['message'] = 'Что-то пошло не так';
+        }
+        echo json_encode($ret);
+    }
+
+    public function check_transfer($id) {
+        $createStatus = $this->check_create_group($id)->status;
+        $transferPay = $this->config->item('group_transfer_pay');
+        $userLeptas = $this->ion_auth->get_meta($id, array('leptas'))->leptas;
+        
+        if ($createStatus && $userLeptas >= $transferPay) {
+            $ret['status'] = "OK";
+        } else {
+            $ret['status'] = "ERR";
+            $ret['message'] = 'У администратора которому передается группа не должно быть заблокировано создание'
+                              .' группы, а также на балансе должна быть сумма достаточная для оплаты передачи';
+        }
+        echo json_encode($ret);
+    }
+
+    public function group_transfer($group_id) {
+        $new_owner = $this->input->post('transfer');
+        if ($this->group_model->transfer($group_id, $new_owner)) {
+            $ret['status'] = "OK";
+            $ret['message'] = 'Группа успешно передана новому владельцу';
+        } else {
+            $ret['status'] = "ERR";
+            $ret['message'] = 'Что-то пошло не так';
+        }
+        echo json_encode($ret);
+    }
+
     public function manage($group_id) {
         $data['group'] = $this->group_model->get_group($group_id);
+        $data['users'] = $this->group_model->get_users($group_id);
         $this->load->view('header', $data);
         $this->load->view('group/setting');
         $this->load->view('footer');
@@ -209,9 +250,10 @@ class Group extends CI_Controller
         echo json_encode($ret);
     }
 
-    public function check_create_group() {
+    public function check_create_group($id = null) {
         $ret = new stdClass();
-        $u_m = $this->ion_auth->get_meta($this->user->id, array('last_group_create'));
+        $userId = (isset($id))?$id:$this->user->id;
+        $u_m = $this->ion_auth->get_meta($userId, array('last_group_create'));
         if (empty($u_m)) {
             $ret->status = true;
             return $ret;

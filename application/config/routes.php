@@ -19,6 +19,7 @@ $route['friends/add/(:num)'] = 'friends/add_friend/$1/0';
 $route['profile/(:num)'] = 'profile/index/$1';
 $route['post/add/(:num)'] = 'post/add_post/$1';
 $route['webhook/(:any)'] = 'webhook/deploy/$1';
+
 $route['default_controller'] = 'welcome';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

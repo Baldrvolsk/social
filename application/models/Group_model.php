@@ -12,6 +12,7 @@ class Group_model extends CI_Model
         $this->load->helper('array_helper');
         $this->load->model('like_model');
         $this->like_model->set_type('community');
+        $this->config->load('group');
     }
 
     public function add_new_group($data, $owner_id) {
@@ -23,7 +24,10 @@ class Group_model extends CI_Model
             $u_data['contacts'] = 1;
             if (!$this->db->insert($this->com_users_table, $u_data)) $ret = false;
             $set = array('last_group_create' => $data['create_date']);
-            $this->ion_auth->set_meta($owner_id, $set);
+            if (!$this->ion_auth->set_meta($owner_id, $set)) $ret = false;
+            $this->db->set('leptas', 'leptas-'.$this->config->item('group_pay'), FALSE);
+            $this->db->where('id', $owner_id);
+            if (!$this->db->update('users_meta')) $ret = false;
         } else $ret = false;
         return $ret;
     }
@@ -31,6 +35,10 @@ class Group_model extends CI_Model
     public function update_group($data, $group_id) {
         $this->db->where('id', $group_id);
         return $this->db->update($this->com_table, $data);
+    }
+
+    public function transfer($group_id, $new_owner) {
+
     }
 
     public function follow_group($user_id, $group_id) {
@@ -89,20 +97,36 @@ class Group_model extends CI_Model
     }
 
     public function get_contacts($group_id) {
-        $group = $this->db->select('c_u.*, 
+        $contacts = $this->db->select('c_u.*, 
                 concat(u.first_name," ",u.last_name) as full_name_user,
                 u.company as photo, c_g.*')
             ->from($this->com_users_table.' as c_u')
             ->join('users as u',
-                'u.id = c_u.user_id',
-                'left')
+                   'u.id = c_u.user_id',
+                   'left')
             ->join($this->com_group_table.' as c_g',
                    'c_g.id = c_u.community_group_id',
                    'left')
             ->where('c_u.community_id', $group_id)
             ->where('c_u.contacts', 1)
             ->get()->result();
-        return $group;
+        return $contacts;
+    }
+
+    public function get_users($group_id) {
+        $users = $this->db->select('c_u.*, 
+                concat(u.first_name," ",u.last_name) as full_name_user,
+                u.company as photo, c_g.*')
+            ->from($this->com_users_table.' as c_u')
+            ->join('users as u',
+                   'u.id = c_u.user_id',
+                   'left')
+            ->join($this->com_group_table.' as c_g',
+                   'c_g.id = c_u.community_group_id',
+                   'left')
+            ->where('c_u.community_id', $group_id)
+            ->get()->result();
+        return $users;
     }
 
     public function get_user_com_gr_id($user_id, $com_id) {
@@ -117,5 +141,4 @@ class Group_model extends CI_Model
         $check = $this->db->get_where($this->com_table, 'id = '.$id, 1);
         return (empty($check))?false:true;
     }
-
 }

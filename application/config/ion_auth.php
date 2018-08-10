@@ -103,8 +103,9 @@ $config['max_password_length']        = 20;                  // Maximum Allowed 
 $config['email_activation']           = FALSE;               // Email Activation for registration
 $config['manual_activation']          = FALSE;               // Manual Activation for registration
 $config['remember_users']             = TRUE;                // Allow users to be remembered and enable auto-login
-$config['user_expire']                = 86500;               // How long to remember the user (seconds). Set to zero for no expiration
-$config['user_extend_on_login']       = FALSE;               // Extend the users cookies every time they auto-login
+$config['user_expire']                = 86400;               // How long to remember the user (seconds). Set to zero
+// for no expiration
+$config['user_extend_on_login']       = TRUE;               // Extend the users cookies every time they auto-login
 $config['track_login_attempts']       = TRUE;                // Track the number of failed login attempts for each user or ip.
 $config['track_login_ip_address']     = TRUE;                // Track login attempts by IP Address, if FALSE will track based on identity. (Default: TRUE)
 $config['maximum_login_attempts']     = 3;                   // The maximum number of failed login attempts.
@@ -183,7 +184,7 @@ $config['email_forgot_password_complete'] = 'new_password.tpl.php';
  | fbaa5e216d163a02ae630ab1a43372635dd374c0 with default salt.
  */
 $config['salt_length'] = 22;
-$config['store_salt']  = FALSE;
+$config['store_salt']  = TRUE;
 
 /*
  | -------------------------------------------------------------------------
