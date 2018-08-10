@@ -2,9 +2,13 @@
 //$config['group_'] = ;
 
 // стоимость создания группы
-$config['group_cost'] = 'u';
+$config['group_pay'] = '10';
+// стоимость создания группы
+$config['group_transfer_pay'] = '10';
 //время блокировки создания групп в формате DateInterval
 $config['group_create_interval'] = 'P1M';
+//время до удаления группы в формате DateInterval
+$config['group_del_time'] = 'P14D';
 // настройки группы по умолчанию
 $config['group_setting'] = array('wall' => 'open', 'albums' => 'open', 'event' => 'open');
 //правила для групп
