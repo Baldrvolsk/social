@@ -4,19 +4,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Register extends CI_Controller
 {
 
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
         $this->load->library('form_validation');
     }
 
-    public function index()
-    {
+    public function index() {
         $this->form_validation->set_rules('login', 'Логин', 'required|min_length[5]|is_unique[users.username]');
         $this->form_validation->set_rules('first_name', 'Имя', 'required|min_length[3]');
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[users.email]');
-        $this->form_validation->set_rules('password', 'Пароль', 'required|min_length[4]');
-        $this->form_validation->set_rules('password_confirm', 'Подтверждение пароля', 'required|min_length[4]');
         //Если есть поле с фоткой гугла
         if($this->input->post('google_photo')) {
 
@@ -29,16 +25,23 @@ class Register extends CI_Controller
             $this->load->view('auth/register');
             $this->load->view('footer');
         } else {
+            $password = bin2hex(random_bytes(6));
             //Создание пользователя
+            $gender = $this->input->post('gender');
+            if ($gender === 'null') $gender = null;
             $additional_data = array(
                 'first_name' => $this->input->post('first_name'),
                 'last_name' => $this->input->post('last_name'),
-                //'gender' => $this->input->post('gender'),
+                'gender' => $gender,
                 'country' => $this->input->post('country'),
                 );
             $group = array('2');
-            $user_id = $this->ion_auth->register($this->input->post('login'), $this->input->post('password'), $this->input->post('email'),$additional_data , $group);
-            $this->ion_auth->login($this->input->post('email'),$this->input->post('password'),true);
+            $user_id = $this->ion_auth->register($this->input->post('login'),
+                                                 $password,
+                                                 $this->input->post('email'),
+                                                 $additional_data,
+                                                 $group);
+            $this->ion_auth->login($this->input->post('email'),$password,true);
             //Папка с фотками юзера
             $this->load->model('photos_model');
             //Создание альбомов профиля и сохраненных фото
