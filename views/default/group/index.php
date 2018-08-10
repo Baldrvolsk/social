@@ -125,19 +125,28 @@
             processData: false,
 
             beforeSend: function() {
-                $('#status').addClass("bg-info").removeClass("bg-danger bg-success bg-warning").html('<span class="glyphicon glyphicon-refresh"' +
-                    '></span>').css({'margin-bottom':'10px','padding':'10px 0'});
+                $('#status').addClass("bg-info")
+                            .removeClass("bg-danger bg-success bg-warning")
+                            .html('<span class="glyphicon glyphicon-refresh"></span>)
+                            .css({'margin-bottom':'10px','padding':'10px 0'});
             },
 
             success: function (json) {
                 //ошибок не было
                 if (json.status == "OK") {
-                    $('#status').addClass("bg-success").removeClass("bg-danger bg-info bg-warning").html(json.message).css({'margin-bottom':'10px','padding':'10px 0'});
+                    $('#status').addClass("bg-success")
+                                .removeClass("bg-danger bg-info bg-warning").html(json.message)
+                                .css({'margin-bottom':'10px','padding':'10px 0'});
 
                 }
                 //ошибки были, показываем их описание
                 else {
-                    $('#status').addClass("bg-danger").removeClass("bg-success bg-info bg-warning").html(json.message).css({'margin-bottom':'10px','padding':'10px 0'});
+                    $('#status').addClass("bg-danger")
+                                .removeClass("bg-success bg-info bg-warning")
+                                .html(json.message+'<s'+'cript>' +
+                                    'setTimeout(function(){location.reload()}, 2e3)' +
+                                    '</s'+'cript>')
+                                .css({'margin-bottom':'10px','padding':'10px 0'});
 
                     $('#name_err').html(json.name_err);
                     $('#slogan_err').html(json.slogan_err);
@@ -148,7 +157,10 @@
             },
 
             error: function (r) {
-                $('#status').addClass("bg-warning").removeClass("bg-danger bg-info bg-success").html('<span class="text-danger">Что-то пошло не так. Попробуйте позже.</span>').css({'margin-bottom':'10px','padding':'10px 0'});
+                $('#status').addClass("bg-warning")
+                            .removeClass("bg-danger bg-info bg-success")
+                            .html('<span class="text-danger">Что-то пошло не так. Попробуйте позже.</span>')
+                            .css({'margin-bottom':'10px','padding':'10px 0'});
             }
         });
     }
