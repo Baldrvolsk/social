@@ -11,6 +11,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
+
 $route['group/(:num)'] = 'group/view_group/$1';
 $route['my_groups'] = 'group/my_groups';
 $route['groups'] = 'group/index';
@@ -20,6 +21,10 @@ $route['profile/(:num)'] = 'profile/index/$1';
 $route['post/add/(:num)'] = 'post/add_post/$1';
 $route['webhook/(:any)'] = 'webhook/deploy/$1';
 
-$route['default_controller'] = 'welcome';
+// static pages
+$route['rules'] = 'page/index/rules';
+$route['for_investors'] = 'page/index/for_investors';
+// default route
+$route['default_controller'] = 'by_default';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

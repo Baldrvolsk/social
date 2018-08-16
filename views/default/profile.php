@@ -160,7 +160,7 @@
         </div>
     </div>
 </div>
-            <link href="/css/colorbox.css" rel="stylesheet">
-            <script type="text/javascript" src="/js/jquery.colorbox-min.js"></script>
-            <script type="text/javascript" src="/js/profile.js"></script>
+            <link href="/assets/css/colorbox.css" rel="stylesheet">
+            <script type="text/javascript" src="/assets/js/jquery.colorbox-min.js"></script>
+            <script type="text/javascript" src="/assets/js/profile.js"></script>
             <!--<script src="/js/socket.js"></script> -->

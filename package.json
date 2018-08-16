@@ -1,0 +1,26 @@
+{
+    "name": "rusimperia",
+    "title": "rusimperia",
+    "description": "Сайт rusimperia.ru",
+    "version": "",
+    "homepage": "https://rusimperia.ru",
+    "license": "UNLICENSED",
+    "author": {
+        "name": "rusimperia.ru",
+        "url": "https://rusimperia.ru"
+    },
+    "keywords": [
+        "rusimperia"
+    ],
+    "dependencies": {
+        "grunt": "^1.0.2"
+    },
+    "devDependencies": {
+        "grunt-autoprefixer": "^3.0.4",
+        "grunt-contrib-concat": "^1.0.1",
+        "grunt-contrib-cssmin": "^2.2.0",
+        "grunt-contrib-jshint": "^1.1.0",
+        "grunt-contrib-uglify": "^3.3.0",
+        "grunt-contrib-watch": "^1.0.0"
+    }
+}

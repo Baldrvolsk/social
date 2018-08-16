@@ -6,16 +6,28 @@ class Login extends CI_Controller
 
     public function __construct() {
         parent::__construct();
-        $this->load->library('form_validation');
-        $this->load->library('google');
-
         if ($this->ion_auth->logged_in()) {
-            // redirect them to the login page
-            redirect('profile', 'refresh');
+            // redirect to default page
+            redirect($this->config->item('site_default_page'), 'refresh');
         }
+        $this->load->library('google');
+        $this->load->library('theme');
     }
 
     public function index() {
+        $data['loginURL'] = $this->google->loginURL();
+
+        $this->theme
+            ->master('auth')
+            ->layout('auth')
+            ->title('Страница авторизации')
+            ->add_partial('auth_header')
+            ->load('auth/login', $data);
+    }
+
+    public function auth_pass() {
+        if (!DEBUG) return;
+        $this->load->library('form_validation');
         $this->form_validation->set_rules('identity',
                                           str_replace(':', '', $this->lang->line('login_identity_label')),
                                           'required');
@@ -60,18 +72,35 @@ class Login extends CI_Controller
             }
             //get user info from google
             $gpInfo = $this->google->getUserInfo();
-            if (empty($gpInfo['gender'])) $gpInfo['gender'] = null;
+
             if ($this->ion_auth->email_check($gpInfo['email'])) {
                 $this->ion_auth->google_login($gpInfo['email']);
                 redirect('profile');
             } else {
+                if (empty($gpInfo['gender'])) $gpInfo['gender'] = null;
                 $data['google_info'] = $gpInfo;
                 $tmp = explode('@', $gpInfo['email']);
                 $data['google_info']['login'] = current($tmp);
-                $this->load->view('header', $data);
-                $this->load->view('auth/google_register');
-                $this->load->view('footer');
+                /*$data['google_info'] = array(
+                  'email' => 'test@example.com',
+                  'login' => 'test',
+                  'given_name' => 'Ivan',
+                  'family_name' => 'Ivanov',
+                  'picture' => '//placehold.it/100x100/CCCCCC/969696&amp;text=advertising',
+                  'gender' => null,
+                  'locale' => 'ru'
+                );*/
+
+                $this->theme
+                    ->title('Страница регистрации')
+                    ->add_partial('header')
+                    ->add_partial('l_sidebar')
+                    ->add_partial('r_sidebar')
+                    ->add_partial('footer')
+                    ->load('auth/register', $data);
             }
+        } else {
+            redirect('auth/login');
         }
     }
 }

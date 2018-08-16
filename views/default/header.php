@@ -8,8 +8,8 @@
     <title></title>
 
     <!-- Bootstrap -->
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/css/main.css" rel="stylesheet">
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/css/main.css" rel="stylesheet">
 
     <!-- на jQuery (необходим для Bootstrap - х JavaScript плагины) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -22,68 +22,68 @@
 </head>
 <body>
 <?php if ($this->ion_auth->logged_in()) : ?>
-<div class="container-fluid main_logo"></div>
+    <div class="container-fluid main_logo"></div>
 
-<div class="container">
-<nav class="navbar">
+    <div class="container">
+    <nav class="navbar">
 
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-        </div>
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse"  id="main_menu">
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="/profile">Я</a></li>
-                <li class=""><a href="/people">Люди</a></li>
-                <li class=""><a href="/groups">Группы</a></li>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse"  id="main_menu">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="/profile">Я</a></li>
+                    <li class=""><a href="/people">Люди</a></li>
+                    <li class=""><a href="/groups">Группы</a></li>
 
-            </ul>
-            <form class="navbar-form navbar-left">
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Поиск">
-                </div>
-                <button type="submit" class="btn btn-default">Submit</button>
-            </form>
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">Правила</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Настройки <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="/profile/edit">Редактировать профиль</a></li>
+                </ul>
+                <form class="navbar-form navbar-left">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Поиск">
+                    </div>
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </form>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">Правила</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Настройки <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/profile/edit">Редактировать профиль</a></li>
 
-                    </ul>
-                </li>
-                <li><a href="/auth/logout">Выйти</a></li>
-                <li><a href="#">RSS+</a></li>
-            </ul>
-        </div><!-- /.navbar-collapse -->
+                        </ul>
+                    </li>
+                    <li><a href="/auth/logout">Выйти</a></li>
+                    <li><a href="#">RSS+</a></li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
 
-</nav>
-</div>
-<div class="container">
-    <div class="row">
-        <div class="col-md-2">
-            <ul class="nav nav-pills nav-stacked">
-                <li role="presentation"><a href="/friends">Contacts +2</a></li>
-                <li role="presentation"><a href="/chat">Messages +15</a></li>
-                <li role="presentation"><a href="/photos">Photos</a></li>
-                <li role="presentation"><a href="#">News +257</a></li>
-                <li role="presentation"><a href="/my_groups">My groups +3</a></li>
-                <li role="presentation"><a href="#">D +16</a></li>
-                <li role="presentation">Leptas: 10.000</li>
-            </ul>
-        </div>
-        <div class="col-md-8">
+    </nav>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2">
+                <ul class="nav nav-pills nav-stacked">
+                    <li role="presentation"><a href="/friends">Contacts +2</a></li>
+                    <li role="presentation"><a href="/chat">Messages +15</a></li>
+                    <li role="presentation"><a href="/photos">Photos</a></li>
+                    <li role="presentation"><a href="#">News +257</a></li>
+                    <li role="presentation"><a href="/my_groups">My groups +3</a></li>
+                    <li role="presentation"><a href="#">D +16</a></li>
+                    <li role="presentation">Leptas: 10.000</li>
+                </ul>
+            </div>
+            <div class="col-md-8">
 <?php else: ?>
             <div class="main_logo_big">
-                <img src="/img/main_logo_big.png" />
+                <img src="/assets/img/main_logo_big.png" />
             </div>
 
             <div class="container">

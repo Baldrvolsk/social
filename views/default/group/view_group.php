@@ -112,7 +112,7 @@
         <div class="row">
             <?php
             ob_start();
-            var_dump($this->user);
+            var_dump($this->router->user_lang);
             $s= ob_get_contents();
             ob_end_clean();
             echo '<pre>'.$s.'</pre>';

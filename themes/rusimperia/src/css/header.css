@@ -1,0 +1,41 @@
+.main-header {
+    background: url("/assets/img/main_head.jpg") center no-repeat;
+    background-size: auto 100%;
+}
+
+.nav {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 100%;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-no-auth {
+    justify-content: flex-end;
+}
+
+.nav li {
+    margin: 0 .5rem;
+}
+
+.nav li:last-child {
+    margin-left: 5rem;
+    margin-right: 1rem;
+}
+
+.nav a, .nav a:hover, .nav a:focus, .nav a:visited {
+    display: block;
+    padding: 11px 10px;
+    line-height: 1;
+    font-size: 1.6rem;
+
+    color: #fff;
+    text-decoration: none;
+}
+
+.nav .active a {
+    color: #ff9900;
+}

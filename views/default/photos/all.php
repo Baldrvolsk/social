@@ -86,6 +86,6 @@
         </div>
     </div>
 </div>
-    <link href="/css/colorbox.css" rel="stylesheet">
-    <script type="text/javascript" src="/js/jquery.colorbox-min.js"></script>
-    <script type="text/javascript" src="/js/photos.js"></script>
+    <link href="/assets/css/colorbox.css" rel="stylesheet">
+    <script type="text/javascript" src="/assets/js/jquery.colorbox-min.js"></script>
+    <script type="text/javascript" src="/assets/js/photos.js"></script>

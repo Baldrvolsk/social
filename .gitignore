@@ -1,6 +1,17 @@
+# файлы собираемые на сервере
+/package-lock.json
+/node_modules/*
+/build/*
+public/assets/css/admin.min.css
+public/assets/css/auth.min.css
+public/assets/css/common.min.css
+public/assets/css/site.min.css
+public/assets/js/all_lib.min.js
+
+
 .DS_Store
 application/cache/*
-!application/cache/index.html
+
 
 application/logs/*
 !application/logs/index.html
