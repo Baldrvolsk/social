@@ -13,14 +13,15 @@ class By_Default extends CI_Controller
             // redirect to default page
             redirect($this->config->item('site_default_page'));
         } else {
-            $this->load->library('google');
+            /*$this->load->library('google');
             $data['loginURL'] = $this->google->loginURL();
             $this->theme
                 ->master('auth')
                 ->layout('auth')
                 ->title('Страница авторизации')
                 ->add_partial('auth_header')
-                ->load('auth/login', $data);
+                ->load('auth/login', $data);*/
+            redirect('auth/login');
         }
     }
 }
