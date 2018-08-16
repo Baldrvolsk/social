@@ -208,5 +208,5 @@ module.exports = function( grunt ) {
     grunt.registerTask( "assembly_ri_css", [ "assembly_cc_css", "assembly_adm_css", "concat:ri", "autoprefixer:ri", "cssmin:ri", "concat:ri_auth", "autoprefixer:ri_auth", "cssmin:ri_auth" ] );
 
     grunt.registerTask( "ri_def", [ "uglify_ri_dev", "assembly_ri_css" ] );
-    grunt.registerTask( "ri_prod", [ "uglify_prod", "assembly_ri_css" ] );
+    grunt.registerTask( "ri_prod", [ "uglify_ri_prod", "assembly_ri_css" ] );
 };
