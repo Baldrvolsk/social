@@ -1,6 +1,11 @@
+# файлы собираемые на сервере
+/package-lock.json
+/node_modules/*
+/build/*
+
 .DS_Store
 application/cache/*
-!application/cache/index.html
+
 
 application/logs/*
 !application/logs/index.html
