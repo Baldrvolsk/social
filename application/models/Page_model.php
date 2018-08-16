@@ -1,33 +1,21 @@
 <?php
 
-class Balance_model extends CI_Model
+class Page_model extends CI_Model
 {
+    private $page_table = 'static_page';
+
     public function __construct() { }
 
-    public function add_balance($user_id, $leptas, $comment) {
-        $this->db->trans_start();
-        $data = array(
-            'user_id' => $user_id,
-            'leptas' => $leptas,
-            'comments' => $comment,
-            'trans_number' => null
-        );
-        $this->db->insert('buy', $data);
-        $u = $this->db->get_where('users_meta', array('id' => $user_id), 1)->row();
-
-        if ($u) {
-            $this->db->set('leptas', 'leptas+'.$leptas, FALSE);
-            $this->db->where('id', $user_id);
-            $this->db->update('users_meta');
+    public function get_page($page_id) {
+        if (is_int($page_id)) {
+            $this->db->where('id', $page_id, true);
+        } elseif (is_string($page_id)) {
+            $this->db->where('name', $page_id, true);
         } else {
-            $this->db->insert('users_meta', array('id' => $user_id, 'leptas' => $leptas));
-        }
-        $this->db->trans_complete ();
-
-        if ($this->db->trans_status() === FALSE) {
             return false;
-        } else {
-            return true;
         }
+        return $this->db->from($this->page_table)
+            ->limit(1)
+            ->get()->row();
     }
 }
