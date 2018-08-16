@@ -34,7 +34,7 @@
  *           data for security
  * @property CI_Javascript                          $javascript                          Javascript Class
  * @property CI_Jquery                              $jquery                              Jquery Class
- * @property CI_Lang                                $lang                                Language Class
+ * @property CI_Lang|MY_Lang                        $lang                                Language Class
  * @property CI_Loader                              $load                                Loads framework components
  * @property CI_Log                                 $log                                 Logging Class
  * @property CI_Migration                           $migration                           All migrations should
@@ -46,8 +46,7 @@
  * @property CI_Parser                              $parser                              Parser Class
  * @property CI_Profiler                            $profiler                            This class enables you to
  *           display benchmark, query, and other data in order to help with debugging and optimization.
- * @property CI_Router                              $router                              Parses URIs and determines
- *           routing
+ * @property CI_Router|MY_Router                    $router                              Parses URIs and determines routing
  * @property CI_Security                            $security                            Security Class
  * @property CI_Session                             $session                             Session Class
  * @property CI_Table                               $table                               Lets you create tables
@@ -84,6 +83,10 @@
  * @property Group $group
  * @property Balance_model $balance_model
  * @property Balance $balance
+ * @property Theme $theme
+ * @property Events $events
+ * @property Page $page
+ * @property Page_model $page_model
  *
  */
 class CIPS
