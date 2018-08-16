@@ -4,7 +4,7 @@ body {
 }
 /*welcome page*/
 div.main_logo {
-    background-image:url(/img/main_logo.png);
+    background-image:url(/assets/img/main_logo.png);
     background-repeat: no-repeat;
     height:60px;
     background-size:cover;
