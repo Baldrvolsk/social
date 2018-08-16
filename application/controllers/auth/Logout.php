@@ -9,7 +9,7 @@ class Logout extends CI_Controller
         $this->load->library('form_validation');
         if (!$this->ion_auth->logged_in()) {
             // redirect them to the login page
-            redirect('auth/login');
+            redirect('');
         }
     }
 
@@ -18,7 +18,7 @@ class Logout extends CI_Controller
         $logout = $this->ion_auth->logout();
 
         $this->session->set_flashdata('message', $this->ion_auth->messages());
-        redirect('auth/login');
+        redirect('');
     }
 
 }
