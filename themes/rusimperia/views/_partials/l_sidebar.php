@@ -1,18 +1,30 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?><div class="col-xs-12 col-sm-4">
-	<div class="panel panel-default">
-		<div class="panel-body">
-			<p>This view is located in:</p>
-			<pre><code>www/content/themes/default/views/_partials/sidebar.php</code></pre>
-			<div class="row">
-				<div class="col-xs-12 col-sm-6">
-					<?php echo img('bkader.jpg', 'class="img-responsive img-thumbnail"', 'uploads'); ?>
-					<p><code>content/uploads/</code></p>
-				</div><!--/.col-sm-6-->
-				<div class="col-xs-12 col-sm-6">
-					<?php echo img('https://avatars0.githubusercontent.com/u/4732702?v=3&u=9ad5322d448cf4e41ada5262d9d3ff3caf09d397&s=400', 'class="img-responsive img-thumbnail"'); ?>
-					<p>From <a target="_blank" href="https://avatars0.githubusercontent.com/u/4732702?v=3&amp;u=9ad5322d448cf4e41ada5262d9d3ff3caf09d397&amp;s=400">Github</a></p>
-				</div><!--/.col-sm-6-->
-			</div><!--/.row-->
-		</div><!--/.panel-body-->
-	</div><!--/.panel-->
-</div><!--/.col-sm-4-->
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
+
+<?php if ($this->ion_auth->logged_in()) : ?>
+    <div class="content-box">
+        <ul class="">
+            <li role="presentation"><a href="/friends">Contacts +2</a></li>
+            <li role="presentation"><a href="/chat">Messages +15</a></li>
+            <li role="presentation"><a href="/photos">Photos</a></li>
+            <li role="presentation"><a href="#">News +257</a></li>
+            <li role="presentation"><a href="/my_groups">My groups +3</a></li>
+            <li role="presentation"><a href="#">&Delta; +16</a></li>
+            <li role="presentation">Leptas: 10.000</li>
+        </ul>
+        <ul class="">
+            <li><a href="/gpoup/#1">Группа #1</a></li>
+            <li><a href="/gpoup/#2">Группа #2</a></li>
+            <li><a href="/gpoup/#3">Группа #3</a></li>
+            <li><a href="/gpoup/#4">Группа #4</a></li>
+            <li><a href="/gpoup/#5">Группа #5</a></li>
+        </ul>
+        <ul class="">
+            <li><a href="/event/#1">Встреча #1<br>26 июня в 18:00</a></li>
+            <li><a href="/gpoup/#2">Встреча #2<br>26 июня в 18:00</a></li>
+            <li><a href="/gpoup/#3">Встреча #3<br>26 июня в 18:00</a></li>
+        </ul>
+    </div>
+<?php endif; ?>
+<div class="advertising"><?=img_alt(170, 200, "advertising")?></div>
+<div class="advertising"><?=img_alt(170, 200, "advertising")?></div>
+<div class="advertising"><?=img_alt(170, 200, "advertising")?></div>

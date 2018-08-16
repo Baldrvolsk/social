@@ -29,6 +29,7 @@ html, body {
 }
 
 .content-box {
+    padding: 15px;
     border-radius: 20px;
     background-color: #fff;
 }

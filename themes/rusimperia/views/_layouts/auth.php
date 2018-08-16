@@ -1,8 +1,7 @@
-<?php echo @$header; ?>
-<div class="container">
-	<div class="row">
-		<?php echo @$content; ?>
-		<?php echo @$sidebar; ?>
-	</div><!--/.row-->
-</div><!-- /.container -->
-<?php echo @$footer; ?>
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
+<div class="main">
+    <?php echo $auth_header; ?>
+    <div class="container">
+        <?php echo @$content; ?>
+    </div>
+</div>
