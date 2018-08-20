@@ -10,7 +10,7 @@ html, body {
 .main {
     height: 100%;
     display: grid;
-    grid-template-rows: 450px 44px 1fr;
+    grid-template-rows: 400px 44px 1fr;
 }
 /* Medium devices (desktops, 992px and up) */
 @media (min-width: 992px) {
@@ -25,9 +25,6 @@ html, body {
     }
 }
 @media (max-width: 1680px) {
-    .main {
-        grid-template-rows: 400px 44px 1fr;
-    }
     .content-box {
         font-size: .9rem;
     }
@@ -105,6 +102,7 @@ html, body {
 }
 
 .content-box p {
+    margin-bottom: .4rem;
     text-align: center;
 }
 

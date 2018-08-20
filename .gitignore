@@ -7,7 +7,9 @@ public/assets/css/auth.min.css
 public/assets/css/common.min.css
 public/assets/css/site.min.css
 public/assets/js/all_lib.min.js
-
+public/assets/js/site.min.js
+public/assets/js/site.min.map
+/bower_components/*
 
 .DS_Store
 application/cache/*

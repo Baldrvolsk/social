@@ -56,7 +56,7 @@ h1, h2, h3, h4, h5, h6 {
 
 p {
   margin-top: 0;
-  margin-bottom: 1rem;
+  margin-bottom: .7rem;
 }
 
 abbr[title],
@@ -166,7 +166,7 @@ samp {
 
 pre {
   margin-top: 0;
-  margin-bottom: 1rem;
+  margin-bottom: .7rem;
   overflow: auto;
   -ms-overflow-style: scrollbar;
 }
