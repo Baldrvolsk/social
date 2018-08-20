@@ -81,15 +81,6 @@ class Login extends CI_Controller
                 $data['google_info'] = $gpInfo;
                 $tmp = explode('@', $gpInfo['email']);
                 $data['google_info']['login'] = current($tmp);
-                /*$data['google_info'] = array(
-                  'email' => 'test@example.com',
-                  'login' => 'test',
-                  'given_name' => 'Ivan',
-                  'family_name' => 'Ivanov',
-                  'picture' => '//placehold.it/100x100/CCCCCC/969696&amp;text=advertising',
-                  'gender' => null,
-                  'locale' => 'ru'
-                );*/
 
                 $this->theme
                     ->title('Страница регистрации')
