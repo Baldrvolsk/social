@@ -107,8 +107,8 @@ class Theme_class
      * @return    void
      */
     public function scripts() {
+        prepend_script('assets/js/site.min');
         prepend_script('assets/js/all_lib.min');
-        prepend_script('assets/js/main.min');
     }
 
     // ------------------------------------------------------------------------
