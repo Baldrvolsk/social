@@ -87,6 +87,8 @@
  * @property Events $events
  * @property Page $page
  * @property Page_model $page_model
+ * @property Photos $photos
+ * @property Photos_model $photos_model
  *
  */
 class CIPS
