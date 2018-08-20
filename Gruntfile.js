@@ -26,6 +26,7 @@ module.exports = function( grunt ) {
                     "build/all_lib_concat_compress.min.js": [
                         "themes/src/js/jquery-3.3.1.js",
                         "themes/src/js/cropper.js",
+                        "themes/src/js/chosen.jquery.js",
                         "themes/src/js/jquery.colorbox.js",
                         "themes/src/js/jquery.colorbox-ru.js"
                     ]
@@ -102,6 +103,7 @@ module.exports = function( grunt ) {
                 src: ['themes/src/css/bootstrap-reboot.css',
                     'themes/src/css/colorbox.css',
                     'themes/src/css/cropper.css',
+                    'themes/src/css/chosen.css',
                     'themes/src/css/fontawesome.css'],
                 dest: 'build/concat_common.css'
             },
@@ -188,6 +190,10 @@ module.exports = function( grunt ) {
             css_admin: {
                 files: 'themes/admin/src/css/**/*.css',
                 tasks: ['concat:admin', 'autoprefixer:admin', 'cssmin:admin']
+            },
+            css_common: {
+                files: 'themes/src/css/**/*.css',
+                tasks: ['concat:common', 'autoprefixer:common', 'cssmin:common']
             }
         }
     });
