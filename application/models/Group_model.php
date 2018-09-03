@@ -4,8 +4,8 @@
 class Group_model extends CI_Model
 {
     private $com_table = 'community';
-    private $com_group_table = 'community_groups';
-    private $com_users_table = 'community_users';
+    private $com_group_table = 'community_group';
+    private $com_users_table = 'community_user';
     private $com_rules = 'community_rules';
 
     public function __construct() {
@@ -27,7 +27,7 @@ class Group_model extends CI_Model
             if (!$this->ion_auth->set_meta($owner_id, $set)) $ret = false;
             $this->db->set('leptas', 'leptas-'.$this->config->item('group_pay'), FALSE);
             $this->db->where('id', $owner_id);
-            if (!$this->db->update('users_meta')) $ret = false;
+            if (!$this->db->update('user_meta')) $ret = false;
         } else $ret = false;
         return $ret;
     }
@@ -53,7 +53,7 @@ class Group_model extends CI_Model
     }
 
     public function get_all_groups($limit = 10, $offset = 0) {
-        return $this->db->select('com.id, com.name, com.slogan, com.label, COUNT(c_u.user_id) as count_users')
+        return $this->db->select('com.id, com.name, com.slogan, com.avatar, COUNT(c_u.user_id) as count_user')
             ->from($this->com_table.' as com')
             ->join($this->com_users_table.' as c_u',
                    'c_u.community_id = com.id',
@@ -65,7 +65,7 @@ class Group_model extends CI_Model
     }
 
     public function get_my_groups($user_id, $limit = 10, $offset = 0) {
-        return $this->db->select('com.id, com.name, com.slogan, com.label, COUNT(cc_u.user_id) as count_users')
+        return $this->db->select('com.id, com.name, com.slogan, com.avatar, COUNT(cc_u.user_id) as count_users')
             ->from($this->com_users_table.' as c_u')
             ->join($this->com_table.' as com',
                    'com.id = c_u.community_id',
@@ -99,9 +99,9 @@ class Group_model extends CI_Model
     public function get_contacts($group_id) {
         $contacts = $this->db->select('c_u.*, 
                 concat(u.first_name," ",u.last_name) as full_name_user,
-                u.company as photo, c_g.*')
+                u.avatar, c_g.*')
             ->from($this->com_users_table.' as c_u')
-            ->join('users as u',
+            ->join('user as u',
                    'u.id = c_u.user_id',
                    'left')
             ->join($this->com_group_table.' as c_g',
@@ -116,9 +116,9 @@ class Group_model extends CI_Model
     public function get_users($group_id) {
         $users = $this->db->select('c_u.*, 
                 concat(u.first_name," ",u.last_name) as full_name_user,
-                u.company as photo, c_g.*')
+                u.avatar, c_g.*')
             ->from($this->com_users_table.' as c_u')
-            ->join('users as u',
+            ->join('user as u',
                    'u.id = c_u.user_id',
                    'left')
             ->join($this->com_group_table.' as c_g',
