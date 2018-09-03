@@ -8,63 +8,79 @@
 
 class Post_model extends CI_Model
 {
-    private $post_table = 'post';
+    private $type;
+    private $post_table;
+
     public function __construct() {
-        $this->load->model('like_model');
-        $this->like_model->set_type('post');
+        //$this->load->model('like_model');
+    }
+
+    public function init($type) {
+        $this->type = $type;
+        $this->post_table = $this->type.'_post';
+        //$this->like_model->set_type('user_post');
+    }
+
+    public function create_post() {
+        $data = array(
+            $this->type.'_id' => (int)$this->input->post('owner_id'),
+            'user_create_id' => (int)$this->input->post('add_id'),
+            'post_content' => $this->input->post('content', true),
+            'media_type' => null,
+            'media' => null,
+            'tags' => null,
+            'c_views' => 0,
+            'c_like' => 0,
+            'c_dislike' => 0,
+            'c_comment' => 0,
+            'c_shared' => 0,
+        );
+        if ($this->db->insert($this->post_table, $data)) {
+            $id_post = $this->db->insert_id();
+            $ret['post'] = $this->get_post($id_post);
+            $ret['status'] = "OK";
+            $ret['message'] = 'ост успешно добавлен';
+        } else {
+            $ret['status'] = "ERR";
+            $ret['message'] = 'Что-то пошло не так, попробуйте позже';
+            if (DEBUG) $ret['error'] = 'Ошибка записи в БД: '.$this->db->error();
+        }
+        return $ret;
     }
 
     public function get_post($id = null) {
-        if ($id === null) {
-            return;
-        }
-
-        $this->db->select('post.*, concat(users.first_name," ",users.last_name) as full_name_user, users.company as photo, post_like.like as u_like, (post.like - post.dislike) as delta')
-                 ->from($this->post_table)
-                 ->join('users','users.id = post.user_create_id','LEFT')
-                 ->join('post_like','post_like.post_id = post.id AND post_like.user_id = '.$this->user->id,'LEFT')
-                 ->where($this->post_table.'.id', (int)$id)
+        if ($id === null) return null;
+        $this->db->select('post.*, concat(user.first_name," ",user.last_name) as full_name_user, '
+                          .'user.avatar')
+                 ->from($this->post_table.' as post')
+                 ->join('user','user.id = post.user_create_id','LEFT')
+                 ->where('post.id', (int)$id)
                  ->limit(1);
         return $this->db->get()->row();
     }
-    public function get_users_post($user_id, $limit = null, $offset = null) {
+
+    public function get_users_post($user_id, $limit = 10, $offset = 0) {
         $user_id = isset($user_id) ? $user_id : $this->session->userdata('user_id');
 
-        if ($limit !== null && $limit !== 0) {
-            if ($offset === null) $offset = 0;
-            $this->db->limit($limit, $offset);
+        $this->db->select('`post`.*, concat(`user`.`first_name`," ",`user`.`last_name`) as `full_name_user`, '
+            .'`user`.`avatar`, `post_like`.`like` as `u_like`, (`post`.`c_like` - `post`.`c_dislike`) as `delta`, '
+            .'user_group.group_id as user_group')
+            ->from($this->post_table.' as `post`')
+            ->join('`user`','`user`.`id` = `post`.`user_create_id`','LEFT')
+            ->join('`user_group`','`user_group`.`user_id` = `post`.`user_create_id`','LEFT')
+            ->join($this->type.'_post_like as `post_like`',
+                   '`post_like`.`post_id` = `post`.`id` AND `post_like`.`user_id` = '.$user_id,'LEFT')
+            ->limit($limit, $offset)
+            ->order_by('`post`.`date_add`', 'desc')
+            ->where('`post`.`user_id`', (int)$user_id);
+        $post = $this->db->get()->result();
+        foreach ($post as $p) {
+            $p->date = date_to_str('%R %e %bg %Y', $this->router->user_lang, strtotime($p->date_add));
         }
-        $this->db->select('post.*, concat(users.first_name," ",users.last_name) as full_name_user, users.company as photo, post_like.like as u_like, (post.like - post.dislike) as delta')
-                 ->from($this->post_table)
-                 ->join('users','users.id = post.user_create_id','LEFT')
-                 ->join('post_like','post_like.post_id = post.id AND post_like.user_id = '.$this->user->id,'LEFT')
-                 ->order_by($this->post_table.'.date_add', 'desc')
-                 ->where($this->post_table.'.user_id', (int)$user_id);
-        return $this->db->get()->result();
+        return $post;
     }
 
-    public function create_post($id) {
-        $content = $this->input->post('content', true);
-        //$this->load->helper('url');
 
-        $link = null;
-        $tags = null;
-        $data = array(
-            'user_id' => $id,
-            'user_create_id' => $this->input->post('userAddId'),
-            'content' => $content,
-            'link' => $link,
-            'tags' => $tags,
-            'views' => 0,
-            'like' => 0,
-            'dislike' => 0,
-            'comments' => 0,
-            'repost' => 0,
-            'no_comm' => 0,
-        );
-
-        return $this->db->insert('post', $data);
-    }
 
     public function update_post($id, $data) {
         $this->db->update($this->post_table, $data, array('id' => $id));
