@@ -15,9 +15,9 @@ module.exports = function( grunt ) {
             grunt_file: {
                 src: [ "Gruntfile.js" ]
             },
-            lib: {
-                src: [ "themes/src/**/*.js" ]
-            },
+            //lib: {
+            //    src: [ "themes/src/**/*.js" ]
+            //},
             admin: {
                 src: [ "themes/admin/src/js/**/*.js" ]
             },
