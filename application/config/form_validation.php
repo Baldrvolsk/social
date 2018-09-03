@@ -1,5 +1,75 @@
 <?php
+//правила валидации форм
 $config = array(
+    'regUser' => array( //регистрация
+        array(
+            'field' => 'email',
+            'label' => 'Email',
+            'rules' => 'trim|required|valid_email|is_unique[user.email]'
+        ),
+        array(
+            'field' => 'login',
+            'label' => 'Логин',
+            'rules' => 'trim|required|min_length[3]|max_length[100]|is_unique[user.username]'
+        ),
+        array(
+            'field' => 'first_name',
+            'label' => 'Имя',
+            'rules' => 'trim|required|min_length[2]|max_length[100]'
+        ),
+        array(
+            'field' => 'last_name',
+            'label' => 'Фамилия',
+            'rules' => 'trim|min_length[2]|max_length[100]'
+        ),
+        array(
+            'field' => 'google_photo',
+            'label' => 'Аватар',
+            'rules' => 'required'
+        ),
+        array(
+            'field' => 'gender',
+            'label' => 'Пол',
+            'rules' => 'trim|in_list[ns,male,female]'
+        ),
+        array(
+            'field' => 'rules',
+            'label' => 'Правила',
+            'rules' => 'required|in_list[true,1]',
+            'errors' => array(
+                'required' => 'Вы должны принять правила проекта',
+                'in_list' => 'Вы должны принять правила проекта',
+            )
+        ),
+        array(
+            'field' => 'privacy',
+            'label' => 'Политика',
+            'rules' => 'required|in_list[true,1]',
+            'errors' => array(
+                'required' => 'Вы должны дать согласие на обработку персональных данных',
+                'in_list' => 'Вы должны дать согласие на обработку персональных данных',
+            )
+        ),
+    ),
+
+    'postAdd' => array(
+        array(
+            'field' => 'owner_id',
+            'label' => 'ID пользователя',
+            'rules' => 'trim|required|integer'
+        ),
+        array(
+            'field' => 'add_id',
+            'label' => 'ID добавившего пост',
+            'rules' => 'trim|required|integer'
+        ),
+        array(
+            'field' => 'content',
+            'label' => 'Сообщение',
+            'rules' => 'trim|required'
+        )
+    ),
+
     'group/create_group' => array(
         array(
             'field' => 'name',
@@ -56,21 +126,4 @@ $config = array(
             'rules' => 'trim|required|in_list[open,limited,close]'
         )
     ),
-    'group/post_add' => array(
-        array(
-            'field' => 'group_id',
-            'label' => 'ID группы',
-            'rules' => 'trim|required|integer'
-        ),
-        array(
-            'field' => 'user_id',
-            'label' => 'ID пользователя',
-            'rules' => 'trim|required|integer'
-        ),
-        array(
-            'field' => 'content',
-            'label' => 'Сообщение',
-            'rules' => 'trim|required'
-        )
-    )
 );
