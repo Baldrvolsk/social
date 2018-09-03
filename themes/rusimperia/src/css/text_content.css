@@ -6,3 +6,39 @@
     text-align: justify;
     text-indent: 1rem;
 }
+
+.text-center {
+    text-align: center;
+}
+
+.bg-primary {
+    background-color: var(--color-primary);
+}
+.bg-success {
+    background-color: var(--color-success);
+}
+.bg-info {
+    background-color: var(--color-info);
+}
+.bg-warning {
+    background-color: var(--color-warning);
+}
+.bg-danger {
+    background-color: var(--color-danger);
+}
+
+.text-primary {
+    color: var(--color-primary);
+}
+.text-success {
+    color: var(--color-success);
+}
+.text-info {
+    color: var(--color-info);
+}
+.text-warning {
+    color: var(--color-warning);
+}
+.text-danger {
+    color: var(--color-danger);
+}

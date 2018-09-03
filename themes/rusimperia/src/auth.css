@@ -29,7 +29,7 @@ html, body {
         font-size: .9rem;
     }
 }
-.browserupgrade {
+.browser-upgrade {
     position: fixed;
     top: 10%;
     left: 0;
@@ -86,7 +86,7 @@ html, body {
 }
 
 .nav .active a {
-    color: #ff9900;
+    color: #fea700;
 }
 
 .container {

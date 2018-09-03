@@ -24,10 +24,10 @@
 
 .form-group > .form-control {
     width: 100%;
-    background-color: #dcdcdc;
+    background-color: var(--color-gray);
     font-size: 1rem;
     font-family: 'PT Serif', serif;
-    border: 1px solid #dcdcdc;
+    border: 1px solid var(--color-gray);
     padding: .5rem .7rem;
     border-radius: 20px;
     outline-offset: -2px;
@@ -35,7 +35,7 @@
 }
 
 .form-group > .form-control:focus {
-    border-color: #b8b8b8;
+    border-color: var(--color-dark-gray);
 }
 /*
 
@@ -75,8 +75,8 @@
     font-size: 1rem;
     padding: .3rem .7rem;
     margin-left: 1rem;
-    background: #dcdcdc;
-    border: 1px solid #b8b8b8;
+    background: var(--color-gray);
+    border: 1px solid var(--color-dark-gray);
     border-radius: 20px;
     cursor: pointer;
 }
@@ -86,17 +86,34 @@
 }
 
 .btn-primary {
-    background-color: #428bca;
+    background-color: var(--color-primary);
 }
 .btn-success {
-    background-color: #5cb85c;
+    background-color: var(--color-success);
 }
 .btn-info {
-    background-color: #5bc0de;
+    background-color: var(--color-info);
 }
 .btn-warning {
-    background-color: #f0ad4e;
+    background-color: var(--color-warning);
 }
 .btn-danger {
-    background-color: #d9534f;
+    background-color: var(--color-danger);
+}
+
+.checkbox-input {
+    display: none;
+}
+
+.checkbox-icon {
+    cursor: pointer;
+    margin-right: 15px;
+}
+
+.checkbox-icon:before {
+    content: "\f0c8";
+}
+
+.checkbox-input:checked + .checkbox-label > .checkbox-icon:before {
+    content: "\f14a";
 }

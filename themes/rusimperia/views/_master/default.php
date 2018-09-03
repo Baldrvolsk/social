@@ -6,12 +6,12 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<base href="<?php echo base_url(); ?>">
 	<title><?php echo Events::trigger('the_title', $title, 'string'); ?></title>
-	<link rel="icon" href="<?php echo base_url('favicon.ico'); ?>">
-	<?php echo @$metadata; ?>
+    <?=(empty($metadata)?'':$metadata)?>
+    <?=(empty($icons)?'':$icons)?>
 
 	<!-- StyleSheets -->
     <link href="//fonts.googleapis.com/css?family=PT+Serif:400,700&amp;subset=cyrillic,cyrillic-ext,latin-ext" rel="stylesheet">
-	<?php echo @$css_files; ?>
+    <?=(empty($css_files)?'':$css_files)?>
     <link rel="stylesheet"
           href="//use.fontawesome.com/releases/v5.2.0/css/all.css"
           integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
@@ -19,7 +19,8 @@
 </head>
 <body>
     <!--[if lte IE 9]>
-        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+        <p class="browser-upgrade">You are using an <strong>outdated</strong> browser. Please <a
+                href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
     <![endif]-->
 	
 	<?php echo @$layout; ?>

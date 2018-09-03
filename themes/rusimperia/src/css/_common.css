@@ -4,10 +4,24 @@ html, body {
     min-height: 100%;
     font-family: 'PT Serif', serif;
     font-size: 16px;
-    background-color: #dcdcdc;
 }
 
-.browserupgrade {
+:root {
+    --color-gray: #dcdcdc;
+    --color-dark-gray: #b8b8b8;
+    --color-primary: #428bca;
+    --color-success: #5cb85c;
+    --color-info:    #5bc0de;
+    --color-warning: #f0ad4e;
+    --color-danger:  #d9534f;
+    --color-active-menu: #fea700;
+}
+
+body {
+    background-color: var(--color-gray);
+}
+
+.browser-upgrade {
     position: fixed;
     top: 10%;
     left: 0;
@@ -21,22 +35,8 @@ html, body {
     border-radius: 20px;
 }
 
-.debug {
-    position: fixed;
-    bottom: 0;
-    font-size: 14px;
-
-}
-
 .content-box {
     padding: 15px;
     border-radius: 20px;
     background-color: #fff;
 }
-/*
-@brand-primary: #428bca;
-@brand-success: #5cb85c;
-@brand-info:    #5bc0de;
-@brand-warning: #f0ad4e;
-@brand-danger:  #d9534f;
-*/
