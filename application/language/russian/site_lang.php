@@ -11,6 +11,7 @@ $lang['site_menu_home'] = 'На главную';
 $lang['site_menu_people'] = 'Люди';
 $lang['site_menu_groups'] = 'Группы';
 $lang['site_menu_search'] = 'Поиск';
+$lang['site_menu_setting'] = 'Настройки';
 
 // Social panel
 $lang['site_social_text'] = 'Ищите нас';
