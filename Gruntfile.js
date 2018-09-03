@@ -6,12 +6,18 @@ module.exports = function( grunt ) {
         pkg: grunt.file.readJSON( "package.json" ),
             //~~ проверка JS на ошибки
         jshint: {
+            options: {
+                globals: {
+                    jQuery: true
+                },
+                "esversion": 6,
+            },
             grunt_file: {
                 src: [ "Gruntfile.js" ]
             },
-            //lib: {
-            //    src: [ "themes/src/**/*.js" ]
-            //},
+            lib: {
+                src: [ "themes/src/**/*.js" ]
+            },
             admin: {
                 src: [ "themes/admin/src/js/**/*.js" ]
             },
@@ -28,7 +34,8 @@ module.exports = function( grunt ) {
                         "themes/src/js/cropper.js",
                         "themes/src/js/chosen.jquery.js",
                         "themes/src/js/jquery.colorbox.js",
-                        "themes/src/js/jquery.colorbox-ru.js"
+                        "themes/src/js/jquery.colorbox-ru.js",
+                        "themes/src/js/jquery.wysibb.js"
                     ]
                 },
                 options: {
@@ -101,10 +108,11 @@ module.exports = function( grunt ) {
         concat: {
             common: {
                 src: ['themes/src/css/bootstrap-reboot.css',
+                    'themes/src/css/fontawesome.css',
                     'themes/src/css/colorbox.css',
                     'themes/src/css/cropper.css',
                     'themes/src/css/chosen.css',
-                    'themes/src/css/fontawesome.css'],
+                    'themes/src/css/wbbtheme.css'],
                 dest: 'build/concat_common.css'
             },
             ri: {
@@ -194,6 +202,73 @@ module.exports = function( grunt ) {
             css_common: {
                 files: 'themes/src/css/**/*.css',
                 tasks: ['concat:common', 'autoprefixer:common', 'cssmin:common']
+            }
+        },
+        // генератор фавиконок
+        realFavicon: {
+            favicons: {
+                src: './themes/rusimperia/src/img/logo.png', //путь до оринигольного логотипа
+                dest: './public/assets/icon/', // куда копировать иконки и файлы
+                options: {
+                    iconsPath: '/assets/icon/', //путь который указывается в метатегах
+                    html: [ './themes/rusimperia/views/_partials/icons.php' ], //файлы куда добавить метатеги
+                    design: {
+                        ios: {
+                            pictureAspect: 'backgroundAndMargin',
+                            backgroundColor: '#ffffff',
+                            margin: '11%',
+                            assets: {
+                                ios6AndPriorIcons: false,
+                                ios7AndLaterIcons: false,
+                                precomposedIcons: false,
+                                declareOnlyDefaultIcon: true
+                            },
+                            appName: 'Rus Imperia'
+                        },
+                        desktopBrowser: {},
+                        windows: {
+                            pictureAspect: 'noChange',
+                            backgroundColor: '#e8e8dd',
+                            onConflict: 'override',
+                            assets: {
+                                windows80Ie10Tile: true,
+                                windows10Ie11EdgeTiles: {
+                                    small: true,
+                                    medium: true,
+                                    big: true,
+                                    rectangle: true
+                                }
+                            },
+                            appName: 'Rus Imperia'
+                        },
+                        androidChrome: {
+                            pictureAspect: 'shadow',
+                            themeColor: '#e8e8dd',
+                            manifest: {
+                                name: 'Rus Imperia',
+                                display: 'standalone',
+                                orientation: 'notSet',
+                                onConflict: 'override',
+                                declared: true
+                            },
+                            assets: {
+                                legacyIcon: false,
+                                lowResolutionIcons: false
+                            }
+                        },
+                        safariPinnedTab: {
+                            pictureAspect: 'silhouette',
+                            themeColor: '#e8e8dd'
+                        }
+                    },
+                    settings: {
+                        scalingAlgorithm: 'Mitchell',
+                        errorOnImageTooSmall: false,
+                        readmeFile: true,
+                        htmlCodeFile: true,
+                        usePathAsIs: false
+                    }
+                }
             }
         }
     });
