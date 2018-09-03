@@ -14,7 +14,8 @@ public/assets/icon/*
 
 .DS_Store
 application/cache/*
-
+/upload/*
+!/upload/24/d2/fe/1b/39/61/b4/99/e0/58/f9/b7/de/2b/17/09/83/17/68/49/24d2fe1b3961b499e058f9b7de2b170983176849.jpg
 
 application/logs/*
 !application/logs/index.html
