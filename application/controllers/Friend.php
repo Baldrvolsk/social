@@ -6,7 +6,7 @@
  * Time: 12:49
  */
 
-class Friends extends CI_Controller
+class Friend extends CI_Controller
 {
     public $user;
     public function __construct() {
@@ -26,14 +26,25 @@ class Friends extends CI_Controller
         $data['user_request'] = $this->friend_model->get_user_request($this->user->id);
         $data['blacklist'] = $this->friend_model->get_blacklist($this->user->id);
 
-        $this->load->view('header', $data);
-        $this->load->view('friend/index');
-        $this->load->view('footer');
+        $debug = array();
+        if (DEBUG) {
+            $debug['debug'][] = array(
+                't' => 'Данные',
+                'c' => var_debug($data)
+            );
+        }
+        $this->theme
+            ->title('Люди')
+            ->add_partial('header')
+            ->add_partial('l_sidebar')
+            ->add_partial('r_sidebar')
+            ->add_partial('footer', $debug)
+            ->load('user/friend', $data);
     }
 
     public function add_friend($id, $group_id) {
         $this->friend_model->add_friend($this->user->id, $id, $group_id);
-        redirect('friends', 'refresh');
+        redirect('friend', 'refresh');
     }
 
     public function confirm_friend($id) {
@@ -43,6 +54,6 @@ class Friends extends CI_Controller
 
     public function delete_friend($id) {
         $this->friend_model->delete_friend($this->user->id, $id);
-        redirect('friends', 'refresh');
+        redirect('friend', 'refresh');
     }
 }
