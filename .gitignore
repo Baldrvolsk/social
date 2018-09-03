@@ -9,6 +9,7 @@ public/assets/css/site.min.css
 public/assets/js/all_lib.min.js
 public/assets/js/site.min.js
 public/assets/js/site.min.map
+public/assets/icon/*
 /bower_components/*
 
 .DS_Store
