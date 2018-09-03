@@ -144,6 +144,8 @@ class CI_Migration {
 			));
 
 			$this->dbforge->create_table($this->_migration_table, TRUE);
+			$this->db->query('ALTER TABLE `migrations` ADD UNIQUE( `version`)');
+
 		}
 
 		// Do we auto migrate to the latest migration?

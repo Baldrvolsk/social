@@ -4,22 +4,40 @@
 class Post extends CI_Controller
 {
     public $user;
+    private $type;
     public function __construct() {
         parent::__construct();
-        $this->load->model('post_model');
-        $this->load->model('comment_model');
-        $this->comment_model->set_type('post');
-
         if (!$this->ion_auth->logged_in()) {
-            // redirect them to the login page
-            redirect('auth/login', 'refresh');
+            redirect('', 'refresh');
+        } else {
+            $this->user = $this->ion_auth->user()->row();
         }
-        $this->user = $this->ion_auth->user()->row();
+        $this->load->model(array('post_model', 'comment_model', 'like_model'));
     }
 
-    public function index($userId, $limit) {
-        $data['posts'] = $this->post_model->get_users_post($userId, $limit);
-        echo $this->load->view('post/index', $data, TRUE);
+    public function init($type) {
+        $this->type = ($type === 'profile')?'user':$type;
+        $this->post_model->init($this->type);
+        //$this->comment_model->init($this->type);
+        //$this->like_model->init($this->type);
+    }
+
+    public function add() {
+        $this->init($this->input->post('type'));
+        $this->load->helper('form');
+        $this->load->library('form_validation');
+        $ret = array();
+        if ($this->form_validation->run('postAdd') === FALSE) {
+            $ret['status'] = "ERR";
+            $ret['owner_err'] = $this->form_validation->error('owner_id');
+            $ret['add_err'] = $this->form_validation->error('add_id');
+            $ret['content_err'] = $this->form_validation->error('content');
+            $ret['message'] = 'Проверьте правильность заполнения формы';
+            if (DEBUG) $ret['error'] = 'не прошла валидация';
+        } else {
+            $ret = $this->post_model->create_post();
+        }
+        echo json_encode($ret);
     }
 
     public function view($id = NULL) {
@@ -27,31 +45,7 @@ class Post extends CI_Controller
         return $this->post_model->get_post($id);
     }
 
-    public function add_post_form() {
-        $this->load->helper('form');
-        $data['user_id'] = $this->user->id;
-        $this->load->view('post/add', $data, TRUE);
-    }
 
-    public function add_post($id) {
-        $this->load->helper('form');
-        $this->load->library('form_validation');
-
-        $this->form_validation->set_rules('content', 'content', 'required|min_length[3]');
-
-        if ($this->form_validation->run() === FALSE) {
-            $formData['userId'] = $id;
-            $data['addPostForm'] = $this->load->view('post/add_post', $formData,true);
-            $this->load->view('header', $data);
-            $this->load->view('profile');
-            $this->load->view('footer');
-
-        } else {
-            $this->post_model->create_post((int)$id);
-            $url = 'profile'.(($id === $this->user->id)?'':'/'.$id);
-            redirect($url);
-        }
-    }
 
     public function add_like($user_id = null, $post_id = null) {
         $ret = null;

@@ -7,30 +7,52 @@ class Group extends CI_Controller
 
     public function __construct() {
         parent::__construct();
-        $this->load->library('form_validation');
-        $this->config->load('group');
-        $this->load->model('group_model');
-        $this->load->model('group_post_model');
         if (!$this->ion_auth->logged_in()) {
             // redirect them to the login page
             redirect('auth/login', 'refresh');
         }
+        $this->load->library('form_validation');
+        $this->config->load('group');
+        $this->load->model('group_model');
+        $this->load->model('group_post_model');
         $this->user = $this->ion_auth->user()->row();
         $this->user->create_group = $this->check_create_group();
     }
 
     public function index() {
         $data['groups'] = $this->group_model->get_all_groups();
-        $this->load->view('header', $data);
-        $this->load->view('group/index');
-        $this->load->view('footer');
+        $debug = array();
+        if (DEBUG) {
+            $debug['debug'][] = array(
+                't' => 'Данные',
+                'c' => var_debug($data)
+            );
+        }
+        $this->theme
+            ->title('Сообщества')
+            ->add_partial('header')
+            ->add_partial('l_sidebar')
+            ->add_partial('r_sidebar')
+            ->add_partial('footer', $debug)
+            ->load('group/list', $data);
     }
 
-    public function my_groups() {
+    public function my_group() {
         $data['groups'] = $this->group_model->get_my_groups($this->user->id);
-        $this->load->view('header', $data);
-        $this->load->view('group/my_groups');
-        $this->load->view('footer');
+        $debug = array();
+        if (DEBUG) {
+            $debug['debug'][] = array(
+                't' => 'Данные',
+                'c' => var_debug($data)
+            );
+        }
+        $this->theme
+            ->title('Сообщества')
+            ->add_partial('header')
+            ->add_partial('l_sidebar')
+            ->add_partial('r_sidebar')
+            ->add_partial('footer', $debug)
+            ->load('group/my_group', $data);
     }
 
     public function view_group($id) {

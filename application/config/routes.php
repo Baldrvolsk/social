@@ -13,17 +13,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 
 $route['group/(:num)'] = 'group/view_group/$1';
-$route['my_groups'] = 'group/my_groups';
+$route['my_group'] = 'group/my_group';
 $route['groups'] = 'group/index';
-$route['friends/delete/(:num)'] = 'friends/delete_friend/$1';
-$route['friends/add/(:num)'] = 'friends/add_friend/$1/0';
+$route['friends/delete/(:num)'] = 'friend/delete_friend/$1';
+$route['friends/add/(:num)'] = 'friend/add_friend/$1/0';
 $route['profile/(:num)'] = 'profile/index/$1';
-$route['post/add/(:num)'] = 'post/add_post/$1';
 $route['webhook/(:any)'] = 'webhook/deploy/$1';
 
 // static pages
 $route['rules'] = 'page/index/rules';
-$route['for_investors'] = 'page/index/for_investors';
+$route['privacy'] = 'page/index/privacy';
 // default route
 $route['default_controller'] = 'by_default';
 $route['404_override'] = '';

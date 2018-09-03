@@ -10,8 +10,7 @@ class By_default extends CI_Controller
 
     public function index() {
         if ($this->ion_auth->logged_in()) {
-            // redirect to default page
-            redirect($this->config->item('site_default_page'));
+            redirect('profile/'.$this->session->user_id, 'refresh');
         } else {
             $this->load->library('google');
             $data['loginURL'] = $this->google->loginURL();
@@ -21,7 +20,6 @@ class By_default extends CI_Controller
                 ->title('Страница авторизации')
                 ->add_partial('auth_header')
                 ->load('auth/login', $data);
-            //redirect('auth/login');
         }
     }
 }

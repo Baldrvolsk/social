@@ -72,23 +72,27 @@
  * @property Google $google
  * @property Google_Client $client
  * @property Post $post
- * @property Post_model $post_model
- * @property Comment_model $comment_model
- * @property Like_model $like_model
- * @property People $people
- * @property Friends $friends
- * @property Friend_model $friend_model
- * @property Group_model $group_model
+ * @property Post_model       $post_model
+ * @property Comment_model    $comment_model
+ * @property Like_model       $like_model
+ * @property People           $people
+ * @property Friend          $friend
+ * @property Friend_model     $friend_model
+ * @property Group_model      $group_model
  * @property Group_post_model $group_post_model
- * @property Group $group
- * @property Balance_model $balance_model
- * @property Balance $balance
- * @property Theme $theme
- * @property Events $events
- * @property Page $page
- * @property Page_model $page_model
- * @property Photos $photos
- * @property Photos_model $photos_model
+ * @property Group            $group
+ * @property Balance_model    $balance_model
+ * @property Balance          $balance
+ * @property Theme            $theme
+ * @property Events           $events
+ * @property Page             $page
+ * @property Page_model       $page_model
+ * @property Photo            $photo
+ * @property Photo_model      $photo_model
+ * @property Media            $media
+ * @property Media_model      $media_model
+ * @property Chat             $chat
+ * @property Chat_model      $chat_model
  *
  */
 class CIPS

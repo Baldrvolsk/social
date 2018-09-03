@@ -2,6 +2,6 @@
 <div class="main">
     <?php echo $auth_header; ?>
     <div class="container">
-        <?php echo @$content; ?>
+        <?php echo $content; ?>
     </div>
 </div>

@@ -1,0 +1,188 @@
+/* grid */
+.profile-grid {
+    display: grid;
+    grid-template-rows: repeat(4, auto);
+    grid-template-columns: 250px 1fr;
+    gap: 10px;
+}
+
+.info-box {
+    grid-row-start: span 2;
+}
+
+.photo-list, .post-add, .post-list {
+    grid-column-start: span 2;
+}
+
+/* style */
+.profile-photo {
+    position: relative;
+    padding: 0;
+    overflow: hidden;
+}
+
+.upload-new {
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+    color: var(--color-dark-gray);
+    background-color: #fff;
+    border-radius: 50%;
+    border: 2px solid var(--color-dark-gray);
+    padding: 4px;
+    line-height: 1;
+    transition-property: bottom, left, border, width, height, background-color, color;
+    transition-duration: 0s, 0s, 0s, .3s, .3s, 0s, 0s;
+}
+.upload-new span {
+    display: none;
+}
+.upload-new:hover {
+    bottom: 0px;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    border-radius: 0;
+    border-color: transparent;
+    background-color: rgba(0,0,0,.4);
+    color: #fff;
+    padding: 15% 10px;
+    font-size: 2rem;
+}
+.upload-new:hover span{
+    display: inline-block;
+    font-size: 1rem;
+}
+
+.user-button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.user-button .btn-user {
+    background-color: #fff;
+    border-radius: 0;
+    margin: 0;
+    border-right-color: #fff;
+}
+.user-button .btn-user:first-child {
+    border-radius: 20px 0 0 20px;
+}
+.user-button .btn-user:last-child {
+    border-radius: 0 20px 20px 0;
+    border-right-color: var(--color-dark-gray);
+}
+.user-button .btn-user:first-child:last-child {
+    border-radius: 20px;
+    border-right-color: var(--color-dark-gray);
+}
+/* info-box grid*/
+.info-box {
+    padding: 5px 15px;
+    display: grid;
+    grid-template-rows: repeat(6, min-content) 1fr repeat(2, min-content);
+    grid-template-columns: repeat(4, minmax(max-content, 1fr));
+}
+
+.rang, .last-online {
+    grid-column-start: span 2;
+}
+
+.user-birthday-title {
+    padding-right: 10px;
+}
+
+.user-country-content,
+.user-city-content,
+.user-birthday-content {
+    grid-column-start: span 3;
+}
+
+.user-name, .user-status,
+.more-info, .more,
+.user-counter {
+    grid-column-start: span 4;
+}
+
+.more-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+/* info-box style */
+.rang, .user-name {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.rang, .last-online {
+    height: 1.3rem;
+}
+
+.rang-icon {
+    font-size: 1.3rem;
+    margin-right: .5rem;
+}
+
+.last-online {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: flex-start;
+    font-size: 13px;
+}
+
+.user-name {
+    font-size: 1.5rem;
+}
+
+.user-gender {
+    margin-right: 1em;
+}
+
+.status_string {
+    display: block;
+    width: 100%;
+    font-size: 13px;
+    padding-bottom: 3px;
+    border-bottom: 1px solid var(--color-gray);
+}
+
+.more-info {
+    padding-bottom: 3px;
+    border-bottom: 1px solid var(--color-gray);
+}
+
+.user-counter {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: stretch;
+    text-align: center;
+}
+
+.user-counter span {
+    display: block;
+}
+
+.photo-list {
+    display: grid;
+    grid-template-rows: max-content;
+    grid-template-columns: repeat(auto-fit, minmax(100px, min-content));
+    grid-gap: 10px;
+}
+
+.photo-list-title {
+    text-align: center;
+}
+
+.photo-list-thumb {
+    border: 1px solid var(--color-dark-gray);
+    border-radius: 20px;
+    overflow: hidden;
+}

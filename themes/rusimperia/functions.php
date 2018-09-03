@@ -66,7 +66,7 @@ class Theme_class
          * With this event registered, theme can independently enqueue
          * all needed JS files without adding them in controllers.
          */
-        if ((!is_controller('login') || !is_controller('by_default')) && !is_method('index')) {
+        if (!(is_controller('by_default') && is_method('index'))) {
             Events::register('enqueue_scripts', array($this, 'scripts'));
         }
 
@@ -91,7 +91,7 @@ class Theme_class
      * @return    void
      */
     public function styles() {
-        if ((is_controller('login') || is_controller('by_default')) && is_method('index')) {
+        if (is_controller('by_default') && is_method('index')) {
             add_style('assets/css/auth.min');
         } else {
             add_style('assets/css/common.min');
@@ -108,6 +108,7 @@ class Theme_class
      */
     public function scripts() {
         prepend_script('assets/js/site.min');
+        prepend_script('assets/js/wysibb_ru.js');
         prepend_script('assets/js/all_lib.min');
     }
 
@@ -120,9 +121,8 @@ class Theme_class
      */
     public function metadata() {
         add_meta('author', 'Семин Иван, zakazhi.website@gmail.com');
-
-        // And why not more!
-        add_meta('apple-touch-icon', base_url('icon.png'), 'rel');
+        // add partial meta icons
+        add_partial('icons');
     }
 
     // ------------------------------------------------------------------------

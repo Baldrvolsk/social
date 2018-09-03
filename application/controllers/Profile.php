@@ -5,37 +5,64 @@ class Profile extends CI_Controller
 {
 
     public $user;
+
     public function __construct() {
         parent::__construct();
-        $this->load->library('form_validation');
-        $this->load->model('post_model');
         if (!$this->ion_auth->logged_in()) {
-            // redirect them to the login page
-            redirect('auth/login', 'refresh');
+            redirect('', 'refresh');
         }
+        $this->load->model(array('post_model', 'photo_model', 'friend_model', 'group_model'));
+        $this->photo_model->init('user');
+        $this->post_model->init('user');
+        $this->lang->load('profile');
         $this->user = $this->ion_auth->user()->row();
-
-
     }
 
-    public function index($id = 0) {
-        if($id != 0) {
-            $data['userdata'] = $this->ion_auth->user((int)$id)->row();
+    public function index($id = null) {
+        if($id === null) redirect('/profile/'.$this->user->id, 'refresh');
+        if ($id === $this->user->id) {
+            $userData = $this->user;
         } else {
-            $data['userdata'] = $this->user;
+            $userData = $this->ion_auth->user((int)$id)->row();
         }
-        //Фотки для профиля
-        $this->load->model('photos_model');
-        $data['userdata']->photos = $this->photos_model->get_last($data['userdata']->id);
-        $data['userdata']->avatars = $this->photos_model->get_avatars($data['userdata']->id);
-        $formData['userId'] = $data['userdata']->id;
-        $data['addPostForm'] = $this->load->view('post/add', $formData,true);
+        $userData->meta = $this->ion_auth->get_meta($userData->id);
+        $userData->group = $this->ion_auth->get_users_groups($userData->id)->result();
+        // форматируем данные и получаем данные счетчиков
+        $userData->birthDayString = $userData->meta->birth;
+        $userData->count = new stdClass();
+        $userData->count->friend = 0; //$this->friend_model->count_user_friend($userData->id);
+        $userData->count->follower = 0; //$this->friend_model->count_user_follower($userData->id);
+        $userData->count->group = 0; //$this->group_model->count_user_group($userData->id);
+        $userData->delta = $userData->meta->all_like - $userData->meta->all_dislike;
+        // подгружаем фото
+        $photoData = $this->photo_model->last_owner_photo($userData->id);
+        // подгружаем посты
+        $postData = $this->post_model->get_users_post($userData->id);
+        $data = array(
+            'userData' => $userData,
+            'photoData' => $photoData,
+            'postAdd' => $this->theme->view('post/add', array('data' => $userData), true),
+            'postList' => $this->theme->view('post/list', array('posts' => $postData, 'lang' => $this->router->user_lang), true),
 
-        $postData['posts'] = $this->post_model->get_users_post($data['userdata']->id, 5);
-        $data['posts'] = $this->load->view('post/index', $postData,true);
-        $this->load->view('header', $data);
-        $this->load->view('profile');
-        $this->load->view('footer');
+        );
+        $debug = array();
+        if (DEBUG) {
+            $debug['debug'][] = array(
+                't' => 'Информация о пользователе',
+                'c' => var_debug($userData)
+            );
+            $debug['debug'][] = array(
+                't' => 'Posts',
+                'c' => var_debug($postData)
+            );
+        }
+        $this->theme
+            ->title('Профиль пользователя '.$userData->first_name.' '.$userData->last_name)
+            ->add_partial('header')
+            ->add_partial('l_sidebar')
+            ->add_partial('r_sidebar')
+            ->add_partial('footer', $debug)
+            ->load('user/profile', $data);
     }
 
     public function edit() {

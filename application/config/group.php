@@ -2,6 +2,8 @@
 //$config['group_'] = ;
 
 // стоимость создания группы
+$config['group_need_pay_to_create'] = true;
+// стоимость создания группы
 $config['group_pay'] = '10';
 // стоимость создания группы
 $config['group_transfer_pay'] = '10';
