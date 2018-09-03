@@ -7,19 +7,25 @@ class Balance extends CI_Controller
 
     public function __construct() {
         parent::__construct();
-        $this->load->library('form_validation');
-        $this->load->model('balance_model');
         if (!$this->ion_auth->logged_in()) {
             // redirect them to the login page
-            redirect('auth/login', 'refresh');
+            redirect('', 'refresh');
         }
+        $this->load->library('form_validation');
+        $this->load->model('balance_model');
+
         $this->user = $this->ion_auth->user()->row();
     }
 
     public function index() {
-        $this->load->view('header');
-        $this->load->view('balance/index');
-        $this->load->view('footer');
+        $debug = array();
+        $this->theme
+            ->title('Рейтинги')
+            ->add_partial('header')
+            ->add_partial('l_sidebar')
+            ->add_partial('r_sidebar')
+            ->add_partial('footer', $debug)
+            ->load('balance/index');
     }
 
     public function add($user_id) {
