@@ -34,14 +34,16 @@ function date_to_str($format, $locale, $t = null) {
                        'us',
                        'usa'
             );
-            $format = preg_replace("~\%bg~", '%B', $format);
+            $format = preg_replace(array("~\%bf~", "~\%bs~"), array('%B', '%b'), $format);
             break;
         case 'ru':
             $l = array('', 'ru_RU', 'ru_RU.UTF-8', 'ru', 'rus', 'russian');
             // если русский язык то заменяем месяц на родительный падеж
-            $months =
-                explode("|", '|января|февраля|марта|апреля|мая|июня|июля|августа|сентября|октября|ноября|декабря');
-            $format = preg_replace("~\%bg~", $months[date('n', $t)], $format);
+            $m_f = explode("|", '|января|февраля|марта|апреля|мая|июня|июля|августа|сентября|октября|ноября|декабря');
+            $m_s = explode("|", '|янв|фев|мар|апр|мая|июня|июля|авг|сен|окт|ноя|дек');
+            $format = preg_replace(array("~\%bf~", "~\%bs~"),
+                array($m_f[date('n', $t)], $m_s[date('n', $t)]),
+                $format);
             break;
     }
     setlocale(LC_ALL, $l);
