@@ -26,14 +26,14 @@ $apiConfig = array(
 
     // OAuth2 Settings, you can get these keys at https://code.google.com/apis/console
     'oauth2_client_id' => '430678797387-kd89me01nm4g68ntl1kbtdf8e0e3he6m.apps.googleusercontent.com',
-    'oauth2_client_secret' => '90wRr8rHEh0yKXHSKYUGCbtC',
-    'oauth2_redirect_uri' => 'localhost/auth/profile',
+    'oauth2_client_secret' => 'p9VbQvqLyJs6rpEF0vUB_ViS',
+    'oauth2_redirect_uri' => 'rusimperia.ru/auth/login',
 
     // The developer key, you get this at https://code.google.com/apis/console
     'developer_key' => '',
   
     // Site name to show in the Google's OAuth 1 authentication screen.
-    'site_name' => 'localhost/',
+    'site_name' => 'rusimperia.ru',
 
     // Which Authentication, Storage and HTTP IO classes to use.
     'authClass'    => 'Google_OAuth2',

@@ -9,7 +9,6 @@ class Auth extends CI_Controller
 {
     public function __construct() {
         parent::__construct();
-        $this->load->library('google');
         $this->load->helper(array('language'));
         $this->lang->load('auth');
     }
@@ -27,6 +26,7 @@ class Auth extends CI_Controller
         if ($this->ion_auth->logged_in()) {
             redirect('profile/'.$this->session->user_id, 'refresh');
         }
+        $this->load->library('google');
         if (isset($_GET['code'])) {
             try {
                 $this->google->getAuthenticate();
@@ -68,9 +68,6 @@ class Auth extends CI_Controller
     }
 
     public function register() {
-        if ($this->ion_auth->logged_in()) {
-            redirect('profile/'.$this->session->user_id, 'refresh');
-        }
         if ($this->form_validation->run('regUser') == FALSE) { //Если валидация не прошла
             $ret['status'] = "ERR";
             $ret['email_err'] = $this->form_validation->error('email');
@@ -80,7 +77,7 @@ class Auth extends CI_Controller
             $ret['photo_err'] = $this->form_validation->error('google_photo');
             $ret['gender_err'] = $this->form_validation->error('name');
             $ret['rules_err'] = $this->form_validation->error('rules');
-            $ret['privacy_err'] = $this->form_validation->error('privacy');
+            //$ret['privacy_err'] = $this->form_validation->error('privacy');
             //$ret['country_err'] = $this->form_validation->error('country');
             $ret['message'] = 'Проверьте правильность заполнения формы';
             $ret['error'] = 'не прошла валидация';

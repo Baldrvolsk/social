@@ -123,7 +123,7 @@ class Photo_model extends CI_Model
         // добавляем пользователю id аватара
         $this->ion_auth->update($user_id, array('avatar' => $media_id));
         // добавлеем запись в альбом пользователя
-        $album = $this->get_album($user_id, array('name' => 'Фотографии профиля'));
+        $album = $this->get_albums($user_id, array('name' => 'Фотографии профиля'));
         $data = array(
             'album_id' => $album->id,
             'media' => $media_id,
@@ -151,14 +151,10 @@ class Photo_model extends CI_Model
         return $ret;
     }
 
-    public function get_albums() {
-        return $this->db->where($this->type.'_id', $this->owner_id)
-                        ->get($this->album_table)->result();
-    }
-
-    public function get_album($where = array()) {
-        $query =  $this->db->where($this->type.'_id', $this->owner_id)
-                           ->where($where)
+    public function get_albums($owner_id = null, $where = array()) {
+        $id = (empty($owner_id))?$this->owner_id:$owner_id;
+        if (!empty($where)) $this->db->where($where);
+        $query =  $this->db->where($this->type.'_id', $id)
                            ->get($this->album_table);
         if ($query->num_rows() > 1) {
             return $this->albums = $query->result();

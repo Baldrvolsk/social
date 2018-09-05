@@ -3,7 +3,6 @@ function regUser() {
     // Собираем данные формы
     var formData = new FormData();
 
-    // noinspection JSLint
     formData.append("email", $("#inputEmail").val());
     formData.append("login", $("#inputLogin").val());
     formData.append("first_name", $("#inputFName").val());
@@ -11,7 +10,7 @@ function regUser() {
     formData.append("google_photo", $("#avatar").val());
     formData.append("country", $("#inputCountry").val());
     formData.append("gender", $("#gender :selected").val());
-    formData.append("rules", $("#rules").prop('checked'));
+    //formData.append("rules", $("#rules").prop('checked'));
     formData.append("privacy", $("#privacy").prop('checked'));
 
     //Begin the ajax call
@@ -54,7 +53,7 @@ function regUser() {
                 $('#country_err').html(json.country_err);
                 $('#gender_err').html(json.gender_err);
                 $('#rules_err').html(json.rules_err);
-                $('#privacy_err').html(json.privacy_err);
+                //$('#privacy_err').html(json.privacy_err);
             }
         },
 
