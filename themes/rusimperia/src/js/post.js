@@ -1,7 +1,9 @@
+var lang = $("html").prop('lang');
 $(function() {
+
     var wbbOpt = {
         buttons: "bold,italic,underline,|,img,video,link,|,bullist,numlist,|,fontcolor,smilebox,|,justifyleft,justifycenter,justifyright,|,quote,removeFormat",
-        lang: "ru",
+        lang: lang,
         smileList: [
             {title:CURLANG.sm1, img: '<img src="/assets/img/smiles/2.gif" class="sm">', bbcode:":)"},
             {title:CURLANG.sm1, img: '<img src="/assets/img/smiles/7.gif" class="sm">', bbcode:":D"},
