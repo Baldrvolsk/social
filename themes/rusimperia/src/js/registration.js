@@ -10,8 +10,8 @@ function regUser() {
     formData.append("google_photo", $("#avatar").val());
     formData.append("country", $("#inputCountry").val());
     formData.append("gender", $("#gender :selected").val());
-    //formData.append("rules", $("#rules").prop('checked'));
-    formData.append("privacy", $("#privacy").prop('checked'));
+    formData.append("rules", $("#rules").prop('checked'));
+    //formData.append("privacy", $("#privacy").prop('checked'));
 
     //Begin the ajax call
     $.ajax({
