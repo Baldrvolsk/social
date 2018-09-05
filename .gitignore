@@ -10,6 +10,7 @@ public/assets/js/all_lib.min.js
 public/assets/js/site.min.js
 public/assets/js/site.min.map
 public/assets/icon/*
+themes/rusimperia/views/_partials/icons.php
 /bower_components/*
 
 .DS_Store
