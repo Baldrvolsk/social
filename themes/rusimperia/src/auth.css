@@ -4,7 +4,7 @@ html, body {
     min-height: 100%;
     font-family: 'PT Serif', serif;
     font-size: 22px;
-    background-color: #dcdcdc;
+    background-color: var(--color-gray);
 }
 
 .main {
@@ -54,7 +54,7 @@ html, body {
     grid-column: 2;
     grid-row: 2;
     border-radius: 20px;
-    background-color: #707070;
+    background-color: var(--color-nav-menu);
 }
 
 .nav {
@@ -86,7 +86,7 @@ html, body {
 }
 
 .nav .active a {
-    color: #fea700;
+    color: var(--color-active-menu);
 }
 
 .container {
@@ -126,7 +126,7 @@ html, body {
     border-radius: 20px;
     background-color: #fff;
     font-size: 1.5rem;
-    color: #f90;
+    color: var(--color-active-menu);
     text-decoration: none;
 }
 

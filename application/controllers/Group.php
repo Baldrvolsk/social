@@ -8,14 +8,15 @@ class Group extends CI_Controller
     public function __construct() {
         parent::__construct();
         if (!$this->ion_auth->logged_in()) {
-            // redirect them to the login page
             redirect('auth/login', 'refresh');
+        } else {
+            $this->user = $this->ion_auth->user()->row();
         }
         $this->load->library('form_validation');
         $this->config->load('group');
         $this->load->model('group_model');
-        $this->load->model('group_post_model');
-        $this->user = $this->ion_auth->user()->row();
+        $this->load->model('post_model');
+        $this->post_model->init('group');
         $this->user->create_group = $this->check_create_group();
     }
 
@@ -55,23 +56,40 @@ class Group extends CI_Controller
             ->load('group/my_group', $data);
     }
 
-    public function view_group($id) {
+    public function view($id) {
         $this->get_rules($id);
         $group = $this->group_model->get_group($id);
-        if (empty($group->head_img) || !file_exists(WEBROOT . $group->head_img)) {
-            $group->head_img = '/img/750x250.png';
+        $data = array('group' => $group);
+        if ($group !== null) {
+            if (empty($group->head_img) || !file_exists(WEBROOT . $group->head_img)) {
+                $group->head_img = '/img/750x250.png';
+            }
+            // подгружаем посты
+            $postData = $this->post_model->get_users_post($group->id);
+            $data['contacts'] = $this->group_model->get_contacts($id);
+            $data['postAdd'] = $this->theme->view('post/add', array('data' => $group), true);
+            $data['postList'] = $this->theme->view('post/list',
+                array(
+                    'posts' => $postData,
+                    'lang' => $this->router->user_lang
+                ),
+                true
+            );
         }
-        $data['group'] = $group;
-        $data['contacts'] = $this->group_model->get_contacts($id);
-
-        $formData['group_id'] = $id;
-        $data['addPostForm'] = $this->load->view('post/group_add', $formData,true);
-        $postData['posts'] = $this->group_post_model->get_group_post($id, 5);
-        $data['posts'] = $this->load->view('post/group_index', $postData,true);
-
-        $this->load->view('header', $data);
-        $this->load->view('group/view_group');
-        $this->load->view('footer');
+        $debug = array();
+        if (DEBUG) {
+            $debug['debug'][] = array(
+                't' => 'Информация о пользователе',
+                'c' => var_debug($data)
+            );
+        }
+        $this->theme
+            ->title((empty($group))?'Группа не существует':'Группа '.$group->name)
+            ->add_partial('header')
+            ->add_partial('l_sidebar')
+            ->add_partial('r_sidebar')
+            ->add_partial('footer', $debug)
+            ->load('group/view', $data);
     }
 
     public function follow_group($user_id, $group_id) {

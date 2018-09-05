@@ -35,7 +35,8 @@ module.exports = function( grunt ) {
                         "themes/src/js/chosen.jquery.js",
                         "themes/src/js/jquery.colorbox.js",
                         "themes/src/js/jquery.colorbox-ru.js",
-                        "themes/src/js/jquery.wysibb.js"
+                        "themes/src/js/jquery.wysibb.js",
+                        "themes/src/js/wysibb_ru.js"
                     ]
                 },
                 options: {
@@ -108,11 +109,11 @@ module.exports = function( grunt ) {
         concat: {
             common: {
                 src: ['themes/src/css/bootstrap-reboot.css',
-                    'themes/src/css/fontawesome.css',
-                    'themes/src/css/colorbox.css',
-                    'themes/src/css/cropper.css',
-                    'themes/src/css/chosen.css',
-                    'themes/src/css/wbbtheme.css'],
+                      'themes/src/css/fontawesome.css',
+                      'themes/src/css/colorbox.css',
+                      'themes/src/css/cropper.css',
+                      'themes/src/css/chosen.css',
+                      'themes/src/css/wbbtheme.css'],
                 dest: 'build/concat_common.css'
             },
             ri: {
@@ -120,7 +121,9 @@ module.exports = function( grunt ) {
                 dest: 'build/concat_ri.css'
             },
             ri_auth: {
-                src: ['themes/src/css/bootstrap-reboot.css', 'themes/rusimperia/src/auth.css'],
+                src: ['themes/src/css/bootstrap-reboot.css',
+                      'themes/rusimperia/src/css/__var.css',
+                      'themes/rusimperia/src/auth.css'],
                 dest: 'build/concat_ri_auth.css'
             },
             admin: {
@@ -188,7 +191,8 @@ module.exports = function( grunt ) {
                 tasks: ['concat:ri', 'autoprefixer:ri', 'cssmin:ri']
             },
             css_ri_auth: {
-                files: 'themes/rusimperia/src/auth.css',
+                files: ['themes/rusimperia/src/auth.css',
+                        'themes/rusimperia/src/css/__var.css'],
                 tasks: ['concat:ri_auth', 'autoprefixer:ri_auth', 'cssmin:ri_auth']
             },
             js_admin: {

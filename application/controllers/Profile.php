@@ -10,12 +10,13 @@ class Profile extends CI_Controller
         parent::__construct();
         if (!$this->ion_auth->logged_in()) {
             redirect('', 'refresh');
+        } else {
+            $this->user = $this->ion_auth->user()->row();
         }
         $this->load->model(array('post_model', 'photo_model', 'friend_model', 'group_model'));
         $this->photo_model->init('user');
         $this->post_model->init('user');
         $this->lang->load('profile');
-        $this->user = $this->ion_auth->user()->row();
     }
 
     public function index($id = null) {

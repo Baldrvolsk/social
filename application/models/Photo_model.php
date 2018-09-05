@@ -151,11 +151,13 @@ class Photo_model extends CI_Model
         return $ret;
     }
 
-    public function get_albums($owner_id = null, $where = array()) {
+    public function get_albums($owner_id = null, $where = array(), $limit = 3, $offset = 0) {
         $id = (empty($owner_id))?$this->owner_id:$owner_id;
         if (!empty($where)) $this->db->where($where);
         $query =  $this->db->where($this->type.'_id', $id)
-                           ->get($this->album_table);
+            ->limit($limit, $offset)
+            ->order_by('`id` ASC')
+            ->get($this->album_table);
         if ($query->num_rows() > 1) {
             return $this->albums = $query->result();
         } elseif ($query->num_rows() === 1) {
@@ -167,14 +169,24 @@ class Photo_model extends CI_Model
 
     public function get_album_photos($id) {
         return $this->db->where('album_id', $id)
-                        ->get($this->photos_table)->result();
+            ->get($this->photo_table)->result();
     }
 
-    public function get_cover($id) {
-        return $this->db->where('album_id', (int)$id)
-                        ->order_by('id', 'DESC')
-                        ->limit(1)
-                        ->get($this->photos_table)->row();
+    public function get_ll_photo($owner_id = null, $limit = 10, $offset = 0) {
+        $owner_id = empty($owner_id) ?
+            (empty($this->owner_id) ?
+                $this->ion_auth->user()->row()->id :
+                $this->owner_id
+            ) :
+            $owner_id;
+        return $this->db->select('*')
+            ->from($this->photo_table.' as `p`')
+            ->join($this->album_table.' as `a`', '`p`.`album_id` = `a`.`id`')
+            ->where('`a`.`'.$this->type.'_id`', (int)$owner_id)
+            ->order_by('`p`.`date_add`', 'DESC')
+            ->limit($limit, $offset)
+            ->group_by('`p`.`id`')
+            ->get()->result();
     }
 
     public function add_photo($album_id = 0, $type_id = 0, $url = null) {
@@ -220,30 +232,5 @@ class Photo_model extends CI_Model
                  ->where('id', $album_id)
                  ->get($this->album_table);
         return ($query->num_rows() > 0)?true:false;
-    }
-
-
-
-    public function get_profile_album($user_id) {
-        $this->db->where('user_id', (int)$user_id);
-        $this->db->where('status', 1);
-        $album = $this->db->get('albums')->row();
-        return $album->id;
-
-    }
-
-    public function get_avatars($user_id = 0) {
-        if ($user_id != 0) {
-            return $this->db->query('SELECT * FROM photos WHERE album_id in (SELECT id FROM albums WHERE user_id = ' .
-                                    (int)$user_id . ' AND status = 1)')->result();
-        }
-    }
-
-    public function update_avatar($file = '') {
-        if ($file != '') {
-            $this->db->where('id', $this->user->id);
-            $this->db->set('company', $file);
-            $this->db->update('users');
-        }
     }
 }

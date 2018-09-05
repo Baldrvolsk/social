@@ -74,9 +74,6 @@ class Post_model extends CI_Model
             ->order_by('`post`.`date_add`', 'desc')
             ->where('`post`.`user_id`', (int)$user_id);
         $post = $this->db->get()->result();
-        foreach ($post as $p) {
-            $p->date = date_to_str('%R %e %bg %Y', $this->router->user_lang, strtotime($p->date_add));
-        }
         return $post;
     }
 

@@ -108,7 +108,6 @@ class Theme_class
      */
     public function scripts() {
         prepend_script('assets/js/site.min');
-        prepend_script('assets/js/wysibb_ru.js');
         prepend_script('assets/js/all_lib.min');
     }
 

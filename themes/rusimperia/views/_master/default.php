@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=0.68, user-scalable=yes" />
 	<base href="<?php echo base_url(); ?>">
 	<title><?php echo Events::trigger('the_title', $title, 'string'); ?></title>
     <?=(empty($metadata)?'':$metadata)?>

@@ -1,3 +1,7 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
+if ($group === null) : ?>
+<h2>Группа не существует</h2>
+<?php else : ?>
 <div class="row row-border">
     <div class="col-md-12 head-img" style="background-image:url(<?=$group->head_img?>)">
         <button class="btn btn-default upl-head-img" onclick="load_form('change_head_img', <?=$group->id?>);">
@@ -159,3 +163,4 @@
         });
     }
 </script>
+<?php endif; ?>

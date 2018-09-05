@@ -1,0 +1,18 @@
+/*@viewport {
+    width: 1170px;
+    min-height: 100%;
+    zoom: auto;
+    max-zoom: 3;
+}*/
+
+:root {
+    --color-gray: #dcdcdc;
+    --color-dark-gray: #b8b8b8;
+    --color-primary: #428bca;
+    --color-success: #5cb85c;
+    --color-info:    #5bc0de;
+    --color-warning: #f0ad4e;
+    --color-danger:  #d9534f;
+    --color-active-menu: #fea700;
+    --color-nav-menu: #707070;
+}

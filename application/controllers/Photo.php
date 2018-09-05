@@ -4,6 +4,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Photo extends CI_Controller
 {
     private $user;
+    private $type;
+    private $owner_id;
 
     public function __construct() {
         parent::__construct();
@@ -13,13 +15,13 @@ class Photo extends CI_Controller
             $this->user = $this->ion_auth->user()->row();
         }
         $this->load->model('photo_model');
-        $this->photo_model->init('user', $this->user->id);
-        $this->load->library('form_validation');
     }
 
-    public function index() {
+    public function index($type, $id = null) {
+        $owner_id = (empty($id))?$this->user->id:$id;
+        $this->photo_model->init($type, $owner_id);
         $data['albums'] = $this->photo_model->get_albums();
-        $data['photo'] = $this->photo_model->get_album();
+        $data['photos'] = $this->photo_model->get_ll_photo();
 
         $debug = array();
         if (DEBUG) {
@@ -37,12 +39,27 @@ class Photo extends CI_Controller
             ->load('photo/list', $data);
     }
 
-    public function init($id) {
-        $this->photo_model->init('user', $id);
+    public function user($id = null) {
+        $this->index('user', $id);
     }
+
+    public function group($id = null) {
+        $this->index('group', $id);
+    }
+
+    public function event($id = null) {
+
+    }
+
+    public function init($type, $id) {
+        $this->type = $type;
+        $this->owner_id = $id;
+        $this->photo_model->init($this->type, $this->owner_id);
+    }
+
     public function album($id = 0) {
         if ((int)$id != 0) {
-            $data['Photo'] = $this->photos_model->get_album((int)$id);
+            $data['Photo'] = $this->photo_model->get_album((int)$id);
             $debug = array();
             if (DEBUG) {
                 $debug['debug'][] = array(
@@ -61,23 +78,24 @@ class Photo extends CI_Controller
     }
 
     public function create_album() {
+        $this->load->library('form_validation');
         $this->form_validation->set_rules('name', 'Имя', 'required');
         if (!$this->form_validation->run() == FALSE) {
-            $this->photos_model->create_album($this->input->post('name'), $this->input->post('description'));
+            $this->photo_model->create_album($this->input->post('name'), $this->input->post('description'));
         }
         redirect('/photos');
     }
 
     public function add_photo() {
-        $this->photos_model->add_photo();
-        redirect('Photo');
+        $this->photo_model->add_photo();
+        //redirect('photo');
     }
 
     public function add_avatar() {
-        $album_id = $this->photos_model->get_profile_album($this->user->id);
-        $new_avatar = $this->photos_model->add_photo($album_id);
-        $this->photos_model->update_avatar($new_avatar);
-        redirect('profile');
+        $album_id = $this->photo_model->get_profile_album($this->user->id);
+        $new_avatar = $this->photo_model->add_photo($album_id);
+        $this->photo_model->update_avatar($new_avatar);
+        //redirect('profile');
 
     }
 }
