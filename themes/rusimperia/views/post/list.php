@@ -24,7 +24,7 @@ foreach ($posts as $post):
         ?><i class="<?=$rangIcon?> rang-icon"></i></p>
     </div>
     <ul class="post-header">
-        <li><?=$post->date?></li>
+        <li><?=date_to_str('%R %e %bf %Y', $this->router->user_lang, strtotime($post->date_add))?></li>
         <li class="dd-anchor"><i class="fas fa-ellipsis-v"></i>
         <?php if ($this->user->id === $post->user_id) : ?>
             <ul class="dropdown">
