@@ -81,18 +81,23 @@ class Group_model extends CI_Model
     }
 
     public function get_group($group_id) {
-        $group = $this->db->select('com.*')
+        $query = $this->db->select('com.*')
             ->from($this->com_table.' as com')
             ->limit(1)
             ->where('com.id', $group_id)
-            ->get()->row();
-        $group->setting = json_decode($group->setting);
-        $group->rules = json_decode($group->rules);
-        $g_u = $this->db->select('COUNT(user_id) as count')
-            ->from($this->com_users_table)
-            ->where('community_id', $group_id)
-            ->get()->row();
-        $group->count_users = $g_u->count;
+            ->get();
+        if ($query->num_rows() == 1) {
+            $group = $query->row();
+            $group->setting = json_decode($group->setting);
+            $group->rules = json_decode($group->rules);
+            $g_u = $this->db->select('COUNT(user_id) as count')
+                ->from($this->com_users_table)
+                ->where('community_id', $group_id)
+                ->get()->row();
+            $group->count_users = $g_u->count;
+        } else {
+            $group = null;
+        }
         return $group;
     }
 
