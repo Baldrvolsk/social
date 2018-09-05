@@ -74,22 +74,18 @@ class Media_model extends CI_Model
         $tmp_path =  $upl . DS . 'f' . $hash . '.file';
         file_put_contents($tmp_path, $media);
         $mime_types = mime_content_type($tmp_path);
-        if (empty($p_info['extension'])) {
-            switch ($mime_types) {
-                case 'image/gif':
-                    $ext = 'gif';
-                    break;
-                case 'image/jpeg':
-                    $ext = 'jpg';
-                    break;
-                case 'image/png':
-                    $ext = 'png';
-                    break;
-                default:
-                    $ext = 'none';
-            }
-        } else {
-            $ext = $p_info['extension'];
+        switch ($mime_types) {
+            case 'image/gif':
+                $ext = 'gif';
+                break;
+            case 'image/jpeg':
+                $ext = 'jpg';
+                break;
+            case 'image/png':
+                $ext = 'png';
+                break;
+            default:
+                $ext = 'unknown';
         }
         if ($c = $this->check_for_file($hash, $ext)) {
             if (file_exists($tmp_path)) {
