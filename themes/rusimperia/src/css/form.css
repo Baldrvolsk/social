@@ -70,37 +70,6 @@
     align-items: stretch;
 }
 
-.btn {
-    font-family: 'PT Serif', serif;
-    font-size: 1rem;
-    padding: .3rem .7rem;
-    margin-left: 1rem;
-    background: var(--color-gray);
-    border: 1px solid var(--color-dark-gray);
-    border-radius: 20px;
-    cursor: pointer;
-}
-
-.btn:focus {
-    outline: none;
-}
-
-.btn-primary {
-    background-color: var(--color-primary);
-}
-.btn-success {
-    background-color: var(--color-success);
-}
-.btn-info {
-    background-color: var(--color-info);
-}
-.btn-warning {
-    background-color: var(--color-warning);
-}
-.btn-danger {
-    background-color: var(--color-danger);
-}
-
 .checkbox-input {
     display: none;
 }
@@ -117,3 +86,6 @@
 .checkbox-input:checked + .checkbox-label > .checkbox-icon:before {
     content: "\f14a";
 }
+
+input::placeholder {color: #bbbbbb; text-indent: 10px; transition: text-indent .6s ease;}
+input:focus::placeholder {text-indent: 110%; transition: text-indent .6s ease;}

@@ -13,8 +13,8 @@
     <div class="content-box info-box">
         <div class="rang">
             <?php
-                $rangName = $this->lang->line('profile_rang_name_'.$userData->group[0]->name);
                 if ($userData->group[0]->id > 40) $userData->group[0]->id = 40;
+                $rangName = $this->lang->line('profile_rang_name_'.$userData->group[0]->id);
                 switch ((int)$userData->group[0]->id) {
                     case 10:
                         $rangIcon = 'far fa-smile';

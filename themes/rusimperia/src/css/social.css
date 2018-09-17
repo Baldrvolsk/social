@@ -1,0 +1,28 @@
+.social-wrap {
+    text-align: center;
+}
+.social {
+    display: inline-flex;
+    margin: 15px auto;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.social span {
+    font-size: 2rem;
+}
+.social a, .social a:hover,
+.social a:focus, .social a:visited {
+    margin-left: 25px;
+    padding: 10px;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background-color: var(--color-nav-menu);
+    color: #fff;
+    text-decoration: none;
+}
+
+.social a:hover, .social a:focus {
+    background-color: var(--color-dark-gray);
+}

@@ -1,5 +1,11 @@
 .page-title {
+    text-align: center;
+}
 
+.page-title a, .page-title a:hover,
+.page-title a:focus, .page-title a:visited {
+    color: #000;
+    text-decoration: none;
 }
 
 .page-content p {

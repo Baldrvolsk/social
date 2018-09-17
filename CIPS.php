@@ -76,7 +76,8 @@
  * @property Comment_model    $comment_model
  * @property Like_model       $like_model
  * @property People           $people
- * @property Friend          $friend
+ * @property People_model     $people_model
+ * @property Friend           $friend
  * @property Friend_model     $friend_model
  * @property Group_model      $group_model
  * @property Group_post_model $group_post_model
