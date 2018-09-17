@@ -92,7 +92,7 @@ html, body {
 .container {
     grid-column: 2;
     grid-row: 3;
-    margin: 30px 100px 0;
+    margin: 10px 100px 0;
 }
 
 .content-box {
@@ -112,7 +112,7 @@ html, body {
 }
 
 .google-login {
-    margin-top: 30px;
+    margin-top: 20px;
     text-align: center;
 }
 
