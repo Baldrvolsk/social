@@ -1,0 +1,56 @@
+.content-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(auto-fit, max-content);
+    margin: 10px 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.content-item {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    grid-template-rows: repeat(3, min-content);
+    grid-column-gap: 20px;
+}
+
+.item-photo {
+    grid-row-start: span 3;
+}
+
+.people-item .item-img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+}
+
+.item-link, .item-link:hover,
+.item-link:visited, .item-link:focus {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 1.2rem;
+    line-height: 1;
+    color: #000;
+    text-decoration: none;
+}
+.item-online {
+    margin-right: 7px;
+    color: var(--color-status-online);
+}
+
+.item-rang {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: .9rem;
+    line-height: 1;
+    color: #000;
+    text-decoration: none;
+}
+
+.item-rang-icon {
+    margin-right: 7px;
+}
