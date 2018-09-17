@@ -21,6 +21,6 @@ $config['default_community_album'] = array( // альбомы сообществ
 );
 
 $config['photo_profile_size'] = 250;
-$config['avatar_size'] = 50;
+$config['avatar_size'] = 90;
 $config['thumb_size'] = array('w' => 100, 'h' => 70);
 $config['cover_size'] = array('w' => 190, 'h' => 130);
