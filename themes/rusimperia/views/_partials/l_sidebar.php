@@ -70,34 +70,9 @@
         </ul>
         <ul class="group-list">
         <?php if (empty($groups)) : ?>
-            <!--<li class="group-list-item">
+            <li class="group-list-item">
                 <a class="group-list-link" href="/my_group">
                     Можете добавить до 5 групп в этот список
-                </a>
-            </li>-->
-            <li class="group-list-item">
-                <a class="group-list-link" href="/group/1">
-                    <?=substr('Gcvbc sdsdf sdfsdfsd xcvdsx', 0, 20)?>
-                </a>
-            </li>
-            <li class="group-list-item">
-                <a class="group-list-link" href="/group/1">
-                    Группа #2
-                </a>
-            </li>
-            <li class="group-list-item">
-                <a class="group-list-link" href="/group/1">
-                    Группа #3
-                </a>
-            </li>
-            <li class="group-list-item">
-                <a class="group-list-link" href="/group/1">
-                    Группа #4
-                </a>
-            </li>
-            <li class="group-list-item">
-                <a class="group-list-link" href="/group/1">
-                    Группа #5
                 </a>
             </li>
         <?php else :
@@ -116,33 +91,9 @@
         </ul>
         <ul class="event-list">
             <?php if (empty($events)) : ?>
-                <!--<li class="event-list-item">
+                <li class="event-list-item">
                     <a class="event-list-link" href="/my_event">
                         Можете добавить до 3 мероприятий в этот список
-                    </a>
-                </li>-->
-                <li class="event-list-item">
-                    <a class="event-list-link" href="/event/1">
-                        <span class="event-title">Встреча #1</span>
-                        <span class="event-time">
-                            <?=date_to_str('%e %bs в %R', $this->router->user_lang, time())?>
-                        </span>
-                    </a>
-                </li>
-                <li class="event-list-item">
-                    <a class="event-list-link" href="/event/1">
-                        <span class="event-title">Встреча #2</span>
-                        <span class="event-time">
-                            <?=date_to_str('%e %bs в %R', $this->router->user_lang, time())?>
-                        </span>
-                    </a>
-                </li>
-                <li class="event-list-item">
-                    <a class="event-list-link" href="/event/1">
-                        <span class="event-title">Встреча #3</span>
-                        <span class="event-time">
-                            <?=date_to_str('%e %bs в %R', $this->router->user_lang, strtotime('2018-09-15 05:41:34'))?>
-                        </span>
                     </a>
                 </li>
             <?php else :
