@@ -10,11 +10,10 @@ class Rss extends CI_Controller
             redirect('', 'refresh');
         } else {
             $this->user = $this->ion_auth->user()->row();
-        }
-		
+        }	
 		$this->load->helper('xml');
         $this->load->helper('text');
-		
+
     }
 
     public function index() {
