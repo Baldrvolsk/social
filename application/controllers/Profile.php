@@ -29,12 +29,17 @@ class Profile extends CI_Controller
         $userData->meta = $this->ion_auth->get_meta($userData->id);
         $userData->group = $this->ion_auth->get_users_groups($userData->id)->result();
         // форматируем данные и получаем данные счетчиков
-        $userData->birthDayString = $userData->meta->birth;
         $userData->count = new stdClass();
         $userData->count->friend = 0; //$this->friend_model->count_user_friend($userData->id);
         $userData->count->follower = 0; //$this->friend_model->count_user_follower($userData->id);
         $userData->count->group = 0; //$this->group_model->count_user_group($userData->id);
-        $userData->delta = $userData->meta->all_like - $userData->meta->all_dislike;
+        if (empty($userData->meta)) {
+            $userData->delta = 0;
+            $userData->birthDayString = null;
+        } else {
+            $userData->delta = $userData->meta->all_like - $userData->meta->all_dislike;
+            $userData->birthDayString = $userData->meta->birth;
+        }
         // подгружаем фото
         $photoData = $this->photo_model->last_owner_photo($userData->id);
         // подгружаем посты
