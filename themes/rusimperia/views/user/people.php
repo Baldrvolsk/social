@@ -1,8 +1,8 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 <div class="content-box">
     <ul class="sub-nav">
-        <li>Все пользователи</li>
-        <li>Пользователи онлайн</li>
+        <li onclick="filterPeople({status:'all'})">Все пользователи</li>
+        <li onclick="filterPeople({status:'online'})">Пользователи онлайн</li>
     </ul>
     <div class="search">
         <div class="search-panel">
