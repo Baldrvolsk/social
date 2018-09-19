@@ -1,6 +1,5 @@
 <?php
 
-
 class Rss extends CI_Controller
 {
     public $user;
@@ -15,13 +14,20 @@ class Rss extends CI_Controller
     }
 
     public function index() {
+    	
+        $data['RSS'] = $this->get_rss();	
         $debug = array();
+		
         $this->theme
-            ->title('Лента новостей')
+            ->title('Настройка RSS')
             ->add_partial('header')
             ->add_partial('l_sidebar')
             ->add_partial('r_sidebar')
             ->add_partial('footer', $debug)
-            ->load('common/in_dev');
+            ->load('common/rss', $data);
     }
+	
+	public function get_rss() {
+		return array('test'=>'1');
+	}
 }
