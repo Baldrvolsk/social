@@ -1,24 +1,14 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-/**
- * 'id' => array('type' => 'BIGINT', 'unsigned' => TRUE, 'auto_increment' => TRUE),
- * 'cdn' => array('type' => 'BOOLEAN', 'default' => 0),
- * 'link' => array('type' => 'TEXT', 'unsigned' => TRUE),
- * 'type' => array('type' => 'VARCHAR', 'constraint' => 20),
- * 'file_hash' => array('type' => 'VARCHAR', 'constraint' => 40),
- * 'file_orig_name' => array('type' => 'VARCHAR', 'constraint' => 40),
- * 'file_ext' => array('type' => 'VARCHAR', 'constraint' => 10),
-*/
 class Media extends CI_Controller
 {
 
     public function __construct() {
         parent::__construct();
-        /*if (!$this->ion_auth->logged_in()) {
-            // redirect them to the login page
+        if (!$this->ion_auth->logged_in()) {
             redirect('', 'refresh');
-        }*/
+        }
         $this->load->model('media_model');
     }
 
@@ -31,7 +21,7 @@ class Media extends CI_Controller
     }
 
     // ~ функции получения медиафайлов
-    public function user($type, $id) {
+    public function user($type, $id = null) {
         switch ($type) {
             case 'avatar':
                 $data = array(
@@ -73,9 +63,21 @@ class Media extends CI_Controller
     }
 
     private function get_media($id, $data = array()) {
-        $media = $this->media_model->get_media($id);
-        $patch = SERVERROOT . DS . 'upload' . DS .
-                 implode(DS, str_split($media->file_hash, 2)) . DS;
+        if ($id === null) {
+            if ($data['type'] === 'user') {
+                $media = new stdClass();
+                $media->id = 0;
+                $media->type = 'image/jpeg';
+                $media->file_hash = 'blank';
+                $media->file_orig_name = 'blank';
+                $media->file_ext = 'jpg';
+                $patch = SERVERROOT . DS . 'public' . DS . 'assets' . DS . 'img' . DS;
+            }
+        } else {
+            $media = $this->media_model->get_media($id);
+            $patch = SERVERROOT . DS . 'upload' . DS .
+                implode(DS, str_split($media->file_hash, 2)) . DS;
+        }
         if ($data['type'] === 'user' || $data['type'] === 'photo') {
             if (empty($data['prefix'])) {
                 $fName =  $media->file_hash . '.' . $media->file_ext;
@@ -83,11 +85,11 @@ class Media extends CI_Controller
                 $fName = $media->file_hash . '_' . $data['prefix'] . '.png';
                 if (!file_exists($patch . $fName)) {
                     if ($data['prefix'] === 'a' || $data['prefix'] === 'p') {
-                        $this->media_model->resize_avatar($media);
+                        $this->media_model->resize_avatar($media, $patch);
                     } elseif ($data['prefix'] === 't') {
-                        $this->media_model->create_thumbs($media);
+                        $this->media_model->create_thumbs($media, $patch);
                     } elseif ($data['prefix'] === 'c') {
-                        $this->media_model->create_cover($media);
+                        $this->media_model->create_cover($media, $patch);
                     }
                 }
                 $media->type = 'image/png';
@@ -96,7 +98,6 @@ class Media extends CI_Controller
                 $filePatch = $patch . $fName;
                 $fileMime = $media->type;
             } else {
-
                 $filePatch = SERVERROOT . DS . 'public'. DS .'assets' . DS . 'img' . DS . 'blank.jpeg';
                 $fileMime = 'image/jpeg';
             }

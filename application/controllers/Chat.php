@@ -9,9 +9,10 @@ class Chat extends CI_Controller
     public function __construct() {
         parent::__construct();
         if (!$this->ion_auth->logged_in()) {
-            redirect('auth/login');
+            redirect('', 'refresh');
+        } else {
+            $this->user = $this->ion_auth->user()->row();
         }
-        $this->user = $this->ion_auth->user()->row();
         $this->load->model('chat_model');
     }
 

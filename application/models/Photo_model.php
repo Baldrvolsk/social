@@ -133,12 +133,17 @@ class Photo_model extends CI_Model
     }
 
     public function last_owner_photo($owner_id) {
-        $ret['count'] = $this->db->select('COUNT(`p`.`id`) as `count`')
+        $query_count = $this->db->select('COUNT(`p`.`id`) as `count`')
             ->from($this->photo_table.' as `p`')
             ->join($this->album_table.' as `a`', '`p`.`album_id` = `a`.`id`')
             ->where('`a`.`'.$this->type.'_id`', (int)$owner_id)
             ->group_by('`p`.`id`')
-            ->get()->row()->count;
+            ->get()->row();
+        if (empty($query_count)) {
+            $ret['count'] = 0;
+        } else {
+            $ret['count'] = $query_count->count;
+        }
 
         $ret['photo'] = $this->db->select('`p`.*, `a`.*')
             ->from($this->photo_table.' as `p`')

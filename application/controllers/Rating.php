@@ -8,13 +8,12 @@ class Rating extends CI_Controller
     public function __construct() {
         parent::__construct();
         if (!$this->ion_auth->logged_in()) {
-            // redirect them to the login page
             redirect('', 'refresh');
+        } else {
+            $this->user = $this->ion_auth->user()->row();
         }
         $this->load->library('form_validation');
         $this->load->model('balance_model');
-
-        $this->user = $this->ion_auth->user()->row();
     }
 
     public function index() {

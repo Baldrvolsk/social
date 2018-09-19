@@ -77,7 +77,6 @@ class Auth extends CI_Controller
             $ret['photo_err'] = $this->form_validation->error('google_photo');
             $ret['gender_err'] = $this->form_validation->error('name');
             $ret['rules_err'] = $this->form_validation->error('rules');
-            //$ret['privacy_err'] = $this->form_validation->error('privacy');
             //$ret['country_err'] = $this->form_validation->error('country');
             $ret['message'] = 'Проверьте правильность заполнения формы';
             $ret['error'] = 'не прошла валидация';

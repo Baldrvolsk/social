@@ -178,9 +178,16 @@ class Media_model extends CI_Model
         }
     }
 
-    public function resize_avatar($media) {
+    public function resize_avatar($media, $path = null) {
         $this->config->load('photos', TRUE);
-        $fDir = SERVERROOT . DS . 'upload' . DS . implode(DS, str_split($media->file_hash, 2)). DS;
+        if ($path !== null) {
+            $fDir = $path;
+        } else {
+            $fDir = SERVERROOT . DS . 'upload' . DS . implode(DS, str_split($media->file_hash, 2)). DS;
+        }
+        if (!is_dir($fDir)) {
+            mkdir($fDir, 0777, true);
+        }
         $fName = $fDir . $media->file_hash . '.' . $media->file_ext;
         $aName = $fDir . $media->file_hash . '_a.png';
         $pName = $fDir . $media->file_hash . '_p.png';
@@ -211,9 +218,16 @@ class Media_model extends CI_Model
         imagedestroy($im);
     }
 
-    public function create_thumbs($media) {
+    public function create_thumbs($media, $path = null) {
         $this->config->load('photos', TRUE);
-        $fDir = SERVERROOT . DS . 'upload' . DS . implode(DS, str_split($media->file_hash, 2)). DS;
+        if ($path !== null) {
+            $fDir = $path;
+        } else {
+            $fDir = SERVERROOT . DS . 'upload' . DS . implode(DS, str_split($media->file_hash, 2)). DS;
+        }
+        if (!is_dir($fDir)) {
+            mkdir($fDir, 0777, true);
+        }
         $fName = $fDir . $media->file_hash . '.' . $media->file_ext;
         $tName = $fDir . $media->file_hash . '_t.png';
         switch ($media->type) {
@@ -237,9 +251,16 @@ class Media_model extends CI_Model
         imagedestroy($im);
     }
 
-    public function create_cover($media) {
+    public function create_cover($media, $path = null) {
         $this->config->load('photos', TRUE);
-        $fDir = SERVERROOT . DS . 'upload' . DS . implode(DS, str_split($media->file_hash, 2)). DS;
+        if ($path !== null) {
+            $fDir = $path;
+        } else {
+            $fDir = SERVERROOT . DS . 'upload' . DS . implode(DS, str_split($media->file_hash, 2)). DS;
+        }
+        if (!is_dir($fDir)) {
+            mkdir($fDir, 0777, true);
+        }
         $fName = $fDir . $media->file_hash . '.' . $media->file_ext;
         $tName = $fDir . $media->file_hash . '_c.png';
         switch ($media->type) {

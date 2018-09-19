@@ -33,7 +33,7 @@
             <i class="<?=$rangIcon?> rang-icon"></i> <?=$rangName?>
         </div>
         <div class="last-online" id="last-online">
-            <?php if ($userData->meta->online) : ?>
+            <?php if (!empty($userData->meta->online) && $userData->meta->online) : ?>
             В сети
             <?php else :
                 echo (($userData->gender === 'female')?'Была':'Был').': '.date_format(date_create($userData->last_login),'H:i d.m.Y');
@@ -61,7 +61,9 @@
                     <span class="status_string"><?=$userData->meta->text_status; //Иначе статус?></span>
                 <?php endif; ?>
             <?php else : ?>
-                <span class="status_string status_string_disabled"><?=$userData->meta->text_status; ?></span>
+                <span class="status_string status_string_disabled"><?=
+                    (empty($userData->meta->text_status)?'':$userData->meta->text_status)
+                    ?></span>
             <?php endif; ?>
         </div>
         <div class="user-country-title">Страна:</div>

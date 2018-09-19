@@ -101,5 +101,7 @@ class Webhook extends CI_Controller
         $this->execute();
     }
 
-    public function index() {}
+    public function index() {
+        die('Access deny');
+    }
 }
