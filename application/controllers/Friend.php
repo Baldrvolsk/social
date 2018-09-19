@@ -11,12 +11,12 @@ class Friend extends CI_Controller
     public $user;
     public function __construct() {
         parent::__construct();
-        $this->load->model('friend_model');
         if (!$this->ion_auth->logged_in()) {
-            // redirect them to the login page
             redirect('auth/login', 'refresh');
+        } else {
+            $this->user = $this->ion_auth->user()->row();
         }
-        $this->user = $this->ion_auth->user()->row();
+        $this->load->model('friend_model');
     }
 
     public function index() {

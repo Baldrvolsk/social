@@ -6,7 +6,7 @@ class People extends CI_Controller
     public function __construct() {
         parent::__construct();
         if (!$this->ion_auth->logged_in()) {
-            redirect('auth/login', 'refresh');
+            redirect('', 'refresh');
         } else {
             $this->user = $this->ion_auth->user()->row();
         }
