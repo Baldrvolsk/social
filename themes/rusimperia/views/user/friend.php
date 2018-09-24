@@ -17,8 +17,7 @@
         <div class="search-filter"></div>
     </div>
     <ul class="content-list" data-nav="all">
-        <?php foreach ($friends as $row):
-            $row->online = rand(0,1);?>
+        <?php foreach ($friends as $row): ?>
             <li class="content-item people-item" id="people-<?=$row->id?>" data-online="<?=$row->online?>">
                 <div class="item-photo">
                     <img src="/media/user/avatar/<?=$row->avatar?>" class="item-img">
