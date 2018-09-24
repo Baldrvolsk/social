@@ -1,5 +1,4 @@
-<?php $row->online = rand(0, 1);
-if ($full) : ?>
+<?php if ($full) : ?>
 <li class="content-item people-item" id="people-<?=$row->id?>" data-online="<?=$row->online?>">
     <?php endif; ?>
     <div class="item-photo">
