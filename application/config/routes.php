@@ -7,9 +7,6 @@ $route['profile/(:num)'] = 'profile/index/$1';
 $route['groups'] = 'group/index';
 $route['group/(:num)'] = 'group/view/$1';
 $route['my_group'] = 'group/my_group';
-// друзья
-$route['friends/delete/(:num)'] = 'friend/delete_friend/$1';
-$route['friends/add/(:num)'] = 'friend/add_friend/$1/0';
 // вебхук
 $route['webhook/(:any)'] = 'webhook/deploy/$1';
 // статические страницы

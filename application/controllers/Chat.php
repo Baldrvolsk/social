@@ -25,7 +25,7 @@ class Chat extends CI_Controller
                 if (DEBUG) {
                     $debug['debug'][] = array(
                         't' => 'Информация о пользователе',
-                        'c' => var_debug($data)
+                        'c' => pretty_print($data)
                     );
                 }
                 $this->theme
@@ -44,7 +44,7 @@ class Chat extends CI_Controller
             if (DEBUG) {
                 $debug['debug'][] = array(
                     't' => 'Информация о пользователе',
-                    'c' => var_debug($data)
+                    'c' => pretty_print($data)
                 );
             }
             $this->theme

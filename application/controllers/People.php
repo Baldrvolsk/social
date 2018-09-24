@@ -10,17 +10,21 @@ class People extends CI_Controller
         } else {
             $this->user = $this->ion_auth->user()->row();
         }
-        $this->load->model('people_model');
+        $this->load->model('friend_model');
         $this->lang->load('profile');
     }
 
     public function index() {
-        $data['people'] = $this->people_model->get_people($this->user->id);
+        $data['people'] = $this->friend_model->get_people($this->user->id);
         $debug = array();
         if (DEBUG) {
             $debug['debug'][] = array(
                 't' => 'Данные',
-                'c' => var_debug($data)
+                'c' => pretty_print($data)
+            );
+            $debug['debug'][] = array(
+                't' => '$_SESSION',
+                'c' => pretty_print($_SESSION)
             );
         }
         $this->theme
@@ -30,5 +34,16 @@ class People extends CI_Controller
             ->add_partial('r_sidebar')
             ->add_partial('footer', $debug)
             ->load('user/people', $data);
+    }
+
+    public function get_lazy() {
+        $startFrom = $this->input->post('startFrom');
+        // Получаем 30 пользователей, начиная с последнего отображенного
+        $people = $this->friend_model->get_people($this->user->id, 30, $startFrom);
+        $ret = array();
+        foreach ($people as $row) {
+            $ret[] = $this->theme->view('user/people_item', array('row' => $row, 'full' => true), true);
+        }
+        echo json_encode($ret);
     }
 }

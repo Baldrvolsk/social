@@ -41,18 +41,6 @@ $config = array(
                 'in_list' => 'Вы должны принять правила проекта',
             )
         ),
-        /*
-        // убрано по приказу начальника
-        array(
-            'field' => 'privacy',
-            'label' => 'Политика',
-            'rules' => 'required|in_list[true,1]',
-            'errors' => array(
-                'required' => 'Вы должны дать согласие на обработку персональных данных',
-                'in_list' => 'Вы должны дать согласие на обработку персональных данных',
-            )
-        ),
-        */
     ),
 
     'postAdd' => array(
@@ -70,6 +58,27 @@ $config = array(
             'field' => 'content',
             'label' => 'Сообщение',
             'rules' => 'trim|required'
+        )
+    ),
+
+    'friendChangeStatus' => array(
+        array(
+            'field' => 'id',
+            'label' => 'ID пользователя',
+            'rules' => 'trim|required|integer'
+        ),
+        array(
+            'field' => 'status',
+            'label' => 'Статус друга',
+            'rules' => 'trim|required|in_list[request,confirmed,subscriber,blacklist,delete]'
+        )
+    ),
+
+    'getFriendList' => array(
+        array(
+            'field' => 'type',
+            'label' => 'Тип списка друзей',
+            'rules' => 'trim|required|in_list[friend,confirm,request,subscriber,blacklist]'
         )
     ),
 

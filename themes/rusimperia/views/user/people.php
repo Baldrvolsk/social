@@ -1,8 +1,9 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 <div class="content-box">
     <ul class="sub-nav">
-        <li onclick="filterPeople({status:'all'})">Все пользователи</li>
-        <li onclick="filterPeople({status:'online'})">Пользователи онлайн</li>
+        <li class="sub-nav-item sub-nav-item-selected" onclick="filterPeople(this, {status:'all'})">Все
+            пользователи</li>
+        <li class="sub-nav-item" onclick="filterPeople(this, {status:'online'})">Пользователи онлайн</li>
     </ul>
     <div class="search">
         <div class="search-panel">
@@ -13,16 +14,24 @@
         <div class="search-filter"></div>
     </div>
     <ul class="content-list">
-    <?php foreach ($people as $row): ?>
-        <li class="content-item people-item">
+    <?php foreach ($people as $row):
+        $row->online = rand(0, 1); ?>
+        <li class="content-item people-item" id="people-<?=$row->id?>" data-online="<?=$row->online?>">
             <div class="item-photo">
                 <img src="/media/user/avatar/<?=$row->avatar?>" class="item-img">
             </div>
-            <a class="item-link" href="/profile/<?=$row->id?>" title="Посмотреть профиль">
+            <a class="item-link" href="/profile/<?=$row->id?>">
                 <?php if ($row->online) : ?>
                 <i class="fas fa-circle fa-xs item-online"></i>
                 <?php endif; ?>
-                <span><?=$row->full_name_user?></span>
+                <span class="tooltip">
+                    <?=$row->full_name_user?>
+                    <span class="tooltip-content">
+                        <span class="tooltip-text">
+                            <span class="tooltip-inner">Посмотреть профиль</span>
+                        </span>
+                    </span>
+                </span>
             </a>
             <div class="item-rang">
                 <?php
@@ -33,7 +42,7 @@
                         $rangIcon = 'far fa-smile';
                         break;
                     case 20:
-                        $rangIcon = 'far fa-user';
+                        $rangIcon = 'fas fa-user';
                         break;
                     case 30:
                         $rangIcon = 'fas fa-university';
@@ -49,44 +58,254 @@
             <?php if (!empty($row->u_f_status)) : // если просматривающий страницу добавлял в друзья
                 switch ($row->u_f_status) {
                     case 'request': ?>
-                        <a href="/friends/delete/<?=$row->id?>" class="btn btn-info" title="Вы уже
-            отправили запрос на добавление в друзья">
-                            Удалить запрос
-                        </a>
+                        <button type="button" class="btn tooltip" onclick="deleteRequest(this, <?=$row->id?>)">
+                            <i class="fas fa-user-minus"></i>
+                            <span class="tooltip-content">
+                                <span class="tooltip-text">
+                                    <span class="tooltip-inner">Удалить запрос</span>
+                                </span>
+                            </span>
+                        </button>
+                        <button type="button" class="btn tooltip" onclick="addBlackList(this, <?=$row->id?>)">
+                            <i class="fas fa-user-shield"></i>
+                            <span class="tooltip-content">
+                                <span class="tooltip-text">
+                                    <span class="tooltip-inner">Добавить в черный список</span>
+                                </span>
+                            </span>
+                        </button>
+                        <button type="button" class="btn tooltip" onclick="sendMessage(this, <?=$row->id?>)">
+                            <i class="fas fa-comments"></i>
+                            <span class="tooltip-content">
+                                <span class="tooltip-text">
+                                    <span class="tooltip-inner">Написать сообщение</span>
+                                </span>
+                            </span>
+                        </button>
                         <?php break;
                     case 'confirmed': ?>
-                        <a href="/friends/delete/<?=$row->id?>" class="btn btn-info">
-                            Удалить из друзей
-                        </a>
+                        <button type="button" class="btn tooltip" onclick="deleteFriends(this, <?=$row->id?>)">
+                            <i class="fas fa-user-times"></i>
+                            <span class="tooltip-content">
+                                <span class="tooltip-text">
+                                    <span class="tooltip-inner">Удалить себя из друзей</span>
+                                </span>
+                            </span>
+                        </button>
+                        <button type="button" class="btn tooltip" onclick="addBlackList(this, <?=$row->id?>)">
+                            <i class="fas fa-user-shield"></i>
+                            <span class="tooltip-content">
+                                <span class="tooltip-text">
+                                    <span class="tooltip-inner">Добавить в черный список</span>
+                                </span>
+                            </span>
+                        </button>
+                        <button type="button" class="btn tooltip" onclick="sendMessage(this, <?=$row->id?>)">
+                            <i class="fas fa-comments"></i>
+                            <span class="tooltip-content">
+                                <span class="tooltip-text">
+                                    <span class="tooltip-inner">Написать сообщение</span>
+                                </span>
+                            </span>
+                        </button>
+                        <?php break;
+                    case 'subscriber': ?>
+                        <button type="button" class="btn tooltip" onclick="addFriends(this, <?=$row->id?>)">
+                            <i class="fas fa-user-plus"></i>
+                            <span class="tooltip-content">
+                                <span class="tooltip-text">
+                                    <span class="tooltip-inner">Добавить в друзья</span>
+                                </span>
+                            </span>
+                        </button>
+                        <button type="button" class="btn tooltip" onclick="deleteSubscriber(this, <?=$row->id?>)">
+                            <span class="fa-stack fa-sm">
+                                <i class="fas fa-user-edit fa-stack-1x"></i>
+                                <i class="fas fa-ban fa-stack-2x"></i>
+                            </span>
+                            <span class="tooltip-content">
+                                <span class="tooltip-text">
+                                    <span class="tooltip-inner">Удалить себя из подписчиков</span>
+                                </span>
+                            </span>
+                        </button>
+                        <button type="button" class="btn tooltip" onclick="addBlackList(this, <?=$row->id?>)">
+                            <i class="fas fa-user-shield"></i>
+                            <span class="tooltip-content">
+                                <span class="tooltip-text">
+                                    <span class="tooltip-inner">Добавить в черный список</span>
+                                </span>
+                            </span>
+                        </button>
+                        <button type="button" class="btn tooltip" onclick="sendMessage(this, <?=$row->id?>)">
+                            <i class="fas fa-comments"></i>
+                            <span class="tooltip-content">
+                                <span class="tooltip-text">
+                                    <span class="tooltip-inner">Написать сообщение</span>
+                                </span>
+                            </span>
+                        </button>
                         <?php break;
                     case 'blacklist': ?>
-                        <a href="/friends/delete/<?=$row->id?>" class="btn btn-info">
-                            Удалить из черного списка
-                        </a>
+                        <button type="button" class="btn tooltip" onclick="addFriends(this, <?=$row->id?>)">
+                            <i class="fas fa-user-plus"></i>
+                            <span class="tooltip-content">
+                                <span class="tooltip-text">
+                                    <span class="tooltip-inner">Добавить в друзья</span>
+                                </span>
+                            </span>
+                        </button>
+                        <button type="button" class="btn tooltip" onclick="deleteBlackList(this, <?=$row->id?>)">
+                            <span class="fa-stack fa-sm">
+                                <i class="fas fa-user-shield fa-stack-1x"></i>
+                                <i class="fas fa-ban fa-stack-2x"></i>
+                            </span>
+                            <span class="tooltip-content">
+                                <span class="tooltip-text">
+                                    <span class="tooltip-inner">Удалить из черного списка</span>
+                                </span>
+                            </span>
+                        </button>
                     <?php }
             elseif (!empty($row->f_u_status)) : // если выводимый пользователь добавлял в друзья
                 switch ($row->f_u_status) {
                     case 'request': ?>
-                        <a href="/friends/confirm_friend/<?=$row->id?>" class="btn btn-info">
-                            Подтвердить запрос в друзья
-                        </a>
+                        <button type="button" class="btn tooltip" onclick="confirmFriends(this, <?=$row->id?>)">
+                            <i class="fas fa-user-check"></i>
+                            <span class="tooltip-content">
+                                <span class="tooltip-text">
+                                    <span class="tooltip-inner">Подтвердить запрос в друзья</span>
+                                </span>
+                            </span>
+                        </button>
+                        <button type="button" class="btn tooltip" onclick="addSubscriber(this, <?=$row->id?>)">
+                            <i class="fas fa-user-edit"></i>
+                            <span class="tooltip-content">
+                                <span class="tooltip-text">
+                                    <span class="tooltip-inner">Оставить в подписчиках</span>
+                                </span>
+                            </span>
+                        </button>
+                        <button type="button" class="btn tooltip" onclick="addBlackList(this, <?=$row->id?>)">
+                            <i class="fas fa-user-shield"></i>
+                            <span class="tooltip-content">
+                                <span class="tooltip-text">
+                                    <span class="tooltip-inner">Добавить в черный список</span>
+                                </span>
+                            </span>
+                        </button>
+                        <button type="button" class="btn tooltip" onclick="sendMessage(this, <?=$row->id?>)">
+                            <i class="fas fa-comments"></i>
+                            <span class="tooltip-content">
+                                <span class="tooltip-text">
+                                    <span class="tooltip-inner">Написать сообщение</span>
+                                </span>
+                            </span>
+                        </button>
                         <?php break;
                     case 'confirmed': ?>
-                        <a href="/friends/delete/<?=$row->id?>" class="btn btn-info">
-                            Удалить из друзей
-                        </a>
+                        <button type="button" class="btn tooltip" onclick="deleteFriends(this, <?=$row->id?>)">
+                            <i class="fas fa-user-times"></i>
+                            <span class="tooltip-content">
+                                <span class="tooltip-text">
+                                    <span class="tooltip-inner">Удалить из друзей</span>
+                                </span>
+                            </span>
+                        </button>
+                        <button type="button" class="btn tooltip" onclick="addSubscriber(this, <?=$row->id?>)">
+                            <i class="fas fa-user-edit"></i>
+                            <span class="tooltip-content">
+                                <span class="tooltip-text">
+                                    <span class="tooltip-inner">Удалить из друзей, оставив подписчиком</span>
+                                </span>
+                            </span>
+                        </button>
+                        <button type="button" class="btn tooltip" onclick="addBlackList(this, <?=$row->id?>)">
+                            <i class="fas fa-user-shield"></i>
+                            <span class="tooltip-content">
+                                <span class="tooltip-text">
+                                    <span class="tooltip-inner">Добавить в черный список</span>
+                                </span>
+                            </span>
+                        </button>
+                        <button type="button" class="btn tooltip" onclick="sendMessage(this, <?=$row->id?>)">
+                            <i class="fas fa-comments"></i>
+                            <span class="tooltip-content">
+                                <span class="tooltip-text">
+                                    <span class="tooltip-inner">Написать сообщение</span>
+                                </span>
+                            </span>
+                        </button>
+                        <?php break;
+                    case 'subscriber': ?>
+                        <button type="button" class="btn tooltip" onclick="addFriends(this, <?=$row->id?>)">
+                            <i class="fas fa-user-plus"></i>
+                            <span class="tooltip-content">
+                                <span class="tooltip-text">
+                                    <span class="tooltip-inner">Добавить в друзья</span>
+                                </span>
+                            </span>
+                        </button>
+                        <button type="button" class="btn tooltip" onclick="deleteSubscriber(this, <?=$row->id?>)">
+                            <span class="fa-stack fa-sm">
+                                <i class="fas fa-user-edit fa-stack-1x"></i>
+                                <i class="fas fa-ban fa-stack-2x"></i>
+                            </span>
+                            <span class="tooltip-content">
+                                <span class="tooltip-text">
+                                    <span class="tooltip-inner">Удалить из подписчиков</span>
+                                </span>
+                            </span>
+                        </button>
+                        <button type="button" class="btn tooltip" onclick="addBlackList(this, <?=$row->id?>)">
+                            <i class="fas fa-user-shield"></i>
+                            <span class="tooltip-content">
+                                <span class="tooltip-text">
+                                    <span class="tooltip-inner">Добавить в черный список</span>
+                                </span>
+                            </span>
+                        </button>
+                        <button type="button" class="btn tooltip" onclick="sendMessage(this, <?=$row->id?>)">
+                            <i class="fas fa-comments"></i>
+                            <span class="tooltip-content">
+                                <span class="tooltip-text">
+                                    <span class="tooltip-inner">Написать сообщение</span>
+                                </span>
+                            </span>
+                        </button>
                         <?php break;
                     case 'blacklist': ?>
-                        <a href="/friends/add/<?=$row->id?>" class="btn btn-info">
-                            Добавить в друзья
-                        </a>
+                        <button type="button" class="btn tooltip">
+                            <i class="fas fa-user-shield user-bl"></i>
+                            <span class="tooltip-content">
+                                <span class="tooltip-text">
+                                    <span class="tooltip-inner">Пользователь заблокировал Вас</span>
+                                </span>
+                            </span>
+                        </button>
                     <?php }
             else : ?>
-                <button type="button" class="btn tooltip" onclick="addFriends(<?=$row->id?>)">
+                <button type="button" class="btn tooltip" onclick="addFriends(this, <?=$row->id?>)">
                     <i class="fas fa-user-plus"></i>
                     <span class="tooltip-content">
                         <span class="tooltip-text">
                             <span class="tooltip-inner">Добавить в друзья</span>
+                        </span>
+					</span>
+                </button>
+                <button type="button" class="btn tooltip" onclick="addBlackList(this, <?=$row->id?>)">
+                    <i class="fas fa-user-shield"></i>
+                    <span class="tooltip-content">
+                        <span class="tooltip-text">
+                            <span class="tooltip-inner">Добавить в черный список</span>
+                        </span>
+                    </span>
+                </button>
+                <button type="button" class="btn tooltip" onclick="sendMessage(this, <?=$row->id?>)">
+                    <i class="fas fa-comments"></i>
+                    <span class="tooltip-content">
+                        <span class="tooltip-text">
+                            <span class="tooltip-inner">Написать сообщение</span>
                         </span>
 					</span>
                 </button>
@@ -96,7 +315,3 @@
     <?php endforeach; ?>
     </ul>
 </div>
-<!--
-<i class="fas fa-user-minus"></i>
-
--->

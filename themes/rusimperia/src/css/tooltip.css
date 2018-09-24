@@ -1,6 +1,5 @@
 .tooltip {
     position: relative;
-    z-index: 9;
 }
 
 /* Gap filler */
@@ -12,7 +11,6 @@
     top: 100%;
     left: 50%;
     pointer-events: none;
-    -webkit-transform: translateX(-50%);
     transform: translateX(-50%);
 }
 
@@ -24,7 +22,7 @@
 
 .tooltip-content {
     position: absolute;
-    z-index: 10;
+    z-index: 1;
     left: 50%;
     top: 100%;
     font-size: 13px;
@@ -35,19 +33,18 @@
     background: var(--color-gray);
     border-radius: 10px;
     opacity: 0;
-    margin: 10px 0 0 -100%;
+    margin: 10px 0 0;
+    transform: translateX(-50%);
     cursor: default;
     pointer-events: none;
     -webkit-font-smoothing: antialiased;
-    -webkit-transition: opacity 0.3s 0.3s;
-    transition: opacity 0.3s 0.3s;
+    /*transition: opacity 0.3s 0.3s;*/
 }
 
 .tooltip:hover .tooltip-content {
     opacity: 1;
     pointer-events: auto;
-    -webkit-transition-delay: 0s;
-    transition-delay: 0s;
+    /*transition-delay: 0s;*/
 }
 
 .tooltip-content span {
@@ -58,36 +55,28 @@
     border: 1px solid var(--color-dark-gray);
     border-radius: 10px;
     overflow: hidden;
-    -webkit-transform: scale3d(0,1,1);
-    transform: scale3d(0,1,1);
-    -webkit-transition: -webkit-transform 0.3s 0.3s;
-    transition: transform 0.3s 0.3s;
+    /*transform: scale3d(0,1,1);
+    transition: transform 0.3s 0.3s;*/
 }
 
 .tooltip:hover .tooltip-text {
-    -webkit-transition-delay: 0s;
-    transition-delay: 0s;
-    -webkit-transform: scale3d(1,1,1);
-    transform: scale3d(1,1,1);
+    /*transition-delay: 0s;
+    transform: scale3d(1,1,1);*/
 }
 
 .tooltip-inner {
     padding: 10px;
-    -webkit-transform: translate3d(0,100%,0);
-    transform: translate3d(0,100%,0);
-    webkit-transition: -webkit-transform 0.3s;
-    transition: transform 0.3s;
+    /*transform: translate3d(0,100%,0);
+    transition: transform 0.3s;*/
+    /*white-space: nowrap;*/
 }
 
 .tooltip:hover .tooltip-inner {
-    -webkit-transition-delay: 0.3s;
-    transition-delay: 0.3s;
-    -webkit-transform: translate3d(0,0,0);
-    transform: translate3d(0,0,0);
+    /*transition-delay: 0.3s;
+    transform: translate3d(0,0,0);*/
 }
 
 /* Arrow */
-
 .tooltip-content::after {
     content: '';
     top: -20px;

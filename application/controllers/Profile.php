@@ -55,11 +55,11 @@ class Profile extends CI_Controller
         if (DEBUG) {
             $debug['debug'][] = array(
                 't' => 'Информация о пользователе',
-                'c' => var_debug($userData)
+                'c' => pretty_print($userData)
             );
             $debug['debug'][] = array(
                 't' => 'Posts',
-                'c' => var_debug($postData)
+                'c' => pretty_print($postData)
             );
         }
         $this->theme

@@ -71,21 +71,11 @@
             </label>
             <span class="text-danger" id="rules_err" ></span>
         </div>
-        <div></div>
-        <?php /* убрано по приказу начальника
-        <div class="form-group">
-            <input type="checkbox" name="privacy" id="privacy" class="checkbox-input" required />
-            <label for="privacy" class="checkbox-label">
-                <span class="far checkbox-icon"></span>
-                Согласен на обработку <a href="/privacy" title="Правила обработки персональных даннных"
-                                                      target="_blank">персональных данных</a>
-            </label>
-            <span class="text-danger" id="privacy_err" ></span>
-        </div>
-        */ ?>
         <div class="form-wide form-right">
             <div id="status" class="text-center" ></div>
-            <button type="button" class="btn btn-success" onclick="regUser();">Зарегистрироваться</button>
+            <button type="button" class="btn btn-success" onclick="regUser(this);">
+                Зарегистрироваться
+            </button>
         </div>
     </form>
 </div>

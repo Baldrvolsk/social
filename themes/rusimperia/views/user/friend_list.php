@@ -1,24 +1,5 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
-<div class="content-box">
-    <ul class="sub-nav">
-        <li class="sub-nav-item sub-nav-item-selected" onclick="filterFriend(this, {status:'all'})">Все
-            друзья</li>
-        <li class="sub-nav-item" onclick="filterFriend(this, {status:'online'})">Друзья онлайн</li>
-        <li class="sub-nav-item" onclick="filterFriend(this, {status:'confirm'})">Запросы в друзья</li>
-        <li class="sub-nav-item" onclick="filterFriend(this, {status:'request'})">Мои запросы</li>
-        <li class="sub-nav-item" onclick="filterFriend(this, {status:'blacklist'})">Черный список</li>
-    </ul>
-    <div class="search">
-        <div class="search-panel">
-            <span class="fas fa-search search-icon fa-lg"></span>
-            <input class="search-input" type="text" id="menuSearch" placeholder="<?=$this->lang->line('site_menu_search')?>"/>
-            <span class="fas fa-sliders-h search-filter fa-lg"></span>
-        </div>
-        <div class="search-filter"></div>
-    </div>
-    <ul class="content-list" data-nav="all">
-        <?php foreach ($friends as $row):
-            $row->online = rand(0,1);?>
+<?php foreach ($friends as $row): ?>
             <li class="content-item people-item" id="people-<?=$row->id?>" data-online="<?=$row->online?>">
                 <div class="item-photo">
                     <img src="/media/user/avatar/<?=$row->avatar?>" class="item-img">
@@ -316,5 +297,3 @@
                 </div>
             </li>
         <?php endforeach; ?>
-    </ul>
-</div>
