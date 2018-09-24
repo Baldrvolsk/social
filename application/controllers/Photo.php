@@ -27,7 +27,7 @@ class Photo extends CI_Controller
         if (DEBUG) {
             $debug['debug'][] = array(
                 't' => 'Информация о пользователе',
-                'c' => var_debug($data)
+                'c' => pretty_print($data)
             );
         }
         $this->theme
@@ -64,7 +64,7 @@ class Photo extends CI_Controller
             if (DEBUG) {
                 $debug['debug'][] = array(
                     't' => 'Информация о пользователе',
-                    'c' => var_debug($data)
+                    'c' => pretty_print($data)
                 );
             }
             $this->theme
@@ -92,10 +92,8 @@ class Photo extends CI_Controller
     }
 
     public function add_avatar() {
-        $album_id = $this->photo_model->get_profile_album($this->user->id);
+        /*$album_id = $this->photo_model->get_profile_album($this->user->id);
         $new_avatar = $this->photo_model->add_photo($album_id);
-        $this->photo_model->update_avatar($new_avatar);
-        //redirect('profile');
-
+        $this->photo_model->update_avatar($new_avatar);*/
     }
 }
