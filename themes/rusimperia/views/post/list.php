@@ -12,7 +12,7 @@ foreach ($posts as $post):
             $rangIcon = 'far fa-smile';
             break;
             case 20:
-            $rangIcon = 'far fa-user';
+            $rangIcon = 'fas fa-user';
             break;
             case 30:
             $rangIcon = 'fas fa-university';
