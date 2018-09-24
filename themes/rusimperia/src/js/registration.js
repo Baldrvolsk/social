@@ -1,4 +1,4 @@
-function regUser() {
+function regUser(e) {
     "use strict";
     // Собираем данные формы
     var formData = new FormData();
@@ -11,7 +11,6 @@ function regUser() {
     formData.append("country", $("#inputCountry").val());
     formData.append("gender", $("#gender :selected").val());
     formData.append("rules", $("#rules").prop('checked'));
-    //formData.append("privacy", $("#privacy").prop('checked'));
 
     //Begin the ajax call
     $.ajax({
@@ -24,20 +23,23 @@ function regUser() {
         processData: false,
 
         beforeSend: function() {
-            $('#status').addClass("bg-info")
-                .removeClass("bg-danger bg-success bg-warning")
-                .html('<i class="fas fa-spinner fa-spin"></i>')
-                .css({'margin-bottom':'10px', 'padding':'10px 0'});
+            $(e).addClass("btn-primary").html('<i class="fas fa-spinner fa-spin"></i>');
         },
 
         success: function (json) {
+            $(e).removeClass("btn-primary").html('Зарегистрироваться');
             if (json.status == "OK") { //ошибок не было
+                $('.modal-header').css({'display':'none'});
+                $('.modal-footer').css({'display':'none'});
+                openModal({
+                    'body': '<span class="text-success">'+json.message+'</span>',
+                    'footer': '<s'+'cript>'+
+                        'setTimeout(function(){location.reload()}, 3e3)'+
+                        '</s'+'cript>'
+                }, false);
                 $('#status').addClass("bg-success")
                     .removeClass("bg-danger bg-info bg-warning")
-                    .html(json.message+'<s'+'cript>' +
-                        'setTimeout(function(){location.reload()}, 2e3)' +
-                        '</s'+'cript>')
-                    .css({'margin-bottom':'10px','padding':'10px 0'});
+                    .html('').css({'margin-bottom':'10px','padding':'10px 0'});
 
             } else { //ошибки были, показываем их описание
                 $('#status').addClass("bg-danger")
