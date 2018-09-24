@@ -62,6 +62,7 @@ class Auth extends CI_Controller
      * Log the user out
      */
     public function logout() {
+        $this->ion_auth->set_meta($this->session->user_id, array('online' => false));
         $this->ion_auth->logout();
         $this->session->set_flashdata('message', $this->ion_auth->messages());
         redirect('', 'refresh');
