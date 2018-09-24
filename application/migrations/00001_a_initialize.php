@@ -16,7 +16,7 @@ class Migration_initialize extends CI_Migration {
 	}
 
 	public function up() {
-	    // Допаем БД
+	    // Дропаем БД
         $tables = $this->db->list_tables();
         $this->db->query('SET foreign_key_checks = 0');
         foreach ($tables as $t) {
