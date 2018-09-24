@@ -76,7 +76,6 @@
  * @property Comment_model    $comment_model
  * @property Like_model       $like_model
  * @property People           $people
- * @property People_model     $people_model
  * @property Friend           $friend
  * @property Friend_model     $friend_model
  * @property Group_model      $group_model
@@ -93,8 +92,9 @@
  * @property Media            $media
  * @property Media_model      $media_model
  * @property Chat             $chat
- * @property Chat_model      $chat_model
- *
+ * @property Chat_model       $chat_model
+ * @property Geoip            $geoip
+ * @property Geoip_model      $geoip_model
  */
 class CIPS
 {
