@@ -12,29 +12,25 @@ class Friend extends CI_Controller
     public function __construct() {
         parent::__construct();
         if (!$this->ion_auth->logged_in()) {
-            redirect('auth/login', 'refresh');
+            redirect('', 'refresh');
         } else {
             $this->user = $this->ion_auth->user()->row();
         }
         $this->load->model('friend_model');
+        $this->lang->load('profile');
     }
 
     public function index() {
         $data['friends'] = $this->friend_model->get_friends($this->user->id);
-        $data['on_friends'] = $this->friend_model->get_friends($this->user->id, true);
-        $data['req_friends'] = $this->friend_model->get_friends_request($this->user->id);
-        $data['user_request'] = $this->friend_model->get_user_request($this->user->id);
-        $data['blacklist'] = $this->friend_model->get_blacklist($this->user->id);
-
         $debug = array();
         if (DEBUG) {
             $debug['debug'][] = array(
                 't' => 'Данные',
-                'c' => var_debug($data)
+                'c' => pretty_print($data)
             );
         }
         $this->theme
-            ->title('Люди')
+            ->title('Друзья')
             ->add_partial('header')
             ->add_partial('l_sidebar')
             ->add_partial('r_sidebar')
@@ -42,18 +38,50 @@ class Friend extends CI_Controller
             ->load('user/friend', $data);
     }
 
-    public function add_friend($id, $group_id) {
-        $this->friend_model->add_friend($this->user->id, $id, $group_id);
-        redirect('friend', 'refresh');
+    public function get_friend_list() {
+        if ($this->form_validation->run('getFriendList') === FALSE) { //Если валидация не прошла
+            $ret['status'] = "ERR";
+            $ret['type_err'] = $this->form_validation->error('type');
+            $ret['message'] = 'Что-то пошло не так, попробуйте позже';
+            if (DEBUG) $ret['error'] = 'не прошла валидация';
+        } else {
+            $type = $this->input->post('type');
+            $data = array();
+            switch ($type) {
+                case 'friend':
+                    $data = $this->friend_model->get_friends($this->user->id);
+                    break;
+                case 'confirm':
+                    $data = $this->friend_model->get_friends_request($this->user->id);
+                    break;
+                case 'request':
+                    $data = $this->friend_model->get_user_request($this->user->id);
+                    break;
+                case 'subscriber':
+                    $data = $this->friend_model->get_user_subscriber($this->user->id);
+                    break;
+                case 'blacklist':
+                    $data = $this->friend_model->get_blacklist($this->user->id);
+                    break;
+            }
+            $ret['status'] = "OK";
+            $ret['html'] = $this->theme->view('user/friend_list', array('friends' => $data), true);
+        }
+        echo json_encode($ret);
     }
 
-    public function confirm_friend($id) {
-        $this->friend_model->change_friend_status((int)$id, $this->user->id, 'confirmed');
-        redirect($_SERVER['HTTP_REFERER']);
-    }
-
-    public function delete_friend($id) {
-        $this->friend_model->delete_friend($this->user->id, $id);
-        redirect('friend', 'refresh');
+    public function change_status() {
+        if ($this->form_validation->run('friendChangeStatus') === FALSE) { //Если валидация не прошла
+            $ret['status'] = "ERR";
+            $ret['id_err'] = $this->form_validation->error('id');
+            $ret['status_err'] = $this->form_validation->error('status');
+            $ret['message'] = 'Что-то пошло не так, попробуйте позже';
+            if (DEBUG) $ret['error'] = 'не прошла валидация';
+        } else {
+            $id = $this->input->post('id');
+            $status = $this->input->post('status');
+            $ret = $this->friend_model->change_friend_status($this->user->id, $id, $status);
+        }
+        echo json_encode($ret);
     }
 }
