@@ -1,0 +1,82 @@
+.overlay {
+    opacity: 0;
+    width: 100%;
+    min-height: 100vh;
+    max-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 40px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.75);
+    pointer-events: none;
+    transition: 0.35s ease-in-out;
+    overflow-y: auto;
+    z-index: 99;
+}
+
+.overlay.open {
+    opacity: 1;
+    pointer-events: inherit;
+}
+
+.overlay .modal {
+    opacity: 0;
+    position: relative;
+    pointer-events: none;
+    transition: 0.35s ease-in-out;
+    max-height: 100vh;
+    padding: 0;
+}
+
+.overlay .modal.open {
+    opacity: 1;
+    pointer-events: inherit;
+}
+
+.btn-close-modal {
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    color: var(--color-gray);
+}
+
+.modal-header, .modal-footer,
+.modal-body {
+    padding: 7px 15px;
+}
+
+.modal-header {
+    font-size: 1.3rem;
+    font-weight: bolder;
+    border-bottom: 1px solid var(--color-gray);
+}
+
+.overlay .modal.open .modal-header {
+    transform: translate(0, 0px);
+    opacity: 1;
+}
+
+.overlay .modal .modal-header {
+    transform: translate(0, -10px);
+    opacity: 0;
+    transition: 0.35s ease-in-out;
+}
+
+.modal-footer {
+    border-top: 1px solid var(--color-gray);
+}
+
+.overlay .modal.open .modal-footer {
+    transform: translate(0, 0px);
+    opacity: 1;
+}
+
+.overlay .modal .modal-footer {
+    transform: translate(0, 10px);
+    opacity: 0;
+    transition: 0.35s ease-in-out;
+}

@@ -60,23 +60,28 @@
     justify-content: center;
     align-items: center;
 }
+
 .user-button .btn-user {
     background-color: #fff;
     border-radius: 0;
     margin: 0;
     border-right-color: #fff;
 }
+
 .user-button .btn-user:first-child {
     border-radius: 20px 0 0 20px;
 }
+
 .user-button .btn-user:last-child {
     border-radius: 0 20px 20px 0;
     border-right-color: var(--color-dark-gray);
 }
+
 .user-button .btn-user:first-child:last-child {
     border-radius: 20px;
     border-right-color: var(--color-dark-gray);
 }
+
 /* info-box grid*/
 .info-box {
     padding: 5px 15px;

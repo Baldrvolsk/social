@@ -31,3 +31,9 @@ body {
     border-radius: 20px;
     background-color: #fff;
 }
+
+.fa-stack .fa-ban,
+.tooltip > .user-bl {
+    color: tomato;
+}
+

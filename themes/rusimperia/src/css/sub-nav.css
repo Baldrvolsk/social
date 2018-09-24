@@ -8,9 +8,13 @@
     padding: 0;
 }
 
-.sub-nav li:not(:first-child) {
+.sub-nav .sub-nav-item {
+    cursor: pointer;
+}
+
+.sub-nav .sub-nav-item:not(:first-child) {
     margin-left: 1.5rem;
 }
-.sub-nav .active {
+.sub-nav-item-selected {
     font-weight: bolder;
 }
