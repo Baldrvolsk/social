@@ -8,6 +8,7 @@
 	<title><?php echo Events::trigger('the_title', $title, 'string'); ?></title>
     <?=(empty($metadata)?'':$metadata)?>
     <?=(empty($icons)?'':$icons)?>
+    <meta name="yandex-verification" content="64efdae1783b9dc9" />
 	<!-- StyleSheets -->
     <link href="//fonts.googleapis.com/css?family=PT+Serif:400,700&amp;subset=cyrillic,cyrillic-ext,latin-ext" rel="stylesheet">
     <?=(empty($css_files)?'':$css_files)?>
