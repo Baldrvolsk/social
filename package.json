@@ -1,16 +1,16 @@
 {
-    "name": "rusimperia",
-    "title": "rusimperia",
-    "description": "Сайт rusimperia.ru",
+    "name": "social",
+    "title": "Social network",
+    "description": "Проект социальной сети на PHP",
     "version": "",
-    "homepage": "https://rusimperia.ru",
+    "homepage": "https://social.zakazhi.website",
     "license": "UNLICENSED",
     "author": {
-        "name": "rusimperia.ru",
-        "url": "https://rusimperia.ru"
+        "name": "Ivan Semin",
+        "url": "https://zakazhi.website"
     },
     "keywords": [
-        "rusimperia"
+        "social PHP"
     ],
     "dependencies": {
         "grunt": "^1.0.2",
